@@ -1,0 +1,183 @@
+================================================================================
+  CLUBE BALL — Component Documentation
+  Figma Source: node 1:6010
+  File: rR7GhfAHOtnPtstmxAMP4G / "Untitled"
+================================================================================
+
+OVERVIEW
+--------
+The Clube Ball component displays a circular club badge/logo with interactive
+hover and selected states. It is designed for use in sports applications where
+users can browse and select their favorite clubs.
+
+Component name: ClubeBall
+Source file:    src/components/ClubeBall/ClubeBall.tsx
+Styles file:    src/components/ClubeBall/ClubeBall.css
+Export:         src/components/ClubeBall/index.ts
+
+
+FIGMA DESIGN SPECIFICATIONS
+----------------------------
+
+  Component Set:  "Clube Ball" (COMPONENT_SET)
+  Variants:       Hover (True/False) × Click (True/False)
+
+  ┌─────────────────────────┬──────────┬──────────┬──────────────┐
+  │ Property                │ Default  │ Hover    │ Selected     │
+  ├─────────────────────────┼──────────┼──────────┼──────────────┤
+  │ Container size          │ 124×124  │ 124×124  │ 124×124      │
+  │ Logo size               │ 88×88    │ 88×88    │ 88×88        │
+  │ Background color        │ #1B1C21  │ #1B1C21  │ #1B1C21      │
+  │ Border                  │ none     │ 2px      │ 2px          │
+  │ Border color            │ transp.  │ #EA580C  │ #EA580C      │
+  │ Border radius           │ 104px    │ 104px    │ 104px        │
+  │ Border align            │ inside   │ inside   │ inside       │
+  │ Hover transition        │ —        │ 300ms    │ —            │
+  │ Hover easing            │ —        │ ease-out │ —            │
+  │ Click transition        │ —        │ —        │ 1022ms       │
+  │ Click easing            │ —        │ —        │ gentle       │
+  │ Figma animation type    │ —        │ Smart    │ Smart        │
+  └─────────────────────────┴──────────┴──────────┴──────────────┘
+
+
+PROPS (TypeScript Interface: ClubeBallProps)
+--------------------------------------------
+
+  logoSrc     string              REQUIRED
+    URL or imported path of the club logo image.
+    Example: import logo from "./assets/corinthians-logo.png"
+
+  clubName    string              REQUIRED
+    Club name used for the alt attribute and ARIA label.
+    This provides accessibility for screen readers.
+    Example: "Corinthians"
+
+  selected    boolean             DEFAULT: false
+    Controls whether the club ball displays the selected state
+    (persistent orange border). Use this for toggle behavior.
+
+  size        "sm" | "md" | "lg"  DEFAULT: "md"
+    Size variant of the component:
+      - "sm"  →  80px container,  56px logo
+      - "md"  → 124px container,  88px logo  (matches Figma)
+      - "lg"  → 164px container, 116px logo
+
+  onClick     () => void          OPTIONAL
+    Callback function invoked when the user clicks the club ball.
+    Typically used to toggle the selected state.
+
+
+USAGE EXAMPLES
+--------------
+
+1. Basic (default state):
+
+   import { ClubeBall } from "./components/ClubeBall";
+   import corinthiansLogo from "./assets/corinthians-logo.png";
+
+   <ClubeBall
+     logoSrc={corinthiansLogo}
+     clubName="Corinthians"
+   />
+
+2. With selection toggle:
+
+   const [selected, setSelected] = useState(false);
+
+   <ClubeBall
+     logoSrc={corinthiansLogo}
+     clubName="Corinthians"
+     selected={selected}
+     onClick={() => setSelected(!selected)}
+   />
+
+3. Small size:
+
+   <ClubeBall
+     logoSrc={corinthiansLogo}
+     clubName="Corinthians"
+     size="sm"
+   />
+
+4. Multiple clubs with single selection:
+
+   const [selectedClub, setSelectedClub] = useState<string | null>(null);
+
+   {clubs.map((club) => (
+     <ClubeBall
+       key={club.id}
+       logoSrc={club.logoUrl}
+       clubName={club.name}
+       selected={selectedClub === club.id}
+       onClick={() => setSelectedClub(
+         selectedClub === club.id ? null : club.id
+       )}
+     />
+   ))}
+
+
+DESIGN TOKENS
+-------------
+
+  Colors:
+    --clube-ball-bg:          #1B1C21  (rgb 27, 28, 33)
+    --clube-ball-border:      #EA580C  (rgb 234, 88, 12)
+    --clube-ball-border-idle: transparent
+
+  Dimensions (md):
+    Container:  124px × 124px
+    Logo:        88px × 88px
+    Border:       2px
+
+  Dimensions (sm):
+    Container:   80px × 80px
+    Logo:        56px × 56px
+    Border:       2px
+
+  Dimensions (lg):
+    Container:  164px × 164px
+    Logo:       116px × 116px
+    Border:       3px
+
+  Border:
+    Radius:    104px (fully circular)
+    Style:     solid
+    Align:     inside (box-sizing: border-box)
+
+  Transitions:
+    Hover:     border-color 300ms ease-out
+    Click:     ~1022ms gentle (Figma Smart Animate)
+
+
+ACCESSIBILITY
+-------------
+  - Rendered as a <button> element for keyboard accessibility
+  - aria-label set to the clubName prop
+  - aria-pressed reflects the selected state
+  - title attribute shows club name on long hover
+  - Images have descriptive alt text ("{clubName} logo")
+  - Focus styles inherit from browser defaults
+
+
+FILE STRUCTURE
+--------------
+
+  src/
+  ├── components/
+  │   └── ClubeBall/
+  │       ├── ClubeBall.tsx       # Component implementation
+  │       ├── ClubeBall.css       # Styles (all variants + sizes)
+  │       └── index.ts            # Named exports
+  ├── pages/
+  │   ├── ComponentShowcase.tsx   # Preview page with 3 tabs
+  │   └── ComponentShowcase.css   # Showcase styling
+  ├── assets/
+  │   ├── corinthians-logo.png    # Sample club logo
+  │   └── reference/              # Figma rendered PNGs
+  │       ├── default-state.png
+  │       ├── hover-state.png
+  │       └── clicked-state.png
+  └── docs/
+      └── ClubeBall.txt           # This file
+
+================================================================================

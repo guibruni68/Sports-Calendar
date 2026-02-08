@@ -1,0 +1,209 @@
+================================================================================
+  FILTRO CAMPEONATOS — Component Documentation
+  Figma Source: node 1:6017
+  File: rR7GhfAHOtnPtstmxAMP4G / "Untitled"
+================================================================================
+
+OVERVIEW
+--------
+The Filtro Campeonatos component is a pill/chip-style filter button used for
+selecting championship categories in a sports application. It features a smooth
+background color transition on hover and supports an active/selected state.
+
+Component name: FiltroCampeonatos
+Source file:    src/components/FiltroCampeonatos/FiltroCampeonatos.tsx
+Styles file:    src/components/FiltroCampeonatos/FiltroCampeonatos.css
+Export:         src/components/FiltroCampeonatos/index.ts
+
+
+FIGMA DESIGN SPECIFICATIONS
+----------------------------
+
+  Component Set:  "Filtro Campeonatos" (COMPONENT_SET)
+  Variants:       Name × Hover (6 names × 2 hover states = 12 variants)
+
+  Name options:   Todos, Champions League, Paulistao, Premier League,
+                  La Liga, Brasileirao
+
+  ┌─────────────────────────┬────────────────┬────────────────┐
+  │ Property                │ Default        │ Hover / Active │
+  ├─────────────────────────┼────────────────┼────────────────┤
+  │ Height                  │ 40px (HUG)     │ 40px (HUG)     │
+  │ Width                   │ fit-content    │ fit-content    │
+  │ Background color        │ #1B1C21        │ #EA580C        │
+  │ Text color              │ #FFFFFF        │ #FFFFFF        │
+  │ Font family             │ Montserrat     │ Montserrat     │
+  │ Font weight             │ 400 (Regular)  │ 400 (Regular)  │
+  │ Font size               │ 16px           │ 16px           │
+  │ Line height             │ 24px (150%)    │ 24px (150%)    │
+  │ Letter spacing          │ 0px            │ 0px            │
+  │ Text alignment          │ center         │ center         │
+  │ Padding                 │ 8px 16px       │ 8px 16px       │
+  │ Border radius           │ 8px            │ 8px            │
+  │ Border                  │ none           │ none           │
+  │ Shadows/effects         │ none           │ none           │
+  │ Layout direction        │ vertical       │ vertical       │
+  │ Align items             │ center         │ center         │
+  │ Justify content         │ center         │ center         │
+  │ Hover transition        │ —              │ 300ms ease-out │
+  └─────────────────────────┴────────────────┴────────────────┘
+
+  Figma Interaction Pattern:
+    - Hover=False → ON_HOVER: CHANGE_TO Hover=True (Smart Animate, 300ms ease-out)
+    - Hover=True  → ON_CLICK: NAVIGATE to page (Smart Animate, 1022ms gentle)
+
+
+VARIANT WIDTH BY NAME
+---------------------
+
+  ┌────────────────────┬───────┐
+  │ Name               │ Width │
+  ├────────────────────┼───────┤
+  │ Todos              │ 80px  │
+  │ Champions League   │ 189px │
+  │ Paulistao          │ 106px │
+  │ Premier League     │ 161px │
+  │ La Liga            │ 90px  │
+  │ Brasileirao        │ 115px │
+  └────────────────────┴───────┘
+
+  Note: Width is content-driven (HUG). These values are computed
+  from the text length at 16px Montserrat Regular + 32px horizontal padding.
+
+
+PROPS (TypeScript Interface: FiltroCampeonatosProps)
+----------------------------------------------------
+
+  label       string              REQUIRED
+    The text label displayed inside the filter chip.
+    Can be any championship name or custom string.
+    Example: "Brasileirao", "Champions League", "Todos"
+
+  active      boolean             DEFAULT: false
+    Controls whether the filter chip displays the active state
+    (orange #EA580C background). When false, shows default dark
+    background. The hover state is handled by CSS :hover.
+
+  size        "sm" | "md" | "lg"  DEFAULT: "md"
+    Size variant of the component:
+      - "sm"  → padding 6px 12px, font 14px, radius 6px
+      - "md"  → padding 8px 16px, font 16px, radius 8px (matches Figma)
+      - "lg"  → padding 10px 20px, font 18px, radius 10px
+
+  onClick     () => void          OPTIONAL
+    Callback function invoked when the user clicks the filter chip.
+    Typically used to update the active filter in a filter group.
+
+
+USAGE EXAMPLES
+--------------
+
+1. Basic (single filter):
+
+   import { FiltroCampeonatos } from "./components/FiltroCampeonatos";
+
+   <FiltroCampeonatos label="Brasileirao" />
+
+2. Filter group with single selection:
+
+   const [active, setActive] = useState("Todos");
+
+   const championships = [
+     "Todos", "Champions League", "Paulistao",
+     "Premier League", "La Liga", "Brasileirao"
+   ];
+
+   <div style={{ display: "flex", gap: 12 }}>
+     {championships.map((name) => (
+       <FiltroCampeonatos
+         key={name}
+         label={name}
+         active={active === name}
+         onClick={() => setActive(name)}
+       />
+     ))}
+   </div>
+
+3. Multi-select filter group:
+
+   const [active, setActive] = useState<Set<string>>(new Set(["Todos"]));
+
+   const toggle = (name: string) => {
+     setActive((prev) => {
+       const next = new Set(prev);
+       if (next.has(name)) next.delete(name);
+       else next.add(name);
+       return next;
+     });
+   };
+
+   {championships.map((name) => (
+     <FiltroCampeonatos
+       key={name}
+       label={name}
+       active={active.has(name)}
+       onClick={() => toggle(name)}
+     />
+   ))}
+
+4. Small size for compact layouts:
+
+   <FiltroCampeonatos label="La Liga" size="sm" />
+
+
+DESIGN TOKENS
+-------------
+
+  Colors:
+    --filtro-bg-default:    #1B1C21  (rgb 27, 28, 33)
+    --filtro-bg-active:     #EA580C  (rgb 234, 88, 12)
+    --filtro-text:          #FFFFFF  (rgb 255, 255, 255)
+
+  Typography:
+    Font family:            Montserrat, sans-serif
+    Font weight:            400 (Regular)
+    Font size:              16px
+    Line height:            24px (150%)
+    Letter spacing:         0px
+
+  Spacing (md):
+    Padding top/bottom:     8px
+    Padding left/right:     16px
+    Height:                 40px (auto from padding + line-height)
+
+  Border:
+    Radius:                 8px
+    Width:                  0 (no border)
+
+  Transitions:
+    Hover:                  background-color 300ms ease-out
+
+
+ACCESSIBILITY
+-------------
+  - Rendered as a <button> element for keyboard accessibility
+  - aria-pressed reflects the active state
+  - White text on both backgrounds meets WCAG AA contrast requirements
+  - Focus styles inherit from browser defaults
+
+
+FILE STRUCTURE
+--------------
+
+  src/
+  ├── components/
+  │   └── FiltroCampeonatos/
+  │       ├── FiltroCampeonatos.tsx   # Component implementation
+  │       ├── FiltroCampeonatos.css   # Styles (all states + sizes)
+  │       └── index.ts               # Named exports
+  ├── pages/
+  │   ├── ComponentShowcase.tsx       # Showcase with component nav
+  │   └── ComponentShowcase.css
+  ├── assets/
+  │   └── reference/
+  │       ├── filtro-default.png      # Figma rendered default
+  │       └── filtro-hover.png        # Figma rendered hover
+  └── docs/
+      └── FiltroCampeonatos.txt       # This file
+
+================================================================================

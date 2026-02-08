@@ -1,0 +1,123 @@
+CARD DESTAQUE
+=============
+Figma node: 1:6436
+Component set: "Card destaque"
+
+DESCRIPTION
+-----------
+Featured/highlight card component with 3 display types (tipos):
+- Jogo: Match card with two team logos, date/time pill or "AO VIVO" badge, and broadcast channels
+- Time: Team card with logo and team name
+- Competição: Competition card with logo and competition name
+
+VARIANTS
+--------
+Properties:
+  - Tipo: "Jogo" | "Time" | "Competição"
+  - Ao vivo: True | False (Jogo only — show live badge vs. date pill)
+  - Hover: True | False
+  - Game Date: TEXT (default "27/01 19:00")
+
+Total: 8 Figma variants (3 tipos × hover states × ao vivo states)
+
+LAYOUT
+------
+Tipo: Jogo
+  - Width: 272px
+  - Height: 116px
+  - Direction: column
+  - Padding: 0 4px
+  - Gap: 8px
+  - Border Radius: 0 (default) → 24px (hover)
+
+Tipo: Time / Competição
+  - Width: 250px
+  - Height: 70px
+  - Direction: column
+  - Gap: 8px
+  - Border Radius: 24px (always)
+
+COLORS
+------
+Card Background:        #1B1C21
+Hover Border:           2px solid #EA580C
+Score Pill BG:          rgba(234, 88, 12, 0.1)
+Score Pill Text:        #EA580C
+AO VIVO Badge BG:       #C5023C
+AO VIVO Badge Text:     #FAFAFA
+Name Text (Time/Comp):  #FFFFFF
+Channels Border Top:    rgba(255, 255, 255, 0.1)
+
+TYPOGRAPHY
+----------
+Game Date:              Inter 600 18px / 22px line-height
+AO VIVO Badge:          Roboto 700 12px / 16px line-height
+Team/Competition Name:  Lexend 600 16px / 20px line-height
+
+LOGOS
+-----
+Size:                   56 × 56px
+Border Radius:          50% (circle)
+Background:             #FFFFFF
+Object Fit:             contain
+
+SCORE PILL
+----------
+Padding:                8px 16px
+Border Radius:          50px (full pill)
+Background:             rgba(234, 88, 12, 0.1)
+Text Color:             #EA580C
+
+AO VIVO BADGE
+-------------
+Padding:                3px 8px
+Border Radius:          4px
+Background:             #C5023C
+Text:                   "AO VIVO", #FAFAFA
+
+CHANNELS ROW (Jogo only)
+-------------------------
+Display:                flex, center aligned
+Gap:                    8px
+Border Top:             1px solid rgba(255, 255, 255, 0.1)
+Padding Top:            8px
+Accepts:                ReactNode (typically TagCanal components + TV icon)
+
+ANIMATION
+---------
+Transition:             border-color 300ms ease-out, border-radius 300ms ease-out
+Trigger:                ON_HOVER → DISSOLVE, 300ms, EASE_OUT
+
+PROPS
+-----
+tipo            CardDestaqueTipo    required    Card type
+aoVivo          boolean             false       Show AO VIVO badge (Jogo)
+gameDate        string              "27/01 19:00"  Date/time (Jogo, not live)
+homeLogo        string              —           Home logo URL (Jogo)
+awayLogo        string              —           Away logo URL (Jogo)
+channels        ReactNode           —           Channel row content (Jogo)
+logo            string              —           Logo URL (Time/Competição)
+name            string              —           Name text (Time/Competição)
+onClick         () => void          —           Click handler
+
+CSS CLASSES
+-----------
+.cardDestaque                   Outer button container
+.cardDestaque--jogo             Match variant
+.cardDestaque--time             Team variant
+.cardDestaque--competicao       Competition variant
+.cardDestaque__club             Logos + center element row
+.cardDestaque__logo             Team/competition logo (56px circle)
+.cardDestaque__score            Date/time pill container
+.cardDestaque__date             Date/time text
+.cardDestaque__live             AO VIVO badge
+.cardDestaque__name             Team/competition name text
+.cardDestaque__channels         Bottom channel row
+
+FILES
+-----
+src/components/CardDestaque/CardDestaque.tsx
+src/components/CardDestaque/CardDestaque.css
+src/components/CardDestaque/index.ts
+src/assets/reference/calendar-date-set.png
+src/docs/CardDestaque.txt

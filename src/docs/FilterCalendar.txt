@@ -1,0 +1,120 @@
+FILTER CALENDAR COMPONENT
+=========================
+Figma Node: 1:6765
+Component Set: "Filter Calendar"
+Type: COMPONENT_SET
+
+OVERVIEW
+--------
+Sport category filter pill button with unique active colors per sport.
+Used to filter calendar content by sport type. Each sport gets its own
+brand color when active. Default and hover states share common styling.
+
+VARIANT PROPERTIES
+------------------
+Name (7 options):
+  Todos, Futebol, Basquete, Futebol Americano, Automobilismo, Beisebol, Hóquei
+
+Clicked: True / False
+Hover: True / False (no Clicked=True + Hover=True combo)
+
+Total variants: 7 × 3 = 21
+
+LAYOUT
+------
+- Display: inline-flex
+- Align: center
+- Padding: 4px 16px
+- Border Radius: 8px
+- Height: 28px (HUG)
+- Width: fit-content (HUG)
+
+STATE COLORS
+------------
+Default:
+  Background: #303030
+  Text:       #B9B9B9
+
+Hover:
+  Background: #4F4E4E
+  Text:       #FFFFFF
+
+Active (Clicked=True) — unique per sport:
+  Todos:              #EA580C (orange)
+  Futebol:            #40BD01 (green)
+  Basquete:           #FF0800 (red)
+  Futebol Americano:  #E11577 (pink)
+  Automobilismo:      #9B18BC (purple)
+  Beisebol:           #2822DA (blue-purple)
+  Hóquei:             #0077FF (blue)
+  Text (all active):  #FFFFFF
+
+TYPOGRAPHY
+----------
+Font Family:  Inter
+Font Weight:  500 (Medium)
+Font Size:    14px
+Line Height:  20px
+Text Case:    Original (no transform)
+
+ANIMATION
+---------
+Transition: background-color, color 300ms ease-out
+Figma Interaction: ON_HOVER → DISSOLVE, EASE_OUT, 300ms
+
+INTERNAL STRUCTURE (Figma)
+--------------------------
+Each variant contains a "Button Master" INSTANCE:
+  - Layout: HORIZONTAL, gap 8px, padding [4px 16px 4px 16px], radius 8px
+  - Children: Icon (hidden), Text, Icon (hidden)
+  - Icons are present but set to visible=false
+
+PROPS (TypeScript)
+------------------
+name:     FilterCalendarName (required)
+          "Todos" | "Futebol" | "Basquete" | "Futebol Americano" |
+          "Automobilismo" | "Beisebol" | "Hóquei"
+active:   boolean (default: false)
+onClick:  () => void (optional)
+
+EXPORTED TYPES
+--------------
+FilterCalendarName  — union of all 7 sport filter names
+FilterCalendarProps — { name, active?, onClick? }
+
+CSS CLASSES
+-----------
+.filterCalendar           — base pill button
+.filterCalendar--active   — active/clicked state (color applied via inline style)
+
+FILE STRUCTURE
+--------------
+src/components/FilterCalendar/
+  FilterCalendar.tsx   — component + types + active color map
+  FilterCalendar.css   — default/hover/active styles
+  index.ts             — public exports
+
+DEPENDENCIES
+------------
+- Inter font (500) loaded via Google Fonts in index.html
+- No external component dependencies
+
+USAGE EXAMPLES
+--------------
+// Basic usage
+<FilterCalendar name="Futebol" />
+
+// Active state
+<FilterCalendar name="Basquete" active />
+
+// Filter group with single selection
+const [active, setActive] = useState("Todos");
+{["Todos", "Futebol", "Basquete", "Futebol Americano",
+  "Automobilismo", "Beisebol", "Hóquei"].map((name) => (
+  <FilterCalendar
+    key={name}
+    name={name}
+    active={active === name}
+    onClick={() => setActive(name)}
+  />
+))}

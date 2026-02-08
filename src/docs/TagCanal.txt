@@ -1,0 +1,220 @@
+================================================================================
+  TAG CANAL — Component Documentation
+  Figma Source: node 1:6535
+  File: rR7GhfAHOtnPtstmxAMP4G / "Untitled"
+================================================================================
+
+OVERVIEW
+--------
+The Tag Canal component is a small badge/tag that displays a TV channel name
+with a brand-specific background color. It is used in sports applications to
+indicate which TV channels are broadcasting a particular match or event.
+
+Component name: TagCanal
+Source file:    src/components/TagCanal/TagCanal.tsx
+Styles file:    src/components/TagCanal/TagCanal.css
+Export:         src/components/TagCanal/index.ts
+
+
+FIGMA DESIGN SPECIFICATIONS
+----------------------------
+
+  Component Set:  "Tag Canal" (COMPONENT_SET)
+  Variants:       Name (10 options) x Canal (8 options) x Tag (True/False)
+                  = 24 defined variants
+
+  ┌─────────────────────────┬────────────────┐
+  │ Property                │ Value          │
+  ├─────────────────────────┼────────────────┤
+  │ Height                  │ 24px (fixed)   │
+  │ Width                   │ fit-content    │
+  │ Padding                 │ 4px 8px        │
+  │ Border radius           │ 4px            │
+  │ Border                  │ none           │
+  │ Text color              │ #FFFFFF        │
+  │ Font family             │ Montserrat     │
+  │ Font weight             │ 400 (Regular)  │
+  │ Font size               │ 12px           │
+  │ Line height             │ 16px (133%)    │
+  │ Letter spacing          │ 0px            │
+  │ Text alignment          │ left           │
+  │ Layout direction        │ horizontal     │
+  │ Align items             │ center         │
+  │ Shadows/effects         │ none           │
+  └─────────────────────────┴────────────────┘
+
+
+BRAND COLOR MAP
+---------------
+
+  ┌──────────────┬──────────┬─────────────────────┐
+  │ Channel      │ Hex      │ RGB                 │
+  ├──────────────┼──────────┼─────────────────────┤
+  │ GE TV        │ #6B0CAE  │ rgb(107, 12, 174)   │
+  │ SporTV       │ #2B762B  │ rgb(43, 118, 43)    │
+  │ ESPN         │ #C70000  │ rgb(199, 0, 0)      │
+  │ HBO Max      │ #060516  │ rgb(6, 5, 22)       │
+  │ SBT          │ #0A0663  │ rgb(10, 6, 99)      │
+  │ Premiere     │ #007700  │ rgb(0, 119, 0)      │
+  │ Band         │ #73766E  │ rgb(115, 117, 110)  │
+  │ Record       │ #0910E3  │ rgb(8, 16, 226)     │
+  │ RedeTV       │ #097E79  │ rgb(9, 126, 120)    │
+  │ None         │ —        │ Not rendered        │
+  └──────────────┴──────────┴─────────────────────┘
+
+
+TEXT LABEL RULES
+----------------
+
+  The displayed label is generated from the channel name and canal number:
+
+  General pattern:  "{ChannelName} {Canal}"
+  Examples:         "ESPN 1", "ESPN 3", "Premiere 2"
+
+  Special cases:
+    - SporTV:  Lowercase "sportv" + canal.  "4k" → "sportv 4K"
+    - GE TV:   Canal "1" → "GE TV" (no number). Canal "2" → "GE TV 2"
+    - Single-canal brands (HBO Max, SBT, Band, Record, RedeTV):
+      Canal "1" → just the brand name (e.g. "HBO Max", "Record")
+
+  Available canals per channel:
+    ┌──────────────┬──────────────────────┐
+    │ Channel      │ Canals               │
+    ├──────────────┼──────────────────────┤
+    │ GE TV        │ 1, 2                 │
+    │ SporTV       │ 1, 2, 3, 4, 5, 4k   │
+    │ ESPN         │ 1, 2, 3, 4, 5, 6    │
+    │ HBO Max      │ 1                    │
+    │ SBT          │ 1                    │
+    │ Premiere     │ 1, 2, 3, 4, 5       │
+    │ Band         │ 1                    │
+    │ Record       │ 1                    │
+    │ RedeTV       │ 1                    │
+    └──────────────┴──────────────────────┘
+
+
+PROPS (TypeScript Interface: TagCanalProps)
+-------------------------------------------
+
+  channel     ChannelName         REQUIRED
+    The TV channel brand. One of:
+    "GE TV" | "SporTV" | "ESPN" | "HBO Max" | "SBT" |
+    "Premiere" | "Band" | "Record" | "RedeTV" | "None"
+
+    When set to "None", the component returns null (nothing rendered).
+
+  canal       CanalNumber         DEFAULT: "1"
+    The canal number/identifier. One of:
+    "0" | "1" | "2" | "3" | "4" | "5" | "6" | "4k"
+
+
+EXPORTED TYPES
+--------------
+
+  ChannelName   Union of all channel brand name strings
+  CanalNumber   Union of all canal identifier strings
+  TagCanalProps Interface for component props
+
+
+USAGE EXAMPLES
+--------------
+
+1. Basic (single tag):
+
+   import { TagCanal } from "./components/TagCanal";
+
+   <TagCanal channel="ESPN" canal="1" />
+
+2. SporTV 4K:
+
+   <TagCanal channel="SporTV" canal="4k" />
+
+3. Single-canal channel (canal defaults to "1"):
+
+   <TagCanal channel="HBO Max" />
+
+4. Multiple tags for a match broadcast:
+
+   const broadcasts = [
+     { channel: "ESPN", canal: "1" },
+     { channel: "Premiere", canal: "3" },
+   ];
+
+   <div style={{ display: "flex", gap: 4 }}>
+     {broadcasts.map((b) => (
+       <TagCanal
+         key={`${b.channel}-${b.canal}`}
+         channel={b.channel}
+         canal={b.canal}
+       />
+     ))}
+   </div>
+
+5. Conditionally hide:
+
+   <TagCanal channel="None" />  {/* renders nothing */}
+
+
+DESIGN TOKENS
+-------------
+
+  Colors (per brand):
+    --tag-canal-getv:       #6B0CAE
+    --tag-canal-sportv:     #2B762B
+    --tag-canal-espn:       #C70000
+    --tag-canal-hbomax:     #060516
+    --tag-canal-sbt:        #0A0663
+    --tag-canal-premiere:   #007700
+    --tag-canal-band:       #73766E
+    --tag-canal-record:     #0910E3
+    --tag-canal-redetv:     #097E79
+    --tag-canal-text:       #FFFFFF
+
+  Typography:
+    Font family:            Montserrat, sans-serif
+    Font weight:            400 (Regular)
+    Font size:              12px
+    Line height:            16px (133%)
+    Letter spacing:         0px
+
+  Spacing:
+    Padding:                4px 8px
+    Height:                 24px (fixed)
+
+  Border:
+    Radius:                 4px
+    Width:                  0 (no border)
+
+
+ACCESSIBILITY
+-------------
+  - Rendered as a <span> element (non-interactive, display-only)
+  - title attribute provides the channel label for tooltip access
+  - White text on all brand backgrounds meets or approaches WCAG contrast
+    requirements (HBO Max #060516 has excellent contrast)
+
+
+FILE STRUCTURE
+--------------
+
+  src/
+  ├── components/
+  │   └── TagCanal/
+  │       ├── TagCanal.tsx        # Component with brand mapping
+  │       ├── TagCanal.css        # Brand color classes
+  │       └── index.ts            # Named exports + type exports
+  ├── pages/
+  │   ├── ComponentShowcase.tsx   # Showcase with TagCanal tab
+  │   └── ComponentShowcase.css
+  ├── assets/
+  │   └── reference/
+  │       ├── tag-getv.png
+  │       ├── tag-espn.png
+  │       ├── tag-premiere.png
+  │       ├── tag-sportv.png
+  │       ├── tag-hbomax.png
+  │       └── tag-record.png
+  └── docs/
+      └── TagCanal.txt            # This file
+
+================================================================================

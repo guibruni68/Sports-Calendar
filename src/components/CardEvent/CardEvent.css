@@ -1,0 +1,70 @@
+.cardEvent {
+  display: inline-flex;
+  align-items: stretch;
+  width: 145px;
+  height: 73px;
+  border: none;
+  border-radius: 4px;
+  padding: 0;
+  background-color: var(--card-bg);
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 300ms ease-out;
+}
+
+.cardEvent:hover {
+  background-color: var(--card-bg-hover);
+}
+
+/* Colored left bar */
+.cardEvent__bar {
+  width: 3px;
+  flex-shrink: 0;
+  background-color: var(--card-bar);
+}
+
+/* Body: vertical stack */
+.cardEvent__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px;
+  gap: 6px;
+}
+
+/* Title text */
+.cardEvent__title {
+  font-family: "Segoe UI", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 13px;
+  color: #ffffff;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Teams row: logos + X separator */
+.cardEvent__teams {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cardEvent__logo {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.cardEvent__separator {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff;
+}

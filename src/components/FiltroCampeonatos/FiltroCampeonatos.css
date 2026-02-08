@@ -1,0 +1,45 @@
+.filtroCampeonatos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1B1C21;
+  color: #FFFFFF;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition: background-color 0.3s ease-out;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.filtroCampeonatos:hover {
+  background-color: #EA580C;
+}
+
+.filtroCampeonatos.active {
+  background-color: #EA580C;
+}
+
+/* Size variants */
+.filtroCampeonatos--sm {
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  border-radius: 6px;
+}
+
+.filtroCampeonatos--lg {
+  padding: 10px 20px;
+  font-size: 18px;
+  line-height: 28px;
+  border-radius: 10px;
+}

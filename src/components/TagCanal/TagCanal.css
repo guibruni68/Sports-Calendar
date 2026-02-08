@@ -1,0 +1,36 @@
+.tagCanal {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  white-space: nowrap;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* Brand colors */
+.tagCanal--getv      { background-color: #6B0CAE; }
+.tagCanal--sportv    { background-color: #2B762B; }
+.tagCanal--espn      { background-color: #C70000; }
+.tagCanal--hbomax    { background-color: #060516; }
+.tagCanal--sbt       { background-color: #0A0663; }
+.tagCanal--premiere  { background-color: #007700; }
+.tagCanal--band      { background-color: #73766E; }
+.tagCanal--record    { background-color: #0910E3; }
+.tagCanal--redetv    { background-color: #097E79; }
+
+/* Hidden/none state */
+.tagCanal--none {
+  visibility: hidden;
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+}

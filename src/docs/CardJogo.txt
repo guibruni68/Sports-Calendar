@@ -1,0 +1,265 @@
+================================================================================
+  CARD JOGO — Component Documentation
+  Figma Source: node 1:6217
+  File: rR7GhfAHOtnPtstmxAMP4G / "Untitled"
+================================================================================
+
+OVERVIEW
+--------
+The Card Jogo component is a match card that displays all key information
+about a sports match: championship name, match tag (derby/final), team logos
+and names, date/time, and broadcast channels. It features a hover state with
+an orange border and composes existing design system components (TagJogo,
+TagCanal).
+
+Component name: CardJogo
+Source file:    src/components/CardJogo/CardJogo.tsx
+Styles file:    src/components/CardJogo/CardJogo.css
+Export:         src/components/CardJogo/index.ts
+
+
+FIGMA DESIGN SPECIFICATIONS
+----------------------------
+
+  Component Set:  "Card Jogo" (COMPONENT_SET)
+  Variants:       Hover (True/False) = 2 defined variants
+
+  ┌─────────────────────────┬────────────────┐
+  │ Property                │ Value          │
+  ├─────────────────────────┼────────────────┤
+  │ Width                   │ 492px (fixed)  │
+  │ Height                  │ 256px (fixed)  │
+  │ Background color        │ #1B1C21        │
+  │ Border radius           │ 10px           │
+  │ Border (default)        │ 4px transparent│
+  │ Border (hover)          │ 4px #ED590D    │
+  │ Overflow                │ hidden         │
+  │ Layout direction        │ vertical       │
+  │ Padding                 │ 20px (all)     │
+  │ Gap                     │ 10px           │
+  │ Hover transition        │ 300ms ease-out │
+  │ Animation type          │ SMART_ANIMATE  │
+  └─────────────────────────┴────────────────┘
+
+
+INTERNAL STRUCTURE
+------------------
+
+  CardJogo
+  ├── Container (vertical flex, padding 20px, gap 10px)
+  │   ├── Header (horizontal, space-between)
+  │   │   ├── Championship Name (text)
+  │   │   └── TagJogo (instance)
+  │   ├── Matchup (vertical, gap 10px)
+  │   │   ├── Team A: [Logo 40px] + [Name text]
+  │   │   └── Team B: [Logo 40px] + [Name text]
+  │   ├── Date/Time (text)
+  │   └── Broadcasts (horizontal, wrap, top border)
+  │       ├── TV Icon (20x20, white 70%)
+  │       └── TagCanal instances...
+
+
+TYPOGRAPHY
+----------
+
+  Championship Name:
+    Font family:   Segoe UI
+    Font weight:   600 (Semibold)
+    Font size:     20px
+    Line height:   25px (125%)
+    Color:         #EA580C (orange)
+
+  Team Name:
+    Font family:   Montserrat
+    Font weight:   400 (Regular)
+    Font size:     16px
+    Line height:   25px
+    Color:         #FFFFFF
+
+  Date/Time:
+    Font family:   Montserrat
+    Font weight:   400 (Regular)
+    Font size:     16px
+    Line height:   20px
+    Color:         rgba(255, 255, 255, 0.7)
+
+
+BROADCAST SECTION
+-----------------
+
+  Layout:         horizontal, flex-wrap
+  Top border:     1px solid rgba(255, 255, 255, 0.1)
+  Padding top:    15px
+  Gap:            10px
+  TV icon:        20x20px, rgba(255, 255, 255, 0.7) stroke
+  Tags:           TagCanal instances (reuses existing component)
+
+
+HOVER BEHAVIOR
+--------------
+
+  Default state:  4px transparent border (reserves space)
+  Hover state:    4px solid #ED590D border
+  Transition:     border-color 300ms ease-out
+  Figma spec:     SMART_ANIMATE, EASE_OUT, 300ms
+
+
+PROPS (TypeScript Interface: CardJogoProps)
+-------------------------------------------
+
+  championship    string              REQUIRED
+    Championship name displayed at the top of the card.
+
+  tagJogo         TagJogoName         DEFAULT: "None"
+    Match tag type: "Clássico" (orange), "Final" (purple), or "None".
+
+  tagJogoText     string              OPTIONAL
+    Custom text for the TagJogo pill. Defaults based on name.
+
+  teamA           TeamInfo            REQUIRED
+    Home team info: { name: string; logoSrc: string }
+
+  teamB           TeamInfo            REQUIRED
+    Away team info: { name: string; logoSrc: string }
+
+  dateTime        string              REQUIRED
+    Date and time string (e.g. "20/03 - 21:30").
+
+  broadcasts      Broadcast[]         DEFAULT: []
+    List of broadcast channels.
+    Each item: { channel: ChannelName; canal?: CanalNumber }
+
+  onClick         () => void          OPTIONAL
+    Callback fired when the card is clicked.
+
+
+EXPORTED TYPES
+--------------
+
+  CardJogoProps   Interface for component props
+  TeamInfo        Interface: { name: string; logoSrc: string }
+  Broadcast       Interface: { channel: ChannelName; canal?: CanalNumber }
+
+
+USAGE EXAMPLES
+--------------
+
+1. Basic match card:
+
+   import { CardJogo } from "./components/CardJogo";
+
+   <CardJogo
+     championship="Paulistão"
+     tagJogo="Clássico"
+     teamA={{ name: "Corinthians", logoSrc: corinthiansLogo }}
+     teamB={{ name: "Ponte Preta", logoSrc: pontePretaLogo }}
+     dateTime="20/03 - 21:30"
+     broadcasts={[
+       { channel: "GE TV", canal: "1" },
+       { channel: "SporTV", canal: "1" },
+       { channel: "Premiere", canal: "1" },
+       { channel: "Premiere", canal: "2" },
+       { channel: "Premiere", canal: "3" },
+     ]}
+   />
+
+2. Without match tag:
+
+   <CardJogo
+     championship="Champions League"
+     teamA={{ name: "Barcelona", logoSrc: barcelonaLogo }}
+     teamB={{ name: "Bayern", logoSrc: bayernLogo }}
+     dateTime="08/04 - 16:00"
+     broadcasts={[{ channel: "SBT", canal: "1" }]}
+   />
+
+3. With click handler:
+
+   <CardJogo
+     championship="Brasileirão"
+     tagJogo="Final"
+     teamA={{ name: "Flamengo", logoSrc: flamengoLogo }}
+     teamB={{ name: "Palmeiras", logoSrc: palmeirasLogo }}
+     dateTime="15/12 - 16:00"
+     onClick={() => navigate("/match/123")}
+   />
+
+4. Minimal card (no broadcasts, no tag):
+
+   <CardJogo
+     championship="Copa do Brasil"
+     teamA={{ name: "São Paulo", logoSrc: saoPauloLogo }}
+     teamB={{ name: "Grêmio", logoSrc: gremioLogo }}
+     dateTime="10/07 - 19:00"
+   />
+
+
+DESIGN TOKENS
+-------------
+
+  Colors:
+    --card-jogo-bg:               #1B1C21
+    --card-jogo-hover-border:     #ED590D
+    --card-jogo-championship:     #EA580C
+    --card-jogo-team-name:        #FFFFFF
+    --card-jogo-datetime:         rgba(255, 255, 255, 0.7)
+    --card-jogo-broadcast-border: rgba(255, 255, 255, 0.1)
+    --card-jogo-tv-icon:          rgba(255, 255, 255, 0.7)
+
+  Typography:
+    Championship:   Segoe UI Semibold 20px / 25px
+    Team name:      Montserrat Regular 16px / 25px
+    Date/time:      Montserrat Regular 16px / 20px
+
+  Spacing:
+    Card width:     492px
+    Card height:    256px
+    Padding:        20px
+    Section gap:    10px
+    Team logo:      40 x 40px
+    Broadcast gap:  10px
+    Broadcast top:  15px padding
+
+  Border:
+    Radius:         10px
+    Hover width:    4px (inside)
+    Transition:     300ms ease-out
+
+  Composed Components:
+    TagJogo:        src/components/TagJogo/
+    TagCanal:       src/components/TagCanal/
+
+
+ACCESSIBILITY
+-------------
+  - Card renders as a <div> by default; when onClick is provided, it gets
+    role="button" and tabIndex={0} for keyboard access
+  - Team logos have alt text set to team name
+  - TV icon is decorative (inline SVG)
+  - TagCanal and TagJogo inherit their own accessibility features
+
+
+FILE STRUCTURE
+--------------
+
+  src/
+  ├── components/
+  │   ├── CardJogo/
+  │   │   ├── CardJogo.tsx        # Component with internal layout
+  │   │   ├── CardJogo.css        # Card styles + hover transition
+  │   │   └── index.ts            # Named exports + type exports
+  │   ├── TagJogo/                # Composed component (match tag)
+  │   └── TagCanal/               # Composed component (channel tag)
+  ├── pages/
+  │   ├── ComponentShowcase.tsx   # Showcase with CardJogo tab
+  │   └── ComponentShowcase.css
+  ├── assets/
+  │   ├── corinthians-logo.png
+  │   ├── ponte-preta-logo.png
+  │   └── reference/
+  │       ├── card-jogo-default.png
+  │       └── card-jogo-hover.png
+  └── docs/
+      └── CardJogo.txt            # This file
+
+================================================================================
