@@ -1,0 +1,55 @@
+.clubeBall {
+  width: 124px;
+  height: 124px;
+  border-radius: 104px;
+  background-color: #1B1C21;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease-out;
+  box-sizing: border-box;
+  overflow: hidden;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.clubeBall:hover {
+  border-color: #EA580C;
+}
+
+.clubeBall.selected {
+  border-color: #EA580C;
+}
+
+.clubeBall__logo {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Size variants */
+.clubeBall--sm {
+  width: 80px;
+  height: 80px;
+  border-radius: 68px;
+}
+
+.clubeBall--sm .clubeBall__logo {
+  width: 56px;
+  height: 56px;
+}
+
+.clubeBall--lg {
+  width: 164px;
+  height: 164px;
+  border-radius: 140px;
+  border-width: 3px;
+}
+
+.clubeBall--lg .clubeBall__logo {
+  width: 116px;
+  height: 116px;
+}

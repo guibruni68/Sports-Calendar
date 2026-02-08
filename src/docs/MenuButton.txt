@@ -1,0 +1,131 @@
+MENU BUTTON COMPONENT
+=====================
+Figma Node: 1:6073
+Component Set: "Menu Button"
+Type: COMPONENT_SET
+
+OVERVIEW
+--------
+Navigation menu button with inline SVG icons. Supports 10 named variants
+across three categories: Sports (6), Navigation (3), and Sidebar (1).
+Features hover and active states with a smooth color transition from
+gray to orange.
+
+VARIANT PROPERTIES
+------------------
+Name (10 options):
+  Sports:     Futebol, Basquete, Hóquei, Futebol Americano, Automobilismo, Beisebol
+  Navigation: Home, Onde Assistir, Calendário
+  Sidebar:    (icon only, no text)
+
+Hover: True / False
+Clicked: True / False
+
+Total variants: 10 × 2 × 2 = 40 (24 unique excluding redundant hover+clicked combos)
+
+LAYOUT
+------
+- Display: inline-flex
+- Align: center
+- Gap: 8px (between icon and text)
+- Icon size: 24×24px (Sidebar: 20×20px)
+- Width: fit-content (HUG)
+- Height: content-based
+
+COLOR TOKENS
+------------
+Default:       #A4A4A4 (gray)
+Hover/Active:  #EA580C (orange)
+
+TYPOGRAPHY — SPORTS
+-------------------
+Font Family:    Inter
+Font Weight:    400 (Regular)
+Font Size:      14px
+Line Height:    17px (auto)
+Text Transform: UPPERCASE
+
+TYPOGRAPHY — NAVIGATION
+-----------------------
+Font Family:    Inter
+Font Weight:    400 (Regular), Home uses 500 (Medium)
+Font Size:      16px
+Line Height:    19px (auto)
+Text Transform: none (mixed case)
+
+ANIMATION
+---------
+Transition: color 300ms ease-out
+Figma Interaction: ON_HOVER → SMART_ANIMATE, EASE_OUT, 300ms
+
+ICONS (inline SVG, fill="currentColor")
+----------------------------------------
+Futebol:           sports_soccer (20×20 content in 24×24 frame)
+Basquete:          sports_basketball (20×20 content in 24×24 frame)
+Hóquei:            ice_skating (21×19 content in 24×24 frame)
+Futebol Americano: sports_football (20×20 content in 24×24 frame)
+Automobilismo:     sports_score / racing flag (14×16 content in 24×24 frame)
+Beisebol:          sports_baseball (20×20 content in 24×24 frame)
+Home:              home (20×22 content in 24×24 frame)
+Onde Assistir:     videocam / TV play (24×24 full frame)
+Calendário:        calendar_today (18×20 content in 24×24 frame)
+Sidebar:           dock_to_left (20×20, standalone)
+
+PROPS (TypeScript)
+------------------
+name:     MenuButtonName (required)
+          "Futebol" | "Basquete" | "Hóquei" | "Futebol Americano" |
+          "Automobilismo" | "Beisebol" | "Home" | "Onde Assistir" |
+          "Calendário" | "Sidebar"
+active:   boolean (default: false)
+onClick:  () => void (optional)
+
+EXPORTED TYPES
+--------------
+MenuButtonName  — union of all 10 variant names
+MenuButtonProps — { name, active?, onClick? }
+
+CSS CLASSES
+-----------
+.menuButton                     — base button
+.menuButton--sport              — sport variant modifier
+.menuButton--nav                — navigation variant modifier
+.menuButton--sidebar            — sidebar variant modifier (icon-only)
+.menuButton--home               — Home weight override (500)
+.menuButton--active             — active/clicked state
+.menuButton__icon               — SVG icon element
+.menuButton__label              — text label span
+
+FILE STRUCTURE
+--------------
+src/components/MenuButton/
+  MenuButton.tsx   — component + types + inline SVG icon data
+  MenuButton.css   — styles with sport/nav/sidebar variants
+  index.ts         — public exports
+
+DEPENDENCIES
+------------
+- Inter font (400, 500) loaded via Google Fonts in index.html
+- No external component dependencies
+
+USAGE EXAMPLES
+--------------
+// Basic sport button
+<MenuButton name="Futebol" />
+
+// Active state
+<MenuButton name="Home" active onClick={() => navigate("/")} />
+
+// Navigation group
+const [active, setActive] = useState("Home");
+{["Home", "Onde Assistir", "Calendário"].map((name) => (
+  <MenuButton
+    key={name}
+    name={name}
+    active={active === name}
+    onClick={() => setActive(name)}
+  />
+))}
+
+// Sidebar toggle (icon only)
+<MenuButton name="Sidebar" onClick={toggleSidebar} />

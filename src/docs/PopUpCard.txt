@@ -1,0 +1,106 @@
+POPUP CARD
+==========
+Figma node: 1:6258
+Component set: "PopUp Card"
+
+DESCRIPTION
+-----------
+Large featured match card (600 × 441px) with decorative geometric mesh
+background, championship title, two team logos with names, date/time or
+AO VIVO badge, optional tag jogo, and broadcast channel row.
+
+VARIANTS
+--------
+Properties:
+  - Ao Vivo: True | False
+Total: 2 Figma variants
+
+LAYOUT
+------
+Width:              600px
+Height:             441px
+Border Radius:      24px
+Background:         #1B1C21
+Overflow:           hidden
+Layout:             Absolute positioning (no auto-layout on root)
+
+LOOPER BG (Decorative Mesh)
+----------------------------
+Position:           absolute, left: -87px, top: 0
+Size:               662 × 441px
+Group Opacity:      0.45
+Polygons:           70 regular polygons
+Stroke:             Linear gradient purple (#6B0CAE) → orange (#EA580C)
+Polygon opacities:  Progressive 0.0 → 1.0 across all 70 polygons
+Exported as:        PNG image (looper-bg.png)
+
+COLORS
+------
+Card Background:         #1B1C21
+Championship Title:      #EA580C
+Team Names:              #FFFFFF
+Score Date Text:         #FFFFFF
+AO VIVO Badge BG:        #C5023C
+AO VIVO Badge Text:      #FAFAFA
+
+TYPOGRAPHY
+----------
+Championship:   Montserrat Alternates 700 36px / 44px line-height, #EA580C
+Team Name:      Montserrat Alternates 700 24px / 29px line-height, #FFFFFF
+Game Date:      Inter 600 22px / 27px line-height, #FFFFFF
+AO VIVO:        Roboto 700 22px / 29px line-height, #FAFAFA
+
+TEAM LOGOS
+----------
+Size:               164 × 164px
+Border Radius:      50% (circle)
+Background:         #FFFFFF
+Object Fit:         contain
+
+AO VIVO BADGE
+-------------
+Background:         #C5023C
+Padding:            5px 15px
+Border Radius:      7px
+
+CHANNELS ROW
+------------
+Direction:          Horizontal
+Gap:                12px
+Padding:            13px 0
+
+PROPS
+-----
+championship    string       required    Championship name
+homeLogo        string       required    Home team logo URL
+homeName        string       required    Home team name
+awayLogo        string       required    Away team logo URL
+awayName        string       required    Away team name
+aoVivo          boolean      false       Show AO VIVO badge
+gameDate        string       "27/01 19:00"  Date/time string
+tagJogo         ReactNode    —           Tag Jogo element
+channels        ReactNode    —           Channel tags row
+
+CSS CLASSES
+-----------
+.popUpCard                   Outer container
+.popUpCard__looper           Decorative mesh background image
+.popUpCard__championship     Championship title
+.popUpCard__teams            Teams row (home + center + away)
+.popUpCard__team             Individual team column
+.popUpCard__logo             Team logo (164px circle)
+.popUpCard__teamName         Team name text
+.popUpCard__center           Center column (score/live/tag)
+.popUpCard__score            Date/time text
+.popUpCard__live             AO VIVO badge
+.popUpCard__tagJogo          Tag Jogo wrapper
+.popUpCard__channels         Bottom broadcast row
+
+FILES
+-----
+src/components/PopUpCard/PopUpCard.tsx
+src/components/PopUpCard/PopUpCard.css
+src/components/PopUpCard/index.ts
+src/assets/looper-bg.png
+src/assets/reference/popup-card-set.png
+src/docs/PopUpCard.txt

@@ -1,0 +1,173 @@
+CARD EVENT COMPONENT
+====================
+Figma Node: 1:6710
+Component Set: "Cards Events"
+Type: COMPONENT_SET
+
+OVERVIEW
+--------
+Sport event card with a colored left bar, match title, and team logos.
+Each sport type (Futebol, Basquete, Hóquei) has a unique color scheme
+for the bar and background. Hover brightens the background to a more
+saturated sport color. Used to display upcoming or live sport events
+in the calendar view.
+
+VARIANT PROPERTIES
+------------------
+Sport (3 options):
+  Futebol, Basquete, Hóquei
+
+Hover: True / False
+
+Total variants: 3 × 2 = 6
+
+LAYOUT
+------
+- Display: inline-flex (horizontal row)
+- Width: 145px
+- Height: 73px
+- Border Radius: 4px
+- Overflow: hidden
+
+Bar (left):
+  - Width: 3px
+  - Height: stretch (fill)
+
+Body (right):
+  - Direction: vertical (column)
+  - Flex: 1
+  - Padding: 4px 6px
+  - Gap: 6px
+
+Teams row:
+  - Direction: horizontal
+  - Gap: 4px
+  - Align: center
+  - Logo size: 26 × 26px
+
+STATE COLORS
+------------
+Futebol:
+  Bar:             #40BD01 (green)
+  Background:      #243223 (dark green)
+  Hover BG:        #306F13 (brighter green)
+
+Basquete:
+  Bar:             #FF0800 (red)
+  Background:      #372023 (dark red)
+  Hover BG:        #591B1D (brighter red)
+
+Hóquei:
+  Bar:             #0077FF (blue)
+  Background:      #1E2B3C (dark blue)
+  Hover BG:        #104C93 (brighter blue)
+
+Text color (all): #FFFFFF
+
+TYPOGRAPHY
+----------
+Title:
+  Font Family:  Segoe UI, sans-serif
+  Font Weight:  600 (Semibold)
+  Font Size:    12px
+  Line Height:  13px
+  Color:        #FFFFFF
+  Overflow:     ellipsis
+
+Separator ("X"):
+  Font Family:  Inter, sans-serif
+  Font Weight:  500 (Medium)
+  Font Size:    12px
+  Line Height:  16px
+  Color:        #FFFFFF
+
+ANIMATION
+---------
+Transition: background-color 300ms ease-out
+Figma Interaction: ON_HOVER → DISSOLVE, EASE_OUT, 300ms
+
+INTERNAL STRUCTURE (Figma)
+--------------------------
+Each variant contains:
+  - Bar (RECTANGLE, 3px, fills with sport color)
+  - Body (FRAME, vertical)
+    - End (TEXT) — match title
+    - Time (FRAME, horizontal)
+      - End (TEXT, hidden) — time "19:00"
+      - Logos (INSTANCE) — home team logo 26×26
+      - X (TEXT) — separator
+      - Logos (INSTANCE) — away team logo 26×26
+
+PROPS (TypeScript)
+------------------
+sport:     CardEventSport (required)
+           "Futebol" | "Basquete" | "Hóquei"
+title:     string (required)
+homeLogo:  string (required — image URL)
+awayLogo:  string (required — image URL)
+onClick:   () => void (optional)
+
+EXPORTED TYPES
+--------------
+CardEventSport — union of 3 sport names
+CardEventProps — { sport, title, homeLogo, awayLogo, onClick? }
+
+CSS CLASSES
+-----------
+.cardEvent           — outer button container
+.cardEvent__bar      — colored left bar
+.cardEvent__body     — vertical content area
+.cardEvent__title    — match title text
+.cardEvent__teams    — horizontal logos + separator row
+.cardEvent__logo     — team logo image (26px)
+.cardEvent__separator — "X" text between logos
+
+CSS CUSTOM PROPERTIES
+---------------------
+--card-bg       — default background color (set via inline style)
+--card-bg-hover — hover background color (set via inline style)
+--card-bar      — bar color (set via inline style)
+
+FILE STRUCTURE
+--------------
+src/components/CardEvent/
+  CardEvent.tsx   — component + types + sport color map
+  CardEvent.css   — layout, typography, hover transition
+  index.ts        — public exports
+
+DEPENDENCIES
+------------
+- Segoe UI font (system font, fallback sans-serif)
+- Inter font (500) loaded via Google Fonts in index.html
+- Team logo images provided via props
+
+USAGE EXAMPLES
+--------------
+// Basic usage
+<CardEvent
+  sport="Futebol"
+  title="Corinthians X Ponte Preta"
+  homeLogo="/logos/corinthians.png"
+  awayLogo="/logos/ponte-preta.png"
+/>
+
+// With click handler
+<CardEvent
+  sport="Basquete"
+  title="Houston Rockets X Denver Nuggets"
+  homeLogo="/logos/rockets.png"
+  awayLogo="/logos/nuggets.png"
+  onClick={() => navigate("/event/123")}
+/>
+
+// All sports
+const events = [
+  { sport: "Futebol", title: "Corinthians X Ponte Preta", ... },
+  { sport: "Basquete", title: "Rockets X Nuggets", ... },
+  { sport: "Hóquei", title: "Kraken X Sabres", ... },
+];
+
+{events.map((ev) => (
+  <CardEvent key={ev.title} sport={ev.sport} title={ev.title}
+    homeLogo={ev.homeLogo} awayLogo={ev.awayLogo} />
+))}

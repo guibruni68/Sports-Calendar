@@ -1,0 +1,119 @@
+SEARCH BAR COMPONENT
+====================
+Figma Node: 1:6694
+Component Set: "Search Bar"
+Type: COMPONENT_SET
+
+OVERVIEW
+--------
+Search input field with a magnifying glass icon and placeholder text.
+Icon and placeholder brighten on hover or focus. Supports controlled input
+for real-time search filtering. Used in the app header for searching
+teams, games, and other content.
+
+VARIANT PROPERTIES
+------------------
+State (3 variants):
+  Default  — idle, no interaction
+  Hover    — mouse over the component
+  Tipping  — input is focused / user is typing
+
+Total variants: 3
+
+LAYOUT
+------
+- Display: inline-flex
+- Align: center
+- Width: 190px
+- Height: 40px (content-driven)
+- Padding: 10px 8px
+- Gap: 8px
+- Border Radius: 6px
+- Box Sizing: border-box
+- Background: #2E3034
+
+STATE COLORS
+------------
+Default:
+  Icon:        #A4A4A4
+  Placeholder: #A4A4A4
+  Input text:  #FFFFFF
+  Background:  #2E3034
+
+Hover / Focus:
+  Icon:        #FFFFFF
+  Placeholder: #FFFFFF
+  Input text:  #FFFFFF
+  Background:  #2E3034
+
+ICON
+----
+Type:     Magnifying glass (search)
+Size:     16 × 16
+Method:   Inline SVG with fill="currentColor"
+Position: Left of input, flex-shrink 0
+
+TYPOGRAPHY
+----------
+Font Family:  Segoe UI, sans-serif
+Font Weight:  400 (Regular)
+Font Size:    16px
+Line Height:  21px
+
+ANIMATION
+---------
+Transition: color 300ms ease-out
+Trigger:    :hover, :focus-within (CSS pseudo-classes)
+Figma Interaction: ON_HOVER → DISSOLVE, EASE_OUT, 300ms
+
+TEXT PROPERTY
+-------------
+Placeholder text is customizable via the "placeholder" prop.
+Default value: "Buscar times, jogos..."
+
+PROPS (TypeScript)
+------------------
+placeholder:  string           (default: "Buscar times, jogos...")
+value:        string           (optional — controlled input)
+onChange:     (value: string) => void  (optional)
+onFocus:     () => void        (optional)
+onBlur:      () => void        (optional)
+
+EXPORTED TYPES
+--------------
+SearchBarProps — { placeholder?, value?, onChange?, onFocus?, onBlur? }
+
+CSS CLASSES
+-----------
+.searchBar           — container with flex layout, background, radius
+.searchBar__icon     — SVG magnifying glass icon
+.searchBar__input    — text input element (no border, no outline)
+
+FILE STRUCTURE
+--------------
+src/components/SearchBar/
+  SearchBar.tsx   — component + types
+  SearchBar.css   — default/hover/focus styles
+  index.ts        — public exports
+
+DEPENDENCIES
+------------
+- Segoe UI font (system font on Windows, fallback sans-serif)
+- No external component dependencies
+
+USAGE EXAMPLES
+--------------
+// Basic usage (uncontrolled)
+<SearchBar />
+
+// Custom placeholder
+<SearchBar placeholder="Pesquisar..." />
+
+// Controlled input
+const [query, setQuery] = useState("");
+<SearchBar
+  value={query}
+  onChange={setQuery}
+  onFocus={() => console.log("focused")}
+  onBlur={() => console.log("blurred")}
+/>

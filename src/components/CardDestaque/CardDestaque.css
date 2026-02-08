@@ -1,0 +1,132 @@
+/* ── Card Destaque ─────────────────────────────────────────────────────── */
+
+.cardDestaque {
+  display: inline-flex;
+  flex-direction: column;
+  background-color: #1b1c21;
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition:
+    border-color 300ms ease-out,
+    border-radius 300ms ease-out;
+}
+
+/* ── Tipo: Jogo ───────────────────────────────────────────────────────── */
+
+.cardDestaque--jogo {
+  width: 272px;
+  height: 116px;
+  border-radius: 0;
+  gap: 8px;
+  padding: 0 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardDestaque--jogo:hover {
+  border-radius: 24px;
+  border-color: #ea580c;
+}
+
+/* ── Tipo: Time / Competição ──────────────────────────────────────────── */
+
+.cardDestaque--time,
+.cardDestaque--competicao {
+  width: 250px;
+  height: 70px;
+  border-radius: 24px;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardDestaque--time:hover,
+.cardDestaque--competicao:hover {
+  border-color: #ea580c;
+}
+
+/* ── Club row ─────────────────────────────────────────────────────────── */
+
+.cardDestaque__club {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cardDestaque--jogo .cardDestaque__club {
+  gap: 8px;
+}
+
+/* ── Logo ─────────────────────────────────────────────────────────────── */
+
+.cardDestaque__logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ── Score pill (game date) ───────────────────────────────────────────── */
+
+.cardDestaque__score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 50px;
+  background-color: rgba(234, 88, 12, 0.1);
+}
+
+.cardDestaque__date {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ea580c;
+  white-space: nowrap;
+}
+
+/* ── AO VIVO badge ────────────────────────────────────────────────────── */
+
+.cardDestaque__live {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: #c5023c;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  color: #fafafa;
+  white-space: nowrap;
+}
+
+/* ── Team / Competition name ──────────────────────────────────────────── */
+
+.cardDestaque__name {
+  font-family: "Lexend", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #ffffff;
+  text-align: left;
+}
+
+/* ── Channels row (Transmissão) ───────────────────────────────────────── */
+
+.cardDestaque__channels {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  justify-content: center;
+}

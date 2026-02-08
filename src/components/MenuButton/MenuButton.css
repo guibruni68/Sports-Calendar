@@ -1,0 +1,52 @@
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #a4a4a4;
+  transition: color 300ms ease-out;
+}
+
+.menuButton:hover,
+.menuButton--active {
+  color: #ea580c;
+}
+
+.menuButton__icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.menuButton--sidebar .menuButton__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.menuButton__label {
+  font-family: "Inter", sans-serif;
+  white-space: nowrap;
+}
+
+/* Sport variants: UPPERCASE, Inter 400 14px */
+.menuButton--sport .menuButton__label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  text-transform: uppercase;
+}
+
+/* Nav variants: Mixed case, Inter 400 16px */
+.menuButton--nav .menuButton__label {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+}
+
+/* Home variant uses medium weight */
+.menuButton--home .menuButton__label {
+  font-weight: 500;
+}

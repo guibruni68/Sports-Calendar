@@ -1,0 +1,150 @@
+================================================================================
+  TAG JOGO — Component Documentation
+  Figma Source: node 1:6586
+  File: rR7GhfAHOtnPtstmxAMP4G / "Untitled"
+================================================================================
+
+OVERVIEW
+--------
+The Tag Jogo component is a pill-shaped badge used to highlight special match
+types in a sports calendar. It supports two visual variants — "Clássico"
+(derby/classic match) with an orange background and "Final" with a purple
+background. Text content is customizable with emoji support.
+
+Component name: TagJogo
+Source file:    src/components/TagJogo/TagJogo.tsx
+Styles file:    src/components/TagJogo/TagJogo.css
+Export:         src/components/TagJogo/index.ts
+
+
+FIGMA DESIGN SPECIFICATIONS
+----------------------------
+
+  Component Set:  "Tag Jogo" (COMPONENT_SET)
+  Variants:       Name (Clássico, Final, None) x Tag (True, False)
+  Text property:  Text#4:4 — overridable, default "⚔️ Clássico!"
+
+  ┌─────────────────────────┬────────────────┬────────────────┬──────────┐
+  │ Property                │ Clássico       │ Final          │ None     │
+  ├─────────────────────────┼────────────────┼────────────────┼──────────┤
+  │ Height                  │ 24px (HUG)     │ 24px (HUG)     │ hidden   │
+  │ Width                   │ fit-content    │ fit-content    │ —        │
+  │ Background color        │ #EA580C        │ #8400DB        │ transp.  │
+  │ Text color              │ #FFFFFF        │ #FFFFFF        │ —        │
+  │ Font family             │ Segoe UI       │ Segoe UI       │ —        │
+  │ Font weight             │ 700 (Bold)     │ 700 (Bold)     │ —        │
+  │ Font size               │ 14px           │ 14px           │ —        │
+  │ Line height             │ 16px           │ 16px           │ —        │
+  │ Padding                 │ 4px 12px       │ 4px 12px       │ —        │
+  │ Border radius           │ 9999px (pill)  │ 9999px (pill)  │ —        │
+  │ Border                  │ none           │ none           │ —        │
+  │ Default text            │ ⚔️ Clássico!   │ 🏆 Final!      │ —        │
+  └─────────────────────────┴────────────────┴────────────────┴──────────┘
+
+  Design token references:
+    - Clássico fill: "builder.io/Christine" (#EA580C)
+    - Text fill: "builder.io/White" (#FFFFFF)
+
+
+PROPS (TypeScript Interface: TagJogoProps)
+------------------------------------------
+
+  name        TagJogoName         REQUIRED
+    The tag type that determines background color and default text.
+    One of: "Clássico" | "Final" | "None"
+
+    - "Clássico" → Orange pill (#EA580C), default text "⚔️ Clássico!"
+    - "Final"    → Purple pill (#8400DB), default text "🏆 Final!"
+    - "None"     → Component returns null (not rendered)
+
+  text        string              OPTIONAL
+    Custom text override. When provided, replaces the default text.
+    Supports emoji characters.
+    Example: "🔥 Derbi!" or "🏆 Grande Final!"
+
+
+EXPORTED TYPES
+--------------
+
+  TagJogoName   "Clássico" | "Final" | "None"
+  TagJogoProps  Interface for component props
+
+
+USAGE EXAMPLES
+--------------
+
+1. Basic with defaults:
+
+   import { TagJogo } from "./components/TagJogo";
+
+   <TagJogo name="Clássico" />   // renders ⚔️ Clássico!
+   <TagJogo name="Final" />      // renders 🏆 Final!
+
+2. Custom text:
+
+   <TagJogo name="Clássico" text="🔥 Derbi!" />
+   <TagJogo name="Final" text="🏆 Grande Final!" />
+
+3. Conditional rendering:
+
+   <TagJogo name={match.isClassico ? "Clássico" : "None"} />
+
+4. In a match card:
+
+   <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+     <TagJogo name="Clássico" />
+     <span>Corinthians vs Palmeiras</span>
+   </div>
+
+
+DESIGN TOKENS
+-------------
+
+  Colors:
+    --tag-jogo-classico-bg:   #EA580C  (rgb 234, 88, 12)
+    --tag-jogo-final-bg:      #8400DB  (rgb 132, 0, 219)
+    --tag-jogo-text:          #FFFFFF
+
+  Typography:
+    Font family:              Segoe UI, Montserrat, system-ui, sans-serif
+    Font weight:              700 (Bold)
+    Font size:                14px
+    Line height:              16px
+    Letter spacing:           0px
+
+  Spacing:
+    Padding:                  4px 12px
+    Height:                   24px (auto from padding + line-height)
+
+  Border:
+    Radius:                   9999px (full pill)
+    Width:                    0 (no border)
+
+
+ACCESSIBILITY
+-------------
+  - Rendered as a <span> element (non-interactive, display-only)
+  - title attribute shows the tag text for tooltip access
+  - When name="None", returns null (no DOM element)
+
+
+FILE STRUCTURE
+--------------
+
+  src/
+  ├── components/
+  │   └── TagJogo/
+  │       ├── TagJogo.tsx         # Component with name variants
+  │       ├── TagJogo.css         # Variant color classes
+  │       └── index.ts            # Named exports + type exports
+  ├── pages/
+  │   ├── ComponentShowcase.tsx   # Showcase with TagJogo tab
+  │   └── ComponentShowcase.css
+  ├── assets/
+  │   └── reference/
+  │       ├── tagjogo-classico.png
+  │       └── tagjogo-final.png
+  └── docs/
+      └── TagJogo.txt             # This file
+
+================================================================================

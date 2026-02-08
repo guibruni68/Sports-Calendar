@@ -1,0 +1,27 @@
+.tagJogo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: none;
+  font-family: "Segoe UI", "Montserrat", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #FFFFFF;
+  white-space: nowrap;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.tagJogo--classico {
+  background-color: #EA580C;
+}
+
+.tagJogo--final {
+  background-color: #8400DB;
+}
