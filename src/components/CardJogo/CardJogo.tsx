@@ -2,6 +2,7 @@ import { TagJogo } from "../TagJogo";
 import type { TagJogoName } from "../TagJogo";
 import { TagCanal } from "../TagCanal";
 import type { ChannelName, CanalNumber } from "../TagCanal";
+import defaultClubLogo from "../../assets/default-club-logo.svg";
 import "./CardJogo.css";
 
 export interface Broadcast {
@@ -85,16 +86,18 @@ export function CardJogo({
           <div className="cardJogo__team">
             <img
               className="cardJogo__teamLogo"
-              src={teamA.logoSrc}
+              src={teamA.logoSrc || defaultClubLogo}
               alt={teamA.name}
+              onError={(e) => { e.currentTarget.src = defaultClubLogo; }}
             />
             <span className="cardJogo__teamName">{teamA.name}</span>
           </div>
           <div className="cardJogo__team">
             <img
               className="cardJogo__teamLogo"
-              src={teamB.logoSrc}
+              src={teamB.logoSrc || defaultClubLogo}
               alt={teamB.name}
+              onError={(e) => { e.currentTarget.src = defaultClubLogo; }}
             />
             <span className="cardJogo__teamName">{teamB.name}</span>
           </div>

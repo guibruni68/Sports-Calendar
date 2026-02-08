@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import defaultClubLogo from "../../assets/default-club-logo.svg";
 import "./CardDestaque.css";
 
 export type CardDestaqueTipo = "Jogo" | "Time" | "Competição";
@@ -50,15 +51,14 @@ export function CardDestaque({
         type="button"
       >
         <div className="cardDestaque__club">
-          {homeLogo && (
-            <img
-              className="cardDestaque__logo"
-              src={homeLogo}
-              alt=""
-              width={56}
-              height={56}
-            />
-          )}
+          <img
+            className="cardDestaque__logo"
+            src={homeLogo || defaultClubLogo}
+            alt=""
+            width={56}
+            height={56}
+            onError={(e) => { e.currentTarget.src = defaultClubLogo; }}
+          />
           {aoVivo ? (
             <span className="cardDestaque__live">AO VIVO</span>
           ) : (
@@ -66,15 +66,14 @@ export function CardDestaque({
               <span className="cardDestaque__date">{gameDate}</span>
             </span>
           )}
-          {awayLogo && (
-            <img
-              className="cardDestaque__logo"
-              src={awayLogo}
-              alt=""
-              width={56}
-              height={56}
-            />
-          )}
+          <img
+            className="cardDestaque__logo"
+            src={awayLogo || defaultClubLogo}
+            alt=""
+            width={56}
+            height={56}
+            onError={(e) => { e.currentTarget.src = defaultClubLogo; }}
+          />
         </div>
         {channels && (
           <div className="cardDestaque__channels">
@@ -93,15 +92,14 @@ export function CardDestaque({
       type="button"
     >
       <div className="cardDestaque__club">
-        {logo && (
-          <img
-            className="cardDestaque__logo"
-            src={logo}
-            alt=""
-            width={56}
-            height={56}
-          />
-        )}
+        <img
+          className="cardDestaque__logo"
+          src={logo || defaultClubLogo}
+          alt=""
+          width={56}
+          height={56}
+          onError={(e) => { e.currentTarget.src = defaultClubLogo; }}
+        />
         <span className="cardDestaque__name">{name}</span>
       </div>
     </button>

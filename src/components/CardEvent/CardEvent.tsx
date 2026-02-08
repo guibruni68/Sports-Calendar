@@ -1,3 +1,4 @@
+import defaultClubLogo from "../../assets/default-club-logo.svg";
 import "./CardEvent.css";
 
 export type CardEventSport = "Futebol" | "Basquete" | "Hóquei";
@@ -52,18 +53,20 @@ export function CardEvent({
         <span className="cardEvent__teams">
           <img
             className="cardEvent__logo"
-            src={homeLogo}
+            src={homeLogo || defaultClubLogo}
             alt=""
             width={26}
             height={26}
+            onError={(e) => { e.currentTarget.src = defaultClubLogo; }}
           />
           <span className="cardEvent__separator">X</span>
           <img
             className="cardEvent__logo"
-            src={awayLogo}
+            src={awayLogo || defaultClubLogo}
             alt=""
             width={26}
             height={26}
+            onError={(e) => { e.currentTarget.src = defaultClubLogo; }}
           />
         </span>
       </span>

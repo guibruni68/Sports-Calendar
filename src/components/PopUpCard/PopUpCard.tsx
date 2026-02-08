@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import looperBg from "../../assets/looper-bg.png";
+import defaultClubLogo from "../../assets/default-club-logo.svg";
 import "./PopUpCard.css";
 
 export interface PopUpCardProps {
@@ -49,10 +50,11 @@ export function PopUpCard({
         <div className="popUpCard__team">
           <img
             className="popUpCard__logo"
-            src={homeLogo}
+            src={homeLogo || defaultClubLogo}
             alt={homeName}
             width={164}
             height={164}
+            onError={(e) => { e.currentTarget.src = defaultClubLogo; }}
           />
           <span className="popUpCard__teamName">{homeName}</span>
         </div>
@@ -69,10 +71,11 @@ export function PopUpCard({
         <div className="popUpCard__team">
           <img
             className="popUpCard__logo"
-            src={awayLogo}
+            src={awayLogo || defaultClubLogo}
             alt={awayName}
             width={164}
             height={164}
+            onError={(e) => { e.currentTarget.src = defaultClubLogo; }}
           />
           <span className="popUpCard__teamName">{awayName}</span>
         </div>
