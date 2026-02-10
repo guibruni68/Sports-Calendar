@@ -1,0 +1,31 @@
+================================================================================
+  CTAButton
+  Figma Node: 1:336
+  File: src/components/CTAButton/CTAButton.tsx
+================================================================================
+
+DESCRIPTION
+  Call-to-action button with golden yellow background and dark text.
+  Used for primary actions like subscription prompts.
+
+PROPS
+  label: string           Required. Button text.
+  onClick?: () => void    Click handler
+  href?: string           Renders as <a> when provided
+
+TOKENS
+  Background:    #f5c451
+  Text:          #000000
+  Hover:         brightness(1.1), scale(1.02)
+  Active:        scale(0.98)
+  Border radius: 6px
+  Font:          Inter 12px weight 500
+  Padding:       8px 16px
+  Transition:    300ms ease-out
+
+CSS CLASSES
+  .ctaButton              Button / anchor element
+
+USAGE
+  <CTAButton label="Quero ser Watch" />
+  <CTAButton label="Subscribe" href="/plans" />

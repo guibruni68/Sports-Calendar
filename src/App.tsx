@@ -1,7 +1,7 @@
-import { ComponentShowcase } from './pages/ComponentShowcase'
+import { HomePage } from './pages/HomePage'
 
 function App() {
-  return <ComponentShowcase />
+  return <HomePage />
 }
 
 export default App

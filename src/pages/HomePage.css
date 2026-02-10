@@ -1,0 +1,359 @@
+/* ─── Home Page Layout ─── */
+.homePage {
+  display: flex;
+  min-height: 100vh;
+  background: #0a0a0b;
+  color: #e4e4e7;
+}
+
+/* ─── Sidebar ─── */
+.homePage__sidebar {
+  width: 283px;
+  min-width: 283px;
+  background: #111113;
+  border-right: 1px solid #1b1c21;
+  padding: 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.homePage__logo {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #a1a1aa;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.homePage__logoAccent {
+  color: #ea580c;
+  font-weight: 700;
+}
+
+.homePage__menuLabel {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #71717a;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.homePage__navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.homePage__divider {
+  height: 3px;
+  background: #1b1c21;
+  border: none;
+  margin: 0;
+}
+
+.homePage__sportsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─── Main Content ─── */
+.homePage__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  padding-bottom: 40px;
+}
+
+/* ─── Header ─── */
+.homePage__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 16px 32px 64px;
+}
+
+.homePage__headerSearch {
+  max-width: 190px;
+}
+
+
+/* ─── Banners Section ─── */
+.homePage__banners {
+  display: flex;
+  gap: 24px;
+  padding: 0 32px;
+  align-items: flex-start;
+}
+
+.homePage__bannerMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.homePage__bannerMain .bannerHero {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 728 / 356;
+}
+
+.homePage__liveGames {
+  width: 301px;
+  min-width: 301px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 356px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #27272a transparent;
+  background: #111113;
+  border: 1px solid #1b1c21;
+  border-radius: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.homePage__liveGames::-webkit-scrollbar {
+  width: 6px;
+}
+
+.homePage__liveGames::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.homePage__liveGames::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+
+.homePage__liveGames::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+.homePage__liveGames > * {
+  flex-shrink: 0;
+}
+
+.homePage__liveGamesTitle {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #e4e4e7;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+/* ─── Match Sections ─── */
+.homePage__matchSection {
+  padding: 24px 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.homePage__sectionDivider {
+  height: 3px;
+  background: #1b1c21;
+  border: none;
+  margin: 0;
+}
+
+/* ─── Carousel Wrapper ─── */
+.homePage__carouselWrapper {
+  position: relative;
+}
+
+.homePage__carousel {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.homePage__carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.homePage__carousel > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* ─── Carousel Arrows ─── */
+.homePage__carouselArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #27272a;
+  background: #18181b;
+  color: #e4e4e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 200ms ease-out, border-color 200ms ease-out;
+}
+
+.homePage__carouselArrow:hover {
+  background: #27272a;
+  border-color: #3f3f46;
+}
+
+.homePage__carouselArrow--left {
+  left: -18px;
+}
+
+.homePage__carouselArrow--right {
+  right: -18px;
+}
+
+/* ─── Footer ─── */
+.homePage__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 32px 0;
+  margin-top: auto;
+}
+
+.homePage__footerLinks {
+  display: flex;
+  gap: 32px;
+}
+
+.homePage__footerLink {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: #a4a4a4;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 300ms ease-out;
+}
+
+.homePage__footerLink:hover {
+  color: #e4e4e7;
+}
+
+.homePage__copyright {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: #a4a4a4;
+}
+
+/* ─── Responsive: Tablet ─── */
+@media (max-width: 1024px) {
+  .homePage__sidebar {
+    width: 72px;
+    min-width: 72px;
+    padding: 24px 12px;
+    align-items: center;
+  }
+
+  .homePage__logo,
+  .homePage__menuLabel {
+    display: none;
+  }
+
+  .homePage__sidebar .menuButton__label {
+    display: none;
+  }
+
+  .homePage__banners {
+    flex-direction: column;
+  }
+
+  .homePage__liveGames {
+    width: 100%;
+    min-width: 0;
+    max-height: none;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 12px;
+  }
+
+  .homePage__liveGames > * {
+    flex-shrink: 0;
+  }
+
+  .homePage__footer {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+/* ─── Responsive: Mobile ─── */
+@media (max-width: 768px) {
+  .homePage__sidebar {
+    display: none;
+  }
+
+  .homePage__header {
+    padding: 12px 16px;
+  }
+
+  .homePage__banners {
+    padding: 0 16px;
+    flex-direction: column;
+  }
+
+  .homePage__bannerMain .bannerHero {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 728 / 356;
+  }
+
+  .homePage__liveGames {
+    width: 100%;
+    min-width: 0;
+    max-height: none;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 12px;
+  }
+
+  .homePage__liveGames > * {
+    flex-shrink: 0;
+  }
+
+  .homePage__matchSection {
+    padding: 16px 16px 0;
+  }
+
+  .homePage__footer {
+    padding: 24px 16px 0;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .homePage__footerLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .homePage__carousel {
+    gap: 16px;
+  }
+}
