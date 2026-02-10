@@ -1,43 +1,69 @@
 .showcase {
+  display: flex;
   min-height: 100vh;
   background-color: #0a0a0b;
   color: #e4e4e7;
   font-family: "Inter", system-ui, -apple-system, sans-serif;
-  padding: 40px;
 }
 
-/* Component nav */
-.showcase__component-nav {
+/* Sidebar */
+.showcase__sidebar {
+  width: 260px;
+  min-width: 260px;
+  background: #111113;
+  border-right: 1px solid #27272a;
+  padding: 24px 0;
   display: flex;
-  gap: 8px;
-  margin-bottom: 32px;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }
 
-.showcase__component-btn {
-  padding: 8px 20px;
-  border-radius: 8px;
-  border: 1px solid #27272a;
-  background: #18181b;
+.showcase__sidebar-header {
+  padding: 0 20px 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #e4e4e7;
+  border-bottom: 1px solid #27272a;
+  margin-bottom: 12px;
+}
+
+.showcase__sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
   color: #71717a;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  width: 100%;
   transition: all 0.2s;
+  border-left: 3px solid transparent;
 }
 
-.showcase__component-btn:hover {
+.showcase__sidebar-item:hover {
   color: #e4e4e7;
-  border-color: #3f3f46;
+  background: rgba(255, 255, 255, 0.04);
 }
 
-.showcase__component-btn--active {
-  background: #EA580C;
-  border-color: #EA580C;
-  color: #ffffff;
+.showcase__sidebar-item--active {
+  color: #EA580C;
+  background: rgba(234, 88, 12, 0.08);
+  border-left-color: #EA580C;
+  font-weight: 600;
 }
 
-.showcase__component-btn--active:hover {
-  border-color: #EA580C;
+/* Main content */
+.showcase__main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
 }
 
 .showcase__header {
@@ -101,6 +127,13 @@
   font-weight: 600;
   margin: 0 0 16px;
   color: #a1a1aa;
+}
+
+/* Hint text */
+.showcase__hint {
+  font-size: 14px;
+  color: #71717a;
+  margin: 0 0 16px;
 }
 
 /* Token grid */

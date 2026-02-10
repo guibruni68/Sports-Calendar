@@ -1,0 +1,205 @@
+================================================================================
+  BANNER HERO — Component Documentation
+  Figma Source: node 53:5921
+  File: rR7GhfAHOtnPtstmxAMP4G / "Untitled"
+================================================================================
+
+OVERVIEW
+--------
+The Banner Hero component is a promotional hero banner that displays a
+full-bleed image with rounded corners. It is used for championship or
+event promotional imagery at the top of pages or within content sections.
+The component supports two size variants and can render as a clickable
+button or an anchor link.
+
+Component name: BannerHero
+Source file:    src/components/BannerHero/BannerHero.tsx
+Styles file:    src/components/BannerHero/BannerHero.css
+Export:         src/components/BannerHero/index.ts
+
+
+FIGMA DESIGN SPECIFICATIONS
+----------------------------
+
+  Component Set:  "Banner Hero" (COMPONENT_SET)
+  Variants:       Size (Default, Mini) = 2 defined variants
+
+  ┌─────────────────────────┬──────────────────────────┐
+  │ Property                │ Value                    │
+  ├─────────────────────────┼──────────────────────────┤
+  │ Width (Default)         │ 728px                    │
+  │ Height (Default)        │ 356px                    │
+  │ Width (Mini)            │ 620px                    │
+  │ Height (Mini)           │ 350px                    │
+  │ Border radius           │ 16px                     │
+  │ Overflow                │ hidden (clipsContent)    │
+  │ Image scale mode        │ FILL (object-fit: cover) │
+  │ Hover transform         │ scale(1.01)              │
+  │ Hover box-shadow        │ 0 8px 24px rgba(0,0,0,4)│
+  │ Transition              │ 300ms ease-out           │
+  └─────────────────────────┴──────────────────────────┘
+
+
+INTERNAL STRUCTURE
+------------------
+
+  BannerHero
+  └── Container (div or a, border-radius 16px, overflow hidden)
+      └── Image (img, object-fit: cover, 100% fill)
+
+
+SIZE VARIANTS
+-------------
+
+  ┌──────────┬──────────┬──────────┐
+  │ Variant  │ Width    │ Height   │
+  ├──────────┼──────────┼──────────┤
+  │ Default  │ 728px    │ 356px    │
+  │ Mini     │ 620px    │ 350px    │
+  └──────────┴──────────┴──────────┘
+
+
+HOVER BEHAVIOR
+--------------
+
+  Default state:  No transform, no shadow
+  Hover state:    scale(1.01) + box-shadow 0 8px 24px rgba(0,0,0,0.4)
+  Transition:     transform 300ms ease-out, box-shadow 300ms ease-out
+
+
+RENDER MODES
+------------
+
+  The component renders differently based on the props provided:
+
+  1. With onClick prop → renders as <div> with role="button" and tabIndex
+  2. With href prop   → renders as <a> with target="_blank" rel="noopener"
+  3. No interaction   → renders as plain <div>
+
+  Priority: href takes precedence over onClick when both are provided.
+
+
+PROPS (TypeScript Interface: BannerHeroProps)
+----------------------------------------------
+
+  imageSrc    string              REQUIRED
+    The banner image source URL. The image fills the container using
+    object-fit: cover, matching Figma's FILL scale mode.
+
+  alt         string              DEFAULT: "Banner"
+    Alt text for the banner image. Used for accessibility.
+
+  size        BannerHeroSize      DEFAULT: "Default"
+    Size variant. One of: "Default" | "Mini"
+    - "Default": 728x356px
+    - "Mini": 620x350px
+
+  onClick     () => void          OPTIONAL
+    Click handler. When provided, the container renders as a div with
+    role="button" and tabIndex={0} for keyboard access.
+
+  href        string              OPTIONAL
+    Link URL. When provided, the container renders as an <a> element
+    with target="_blank" and rel="noopener noreferrer".
+
+
+EXPORTED TYPES
+--------------
+
+  BannerHeroProps  Interface for component props
+  BannerHeroSize   Union type: "Default" | "Mini"
+
+
+USAGE EXAMPLES
+--------------
+
+1. Default size with click handler:
+
+   import { BannerHero } from "./components/BannerHero";
+
+   <BannerHero
+     imageSrc="/banners/brasileirao.png"
+     alt="Brasileirão Premiere"
+     onClick={() => navigate("/brasileirao")}
+   />
+
+2. Mini size:
+
+   <BannerHero
+     imageSrc="/banners/brasileirao.png"
+     alt="Brasileirão Premiere"
+     size="Mini"
+   />
+
+3. As a link:
+
+   <BannerHero
+     imageSrc="/banners/brasileirao.png"
+     alt="Brasileirão Premiere"
+     href="https://ge.globo.com/brasileirao"
+   />
+
+4. Minimal (no interaction):
+
+   <BannerHero
+     imageSrc="/banners/brasileirao.png"
+     alt="Brasileirão Premiere"
+   />
+
+
+DESIGN TOKENS
+-------------
+
+  Dimensions:
+    --banner-hero-width-default:     728px
+    --banner-hero-height-default:    356px
+    --banner-hero-width-mini:        620px
+    --banner-hero-height-mini:       350px
+
+  Border:
+    --banner-hero-radius:            16px
+
+  Image:
+    object-fit:                      cover
+    overflow:                        hidden
+    pointer-events:                  none (on img element)
+    draggable:                       false
+
+  Hover:
+    transform:                       scale(1.01)
+    box-shadow:                      0 8px 24px rgba(0, 0, 0, 0.4)
+    transition:                      300ms ease-out
+
+
+ACCESSIBILITY
+-------------
+  - When onClick is provided: renders as <div> with role="button" and
+    tabIndex={0} for keyboard navigation
+  - When href is provided: renders as <a> with target="_blank" and
+    rel="noopener noreferrer" for secure external linking
+  - Image has alt text for screen readers
+  - Image is non-draggable (draggable={false}) to prevent accidental drags
+
+
+FILE STRUCTURE
+--------------
+
+  src/
+  ├── components/
+  │   └── BannerHero/
+  │       ├── BannerHero.tsx        # Component with size variants
+  │       ├── BannerHero.css        # Styles + hover animation
+  │       └── index.ts              # Named exports + type exports
+  ├── pages/
+  │   ├── ComponentShowcase.tsx     # Showcase with BannerHero tab
+  │   └── ComponentShowcase.css
+  ├── assets/
+  │   ├── banner-hero-bg.png        # Demo banner background image
+  │   └── reference/
+  │       ├── banner-hero-set.png   # Full component set from Figma
+  │       ├── banner-hero-default.png
+  │       └── banner-hero-mini.png
+  └── docs/
+      └── BannerHero.txt            # This file
+
+================================================================================

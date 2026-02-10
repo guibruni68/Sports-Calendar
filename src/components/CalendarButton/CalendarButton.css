@@ -1,0 +1,51 @@
+/* ─── Calendar Button ─── */
+.calendarButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ─── Arrow Buttons ─── */
+.calendarButton__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: #1b1c21;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0;
+  transition: background 300ms ease-out;
+}
+
+.calendarButton__arrow:hover {
+  background: #27272a;
+}
+
+/* ─── Center Label ─── */
+.calendarButton__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 12px;
+  background: #1b1c21;
+  border: none;
+  border-left: 1px solid #27272a;
+  border-right: 1px solid #27272a;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 300ms ease-out;
+}
+
+.calendarButton__label:hover {
+  background: #27272a;
+}

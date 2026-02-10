@@ -1,0 +1,37 @@
+================================================================================
+  CalendarButton
+  Figma Node: 1:6043
+  File: src/components/CalendarButton/CalendarButton.tsx
+================================================================================
+
+DESCRIPTION
+  Date navigation control with left/right arrows and a center label.
+  Used to navigate between days in match schedules.
+
+PROPS
+  label?: string          Default: "Hoje"
+  onPrevious?: () => void Left arrow click handler
+  onNext?: () => void     Right arrow click handler
+  onClick?: () => void    Center label click handler
+
+TOKENS
+  Background:    #1b1c21
+  Text/Icons:    #ffffff
+  Hover bg:      #27272a
+  Border:        #27272a (internal dividers)
+  Border radius: 8px (container)
+  Font:          Inter 12px weight 400
+  Size:          116x28px
+  Transition:    300ms ease-out
+
+CSS CLASSES
+  .calendarButton         Container
+  .calendarButton__arrow  Arrow buttons (28x28)
+  .calendarButton__label  Center label button
+
+USAGE
+  <CalendarButton
+    label="Hoje"
+    onPrevious={() => console.log("prev")}
+    onNext={() => console.log("next")}
+  />
