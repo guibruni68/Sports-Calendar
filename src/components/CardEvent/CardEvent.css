@@ -39,7 +39,7 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 13px;
-  color: #ffffff;
+  color: var(--color-text-primary);
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -66,5 +66,5 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }

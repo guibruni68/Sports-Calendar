@@ -2,16 +2,16 @@
 .homePage {
   display: flex;
   min-height: 100vh;
-  background: #0a0a0b;
-  color: #e4e4e7;
+  background: var(--color-bg-base);
+  color: var(--color-text-secondary);
 }
 
 /* ─── Sidebar ─── */
 .homePage__sidebar {
   width: 283px;
   min-width: 283px;
-  background: #111113;
-  border-right: 1px solid #1b1c21;
+  background: var(--color-bg-surface-1);
+  border-right: 1px solid var(--color-bg-surface-3);
   padding: 24px 24px;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,7 @@
   font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #a1a1aa;
+  color: var(--color-text-muted);
   letter-spacing: 1px;
   display: flex;
   align-items: center;
@@ -34,7 +34,7 @@
 }
 
 .homePage__logoAccent {
-  color: #ea580c;
+  color: var(--color-primary);
   font-weight: 700;
 }
 
@@ -42,7 +42,7 @@
   font-family: "Inter", sans-serif;
   font-size: 11px;
   font-weight: 500;
-  color: #71717a;
+  color: var(--color-text-disabled);
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
@@ -55,7 +55,7 @@
 
 .homePage__divider {
   height: 3px;
-  background: #1b1c21;
+  background: var(--color-bg-surface-3);
   border: none;
   margin: 0;
 }
@@ -117,9 +117,9 @@
   max-height: 356px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #27272a transparent;
-  background: #111113;
-  border: 1px solid #1b1c21;
+  scrollbar-color: var(--color-bg-surface-4) transparent;
+  background: var(--color-bg-surface-1);
+  border: 1px solid var(--color-bg-surface-3);
   border-radius: 16px;
   padding: 16px;
   box-sizing: border-box;
@@ -134,12 +134,12 @@
 }
 
 .homePage__liveGames::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: var(--color-bg-surface-4);
   border-radius: 3px;
 }
 
 .homePage__liveGames::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: var(--color-border-strong);
 }
 
 .homePage__liveGames > * {
@@ -150,7 +150,7 @@
   font-family: "Segoe UI", sans-serif;
   font-size: 16px;
   font-weight: 600;
-  color: #e4e4e7;
+  color: var(--color-text-secondary);
   margin: 0 0 8px;
   text-align: center;
 }
@@ -165,7 +165,7 @@
 
 .homePage__sectionDivider {
   height: 3px;
-  background: #1b1c21;
+  background: var(--color-bg-surface-3);
   border: none;
   margin: 0;
 }
@@ -201,9 +201,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid #27272a;
-  background: #18181b;
-  color: #e4e4e7;
+  border: 1px solid var(--color-border-default);
+  background: var(--color-bg-surface-2);
+  color: var(--color-text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -213,8 +213,8 @@
 }
 
 .homePage__carouselArrow:hover {
-  background: #27272a;
-  border-color: #3f3f46;
+  background: var(--color-bg-surface-4);
+  border-color: var(--color-border-strong);
 }
 
 .homePage__carouselArrow--left {
@@ -242,20 +242,20 @@
 .homePage__footerLink {
   font-family: "Inter", sans-serif;
   font-size: 13px;
-  color: #a4a4a4;
+  color: var(--color-text-muted-2);
   text-decoration: none;
   cursor: pointer;
   transition: color 300ms ease-out;
 }
 
 .homePage__footerLink:hover {
-  color: #e4e4e7;
+  color: var(--color-text-secondary);
 }
 
 .homePage__copyright {
   font-family: "Inter", sans-serif;
   font-size: 13px;
-  color: #a4a4a4;
+  color: var(--color-text-muted-2);
 }
 
 /* ─── Responsive: Tablet ─── */

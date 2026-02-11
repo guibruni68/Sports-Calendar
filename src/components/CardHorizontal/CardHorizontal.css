@@ -9,13 +9,13 @@
   cursor: pointer;
   display: block;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border-subtle);
   transition: transform 300ms ease-out, box-shadow 300ms ease-out;
 }
 
 .cardHorizontal:hover {
   transform: scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 24px var(--color-shadow);
 }
 
 /* ─── Image ─── */
@@ -34,9 +34,9 @@
   left: 12px;
   padding: 4px 12px;
   border-radius: 4px;
-  border-left: 3px solid #ea580c;
-  background: linear-gradient(135deg, #7c5cbf 0%, #d97766 100%);
-  color: #ffffff;
+  border-left: 3px solid var(--color-primary);
+  background: linear-gradient(135deg, var(--color-gradient-start) 0%, var(--color-gradient-end) 100%);
+  color: var(--color-text-primary);
   font-family: "Inter", sans-serif;
   font-size: 12px;
   font-weight: 700;

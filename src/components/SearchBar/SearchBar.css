@@ -4,27 +4,27 @@
   gap: 8px;
   padding: 10px 8px;
   border-radius: 6px;
-  background-color: #2e3034;
+  background-color: var(--color-bg-surface-5);
   width: 190px;
   box-sizing: border-box;
 }
 
 .searchBar__icon {
   flex-shrink: 0;
-  color: #a4a4a4;
+  color: var(--color-text-muted-2);
   transition: color 300ms ease-out;
 }
 
 .searchBar:hover .searchBar__icon,
 .searchBar:focus-within .searchBar__icon {
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .searchBar__input {
   background: none;
   border: none;
   outline: none;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-family: "Segoe UI", sans-serif;
   font-weight: 400;
   font-size: 16px;
@@ -34,11 +34,11 @@
 }
 
 .searchBar__input::placeholder {
-  color: #a4a4a4;
+  color: var(--color-text-muted-2);
   transition: color 300ms ease-out;
 }
 
 .searchBar:hover .searchBar__input::placeholder,
 .searchBar:focus-within .searchBar__input::placeholder {
-  color: #ffffff;
+  color: var(--color-text-primary);
 }

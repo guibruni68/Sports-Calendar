@@ -5,8 +5,8 @@
   padding: 8px 16px;
   border-radius: 8px;
   border: none;
-  background-color: #1B1C21;
-  color: #FFFFFF;
+  background-color: var(--color-bg-surface-3);
+  color: var(--color-text-primary);
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -22,11 +22,11 @@
 }
 
 .filtroCampeonatos:hover {
-  background-color: #EA580C;
+  background-color: var(--color-primary);
 }
 
 .filtroCampeonatos.active {
-  background-color: #EA580C;
+  background-color: var(--color-primary);
 }
 
 /* Size variants */

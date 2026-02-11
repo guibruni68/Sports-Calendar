@@ -6,13 +6,13 @@
   border: none;
   padding: 0;
   cursor: pointer;
-  color: #a4a4a4;
+  color: var(--color-text-muted-2);
   transition: color 300ms ease-out;
 }
 
 .menuButton:hover,
 .menuButton--active {
-  color: #ea580c;
+  color: var(--color-primary);
 }
 
 .menuButton__icon {
