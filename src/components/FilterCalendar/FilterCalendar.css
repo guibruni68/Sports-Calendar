@@ -5,8 +5,8 @@
   padding: 4px 16px;
   border: none;
   border-radius: 8px;
-  background-color: #303030;
-  color: #b9b9b9;
+  background-color: var(--color-bg-surface-6);
+  color: var(--color-text-muted-3);
   font-family: "Inter", sans-serif;
   font-weight: 500;
   font-size: 14px;
@@ -19,12 +19,12 @@
 }
 
 .filterCalendar:hover {
-  background-color: #4f4e4e;
-  color: #ffffff;
+  background-color: var(--color-bg-surface-hover);
+  color: var(--color-text-primary);
 }
 
 .filterCalendar--active {
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .filterCalendar--active:hover {

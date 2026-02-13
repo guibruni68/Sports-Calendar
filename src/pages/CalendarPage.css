@@ -1,0 +1,287 @@
+/* ─── Calendar Page Layout ─── */
+.calendarPage {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-bg-base);
+  color: var(--color-text-secondary);
+}
+
+/* ─── Sidebar (same pattern as HomePage) ─── */
+.calendarPage__sidebar {
+  width: 283px;
+  min-width: 283px;
+  background: var(--color-bg-surface-1);
+  border-right: 1px solid var(--color-bg-surface-3);
+  padding: 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.calendarPage__logo {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 32px;
+}
+
+.calendarPage__logoAccent {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.calendarPage__menuLabel {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-disabled);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.calendarPage__navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.calendarPage__divider {
+  height: 3px;
+  background: var(--color-bg-surface-3);
+  border: none;
+  margin: 0;
+}
+
+.calendarPage__sportsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─── Main Content ─── */
+.calendarPage__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  padding-bottom: 40px;
+}
+
+/* ─── Header ─── */
+.calendarPage__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 16px 32px 64px;
+}
+
+.calendarPage__headerSearch {
+  max-width: 190px;
+}
+
+/* ─── Calendar Section ─── */
+.calendarPage__calendar {
+  flex: 1;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ─── Calendar Header (filters row) ─── */
+.calendarPage__calendarHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.calendarPage__calendarSearch {
+  margin-left: auto;
+  max-width: 184px;
+}
+
+/* ─── Calendar Grid ─── */
+.calendarPage__grid {
+  display: grid;
+  grid-template-columns: 60px repeat(7, 1fr);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ─── Week Days Header ─── */
+.calendarPage__dayHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 8px 12px;
+  background: var(--color-bg-surface-2);
+  border-left: 1px solid var(--color-border-subtle);
+}
+
+.calendarPage__dayHeader:first-of-type {
+  border-left: none;
+}
+
+.calendarPage__dayLabel {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calendarPage__dayNumber {
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+/* Corner cell (top-left empty) */
+.calendarPage__cornerCell {
+  background: var(--color-bg-surface-2);
+}
+
+/* ─── Hour Rows ─── */
+.calendarPage__timeLabel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 6px 8px 0 0;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border-subtle);
+  white-space: nowrap;
+}
+
+.calendarPage__cell {
+  border-top: 1px solid var(--color-border-subtle);
+  border-left: 1px solid var(--color-border-subtle);
+  min-height: 80px;
+  padding: 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: stretch;
+}
+
+.calendarPage__cell .cardEvent {
+  width: 100%;
+  height: auto;
+  min-height: 73px;
+}
+
+/* ─── Footer ─── */
+.calendarPage__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 32px 0;
+  margin-top: auto;
+}
+
+.calendarPage__footerLinks {
+  display: flex;
+  gap: 32px;
+}
+
+.calendarPage__footerLink {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--color-text-muted-2);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 300ms ease-out;
+}
+
+.calendarPage__footerLink:hover {
+  color: var(--color-text-secondary);
+}
+
+.calendarPage__copyright {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--color-text-muted-2);
+}
+
+/* ─── Responsive: Tablet ─── */
+@media (max-width: 1024px) {
+  .calendarPage__sidebar {
+    width: 72px;
+    min-width: 72px;
+    padding: 24px 12px;
+    align-items: center;
+  }
+
+  .calendarPage__logo,
+  .calendarPage__menuLabel {
+    display: none;
+  }
+
+  .calendarPage__sidebar .menuButton__label {
+    display: none;
+  }
+
+  .calendarPage__calendarHeader {
+    gap: 6px;
+  }
+
+  .calendarPage__grid {
+    grid-template-columns: 50px repeat(7, 1fr);
+  }
+
+  .calendarPage__footer {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+/* ─── Responsive: Mobile ─── */
+@media (max-width: 768px) {
+  .calendarPage__sidebar {
+    display: none;
+  }
+
+  .calendarPage__header {
+    padding: 12px 16px;
+  }
+
+  .calendarPage__calendar {
+    padding: 0 16px;
+  }
+
+  .calendarPage__grid {
+    grid-template-columns: 50px repeat(7, minmax(120px, 1fr));
+    overflow-x: auto;
+  }
+
+  .calendarPage__footer {
+    padding: 24px 16px 0;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .calendarPage__footerLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+}

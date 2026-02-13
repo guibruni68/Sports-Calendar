@@ -12,16 +12,16 @@
   line-height: 16px;
   letter-spacing: 0px;
   text-align: center;
-  color: #FFFFFF;
+  color: var(--color-text-primary);
   white-space: nowrap;
   box-sizing: border-box;
   flex-shrink: 0;
 }
 
 .tagJogo--classico {
-  background-color: #EA580C;
+  background-color: var(--color-primary);
 }
 
 .tagJogo--final {
-  background-color: #8400DB;
+  background-color: var(--color-tag-final);
 }

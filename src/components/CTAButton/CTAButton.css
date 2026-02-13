@@ -1,0 +1,28 @@
+/* ─── CTA Button ─── */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 16px;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 6px;
+  color: var(--color-text-primary);
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter 300ms ease-out, transform 300ms ease-out;
+}
+
+.ctaButton:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+
+.ctaButton:active {
+  transform: scale(0.98);
+}

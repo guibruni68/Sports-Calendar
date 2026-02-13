@@ -1,0 +1,76 @@
+:root {
+  /* ── Brand ── */
+  --color-primary: #ED590D;
+  --color-primary-hover: #ED590D;
+
+  /* ── Backgrounds ── */
+  --color-bg-base: #0A0A0B;
+  --color-bg-surface-1: #111113;
+  --color-bg-surface-2: #18181B;
+  --color-bg-surface-3: #1B1C21;
+  --color-bg-surface-4: #27272A;
+  --color-bg-surface-5: #2E3034;
+  --color-bg-surface-6: #303030;
+  --color-bg-surface-hover: #4F4E4E;
+
+  /* ── Text ── */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #E4E4E7;
+  --color-text-tertiary: #FAFAFA;
+  --color-text-muted: #A1A1AA;
+  --color-text-muted-2: #A4A4A4;
+  --color-text-muted-3: #B9B9B9;
+  --color-text-disabled: #71717A;
+
+  /* ── Borders ── */
+  --color-border-default: #27272A;
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-muted: rgba(255, 255, 255, 0.1);
+  --color-border-strong: #3F3F46;
+
+  /* ── Overlay / Shadow ── */
+  --color-overlay-light: rgba(255, 255, 255, 0.04);
+  --color-overlay-primary: rgba(234, 88, 12, 0.08);
+  --color-overlay-primary-strong: rgba(234, 88, 12, 0.1);
+  --color-shadow: rgba(0, 0, 0, 0.4);
+  --color-text-translucent: rgba(255, 255, 255, 0.7);
+
+  /* ── Status ── */
+  --color-live: #C5023C;
+  --color-tag-final: #8400DB;
+
+  /* ── Sport Colors ── */
+  --color-sport-futebol: #40BD01;
+  --color-sport-futebol-bg: #243223;
+  --color-sport-futebol-bg-hover: #306F13;
+  --color-sport-basquete: #FF0800;
+  --color-sport-basquete-bg: #372023;
+  --color-sport-basquete-bg-hover: #591B1D;
+  --color-sport-hockey: #0077FF;
+  --color-sport-hockey-bg: #1E2B3C;
+  --color-sport-hockey-bg-hover: #104C93;
+  --color-sport-futebol-americano: #E11577;
+  --color-sport-automobilismo: #9B18BC;
+  --color-sport-beisebol: #2822DA;
+
+  /* ── Channel Colors ── */
+  --color-channel-getv: #6B0CAE;
+  --color-channel-sportv: #2B762B;
+  --color-channel-espn: #C70000;
+  --color-channel-hbomax: #060516;
+  --color-channel-sbt: #0A0663;
+  --color-channel-premiere: #007700;
+  --color-channel-band: #73766E;
+  --color-channel-record: #0910E3;
+  --color-channel-redetv: #097E79;
+
+  /* ── Gradient ── */
+  --color-gradient-start: #7C5CBF;
+  --color-gradient-end: #D97766;
+
+  /* ── Code Syntax (Showcase) ── */
+  --color-code-keyword: #C084FC;
+  --color-code-string: #4ADE80;
+  --color-code-component: #60A5FA;
+  --color-code-attr: #FBBF24;
+}

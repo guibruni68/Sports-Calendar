@@ -1,0 +1,36 @@
+================================================================================
+  CardHorizontal
+  Figma Node: 1:322
+  File: src/components/CardHorizontal/CardHorizontal.tsx
+================================================================================
+
+DESCRIPTION
+  Full-image card with rounded corners and an optional gradient tag
+  overlay in the top-left corner. Used for content/news cards.
+
+PROPS
+  imageSrc: string        Required. Image source URL.
+  alt?: string            Default: "Card"
+  tag?: string            Default: "NOVO". Set to "" to hide tag.
+  onClick?: () => void    Click handler
+  href?: string           Renders as <a> when provided
+
+TOKENS
+  Size:          400x260px
+  Border radius: 8px
+  Border:        1px rgba(255,255,255, 0.08)
+  Image:         object-fit: cover, 100% fill
+  Tag bg:        linear-gradient(135deg, #7c5cbf, #d97766)
+  Tag border:    3px solid #ea580c (left)
+  Tag text:      #ffffff, Inter 12px weight 700, uppercase
+  Hover:         scale(1.02), box-shadow
+  Transition:    300ms ease-out
+
+CSS CLASSES
+  .cardHorizontal         Container (div or a)
+  .cardHorizontal__image  Full-cover image
+  .cardHorizontal__tag    Gradient overlay tag
+
+USAGE
+  <CardHorizontal imageSrc="/images/news.jpg" tag="NOVO" />
+  <CardHorizontal imageSrc="/images/event.jpg" tag="" />

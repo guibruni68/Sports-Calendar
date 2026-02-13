@@ -1,0 +1,126 @@
+================================================================================
+  HOME PAGE — /Home
+  Figma Node: 1:2368
+  File: src/pages/HomePage.tsx
+================================================================================
+
+PURPOSE
+  Main landing page for the Sports Calendar streaming app. Displays live games,
+  upcoming matches across multiple sports, and featured content.
+
+ENTRY POINT
+  Default page rendered by App.tsx (no routing).
+
+================================================================================
+SECTION BREAKDOWN
+================================================================================
+
+1. SIDEBAR (283px, sticky)
+   ├── Brand Logo: "STREAMING by WATCH"
+   ├── Menu label
+   ├── Navigation: Home (active), Calendário
+   ├── Divider
+   └── Sports: Futebol, Basquete, Futebol Americano, Automobilismo, Beisebol, Hóquei
+   Component: MenuButton (9 instances)
+
+2. HEADER (flex-end aligned)
+   ├── SearchBar (190px max)
+   ├── CTAButton "Quero ser Watch" (new component)
+   └── User profile icon (SVG)
+   Components: SearchBar, CTAButton
+
+3. BANNER SECTION (flex row)
+   ├── BannerHero (Default size, flex: 1)
+   └── Live Games sidebar (301px)
+       ├── "Jogos ao vivo:" heading
+       └── 6x CardDestaque tipo="Jogo"
+   Components: BannerHero, CardDestaque, TagCanal
+
+4. MATCH SECTION 1 — Football/Sports
+   ├── Divider (3px)
+   ├── CalendarButton "Hoje" (new component)
+   └── Carousel (horizontal scroll)
+       ├── FIBA EuroBasket: Itália vs Espanha (27/01 22:00, Clássico)
+       ├── NBA: Memphis Grizzles vs Minnesota Timberwolves (27/01 19:00, Final)
+       ├── Paulistão: Corinthians vs Ponte Preta (27/01 19:00, Clássico)
+       └── Camp. Carioca: Flamengo vs Vasco da Gama (27/01 19:00, Clássico)
+   Components: CalendarButton, CardJogo, TagJogo, TagCanal
+
+5. MATCH SECTION 2 — Mixed Sports
+   └── Carousel
+       ├── NBA: Celtics vs Lakers (27/01 20:30, Clássico)
+       ├── NHL: Seattle Kraken vs Buffalo Sabres (27/01 18:30, Final)
+       ├── Champions League: Chelsea vs Borussia Dortmund (27/01 20:00, Clássico)
+       └── NHL: Maple Leafs vs Pittsburgh Penguins (27/01 23:00, Clássico)
+   Components: CardJogo, TagJogo, TagCanal
+
+6. CONTENT CARDS
+   └── Carousel
+       └── 7x CardHorizontal tag="NOVO" (new component)
+   Component: CardHorizontal
+
+7. FOOTER
+   ├── Links: Terms Of Service, Report Abuse, Privacy & Data Policy
+   └── Copyright: "2026 All Rights Reserved © WatchStats"
+
+================================================================================
+COMPONENTS USED (10 total)
+================================================================================
+
+  Existing (7):
+    - BannerHero        src/components/BannerHero/
+    - CardDestaque      src/components/CardDestaque/
+    - CardJogo          src/components/CardJogo/
+    - TagCanal          src/components/TagCanal/
+    - TagJogo           src/components/TagJogo/ (via CardJogo)
+    - SearchBar         src/components/SearchBar/
+    - MenuButton        src/components/MenuButton/
+
+  New (3):
+    - CalendarButton    src/components/CalendarButton/
+    - CTAButton         src/components/CTAButton/
+    - CardHorizontal    src/components/CardHorizontal/
+
+================================================================================
+RESPONSIVE BEHAVIOR
+================================================================================
+
+  Desktop (>1024px):
+    - Full sidebar (283px)
+    - Banner + live games side by side
+    - Carousels with horizontal scroll
+
+  Tablet (768–1024px):
+    - Sidebar collapses to icon-only (72px)
+    - Labels hidden, icons centered
+    - Banner and live games stack vertically
+    - Live games scroll horizontally
+
+  Mobile (<768px):
+    - Sidebar hidden entirely
+    - Sections use 16px padding
+    - All carousels horizontal scroll
+    - Footer stacks vertically
+
+================================================================================
+NAVIGATION & BEHAVIOR
+================================================================================
+
+  - MenuButton clicks: no routing, visual active state only
+  - CalendarButton: onPrevious / onNext / onClick handlers (not wired)
+  - CardJogo / CardDestaque: onClick handlers (not wired)
+  - SearchBar: controlled input (not wired)
+  - All interactive behavior is prop-ready but not connected to data/routing
+
+================================================================================
+CONSTRAINTS (DO NOT CHANGE)
+================================================================================
+
+  - No new colors — all from existing design tokens
+  - No new layout primitives — flexbox composition only
+  - No CSS Grid for page structure
+  - BEM naming convention (.homePage, .homePage__section)
+  - 300ms ease-out transitions
+  - Dark theme only (#0a0a0b background)
+  - Inter, Segoe UI, Montserrat fonts only
+  - Component internals are not modified

@@ -19,13 +19,13 @@ export interface FilterCalendarProps {
 }
 
 const ACTIVE_COLORS: Record<FilterCalendarName, string> = {
-  Todos: "#EA580C",
-  Futebol: "#40BD01",
-  Basquete: "#FF0800",
-  "Futebol Americano": "#E11577",
-  Automobilismo: "#9B18BC",
-  Beisebol: "#2822DA",
-  Hóquei: "#0077FF",
+  Todos: "var(--color-primary)",
+  Futebol: "var(--color-sport-futebol)",
+  Basquete: "var(--color-sport-basquete)",
+  "Futebol Americano": "var(--color-sport-futebol-americano)",
+  Automobilismo: "var(--color-sport-automobilismo)",
+  Beisebol: "var(--color-sport-beisebol)",
+  Hóquei: "var(--color-sport-hockey)",
 };
 
 export function FilterCalendar({

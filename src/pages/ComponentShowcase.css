@@ -1,43 +1,69 @@
 .showcase {
-  min-height: 100vh;
-  background-color: #0a0a0b;
-  color: #e4e4e7;
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
-  padding: 40px;
-}
-
-/* Component nav */
-.showcase__component-nav {
   display: flex;
-  gap: 8px;
-  margin-bottom: 32px;
+  min-height: 100vh;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-secondary);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
 }
 
-.showcase__component-btn {
-  padding: 8px 20px;
-  border-radius: 8px;
-  border: 1px solid #27272a;
-  background: #18181b;
-  color: #71717a;
+/* Sidebar */
+.showcase__sidebar {
+  width: 260px;
+  min-width: 260px;
+  background: var(--color-bg-surface-1);
+  border-right: 1px solid var(--color-border-default);
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.showcase__sidebar-header {
+  padding: 0 20px 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border-default);
+  margin-bottom: 12px;
+}
+
+.showcase__sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  color: var(--color-text-disabled);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  width: 100%;
   transition: all 0.2s;
+  border-left: 3px solid transparent;
 }
 
-.showcase__component-btn:hover {
-  color: #e4e4e7;
-  border-color: #3f3f46;
+.showcase__sidebar-item:hover {
+  color: var(--color-text-secondary);
+  background: var(--color-overlay-light);
 }
 
-.showcase__component-btn--active {
-  background: #EA580C;
-  border-color: #EA580C;
-  color: #ffffff;
+.showcase__sidebar-item--active {
+  color: var(--color-primary);
+  background: var(--color-overlay-primary);
+  border-left-color: var(--color-primary);
+  font-weight: 600;
 }
 
-.showcase__component-btn--active:hover {
-  border-color: #EA580C;
+/* Main content */
+.showcase__main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
 }
 
 .showcase__header {
@@ -52,7 +78,7 @@
 
 .showcase__header p {
   font-size: 14px;
-  color: #71717a;
+  color: var(--color-text-disabled);
   margin: 0;
 }
 
@@ -60,7 +86,7 @@
 .showcase__tabs {
   display: flex;
   gap: 0;
-  border-bottom: 1px solid #27272a;
+  border-bottom: 1px solid var(--color-border-default);
   margin-bottom: 32px;
 }
 
@@ -68,7 +94,7 @@
   padding: 12px 24px;
   background: none;
   border: none;
-  color: #71717a;
+  color: var(--color-text-disabled);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -77,12 +103,12 @@
 }
 
 .showcase__tab:hover {
-  color: #e4e4e7;
+  color: var(--color-text-secondary);
 }
 
 .showcase__tab--active {
-  color: #EA580C;
-  border-bottom-color: #EA580C;
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
 }
 
 /* Sections */
@@ -100,7 +126,14 @@
   font-size: 16px;
   font-weight: 600;
   margin: 0 0 16px;
-  color: #a1a1aa;
+  color: var(--color-text-muted);
+}
+
+/* Hint text */
+.showcase__hint {
+  font-size: 14px;
+  color: var(--color-text-disabled);
+  margin: 0 0 16px;
 }
 
 /* Token grid */
@@ -111,15 +144,15 @@
 }
 
 .token-card {
-  background: #18181b;
-  border: 1px solid #27272a;
+  background: var(--color-bg-surface-2);
+  border: 1px solid var(--color-border-default);
   border-radius: 12px;
   padding: 16px;
 }
 
 .token-card__label {
   font-size: 12px;
-  color: #71717a;
+  color: var(--color-text-disabled);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 8px;
@@ -136,7 +169,7 @@
   height: 40px;
   border-radius: 8px;
   margin-bottom: 12px;
-  border: 1px solid #27272a;
+  border: 1px solid var(--color-border-default);
 }
 
 /* Styles preview */
@@ -156,7 +189,7 @@
 
 .styles-item__label {
   font-size: 13px;
-  color: #71717a;
+  color: var(--color-text-disabled);
 }
 
 /* Properties table */
@@ -169,9 +202,9 @@
 .props-table th {
   text-align: left;
   padding: 12px 16px;
-  background: #18181b;
-  border-bottom: 1px solid #27272a;
-  color: #a1a1aa;
+  background: var(--color-bg-surface-2);
+  border-bottom: 1px solid var(--color-border-default);
+  color: var(--color-text-muted);
   font-weight: 500;
   font-size: 12px;
   text-transform: uppercase;
@@ -180,22 +213,22 @@
 
 .props-table td {
   padding: 12px 16px;
-  border-bottom: 1px solid #27272a;
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 .props-table code {
-  background: #27272a;
+  background: var(--color-bg-surface-4);
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 13px;
   font-family: "JetBrains Mono", monospace;
-  color: #EA580C;
+  color: var(--color-primary);
 }
 
 /* Interactive demo */
 .demo-area {
-  background: #18181b;
-  border: 1px solid #27272a;
+  background: var(--color-bg-surface-2);
+  border: 1px solid var(--color-border-default);
   border-radius: 16px;
   padding: 40px;
   display: flex;
@@ -217,24 +250,24 @@
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #a1a1aa;
+  color: var(--color-text-muted);
   cursor: pointer;
 }
 
 .demo-controls select,
 .demo-controls input[type="text"] {
-  background: #27272a;
-  border: 1px solid #3f3f46;
+  background: var(--color-bg-surface-4);
+  border: 1px solid var(--color-border-strong);
   border-radius: 8px;
-  color: #e4e4e7;
+  color: var(--color-text-secondary);
   padding: 8px 12px;
   font-size: 14px;
 }
 
 /* Code example */
 .code-block {
-  background: #18181b;
-  border: 1px solid #27272a;
+  background: var(--color-bg-surface-2);
+  border: 1px solid var(--color-border-default);
   border-radius: 12px;
   padding: 20px;
   font-family: "JetBrains Mono", monospace;
@@ -242,21 +275,21 @@
   line-height: 1.6;
   overflow-x: auto;
   white-space: pre;
-  color: #a1a1aa;
+  color: var(--color-text-muted);
 }
 
 .code-block .keyword {
-  color: #c084fc;
+  color: var(--color-code-keyword);
 }
 
 .code-block .string {
-  color: #4ade80;
+  color: var(--color-code-string);
 }
 
 .code-block .component {
-  color: #60a5fa;
+  color: var(--color-code-component);
 }
 
 .code-block .attr {
-  color: #fbbf24;
+  color: var(--color-code-attr);
 }

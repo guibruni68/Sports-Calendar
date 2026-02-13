@@ -20,9 +20,9 @@ const SPORT_COLORS: Record<
   CardEventSport,
   { bar: string; bg: string; bgHover: string }
 > = {
-  Futebol: { bar: "#40BD01", bg: "#243223", bgHover: "#306F13" },
-  Basquete: { bar: "#FF0800", bg: "#372023", bgHover: "#591B1D" },
-  Hóquei: { bar: "#0077FF", bg: "#1E2B3C", bgHover: "#104C93" },
+  Futebol: { bar: "var(--color-sport-futebol)", bg: "var(--color-sport-futebol-bg)", bgHover: "var(--color-sport-futebol-bg-hover)" },
+  Basquete: { bar: "var(--color-sport-basquete)", bg: "var(--color-sport-basquete-bg)", bgHover: "var(--color-sport-basquete-bg-hover)" },
+  Hóquei: { bar: "var(--color-sport-hockey)", bg: "var(--color-sport-hockey-bg)", bgHover: "var(--color-sport-hockey-bg-hover)" },
 };
 
 export function CardEvent({

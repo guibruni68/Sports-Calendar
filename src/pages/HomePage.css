@@ -1,0 +1,371 @@
+/* ─── Home Page Layout ─── */
+.homePage {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-bg-base);
+  color: var(--color-text-secondary);
+}
+
+/* ─── Sidebar ─── */
+.homePage__sidebar {
+  width: 283px;
+  min-width: 283px;
+  background: var(--color-bg-surface-1);
+  border-right: 1px solid var(--color-bg-surface-3);
+  padding: 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.homePage__logo {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 32px;
+}
+
+.homePage__logoAccent {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.homePage__menuLabel {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-disabled);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.homePage__navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.homePage__divider {
+  height: 3px;
+  background: var(--color-bg-surface-3);
+  border: none;
+  margin: 0;
+}
+
+.homePage__sportsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─── Main Content ─── */
+.homePage__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  padding-bottom: 40px;
+}
+
+/* ─── Header ─── */
+.homePage__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 16px 32px 64px;
+}
+
+.homePage__headerSearch {
+  max-width: 190px;
+}
+
+
+/* ─── Banners Section ─── */
+.homePage__banners {
+  display: grid;
+  grid-template-columns: 1fr 301px;
+  gap: 24px;
+  padding: 0 32px;
+}
+
+.homePage__bannerMain {
+  min-width: 0;
+}
+
+.homePage__bannerMain .bannerHero {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 728 / 356;
+}
+
+.homePage__liveGamesWrapper {
+  position: relative;
+}
+
+.homePage__liveGames {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-bg-surface-4) transparent;
+  background: var(--color-bg-surface-1);
+  border: 1px solid var(--color-bg-surface-3);
+  border-radius: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.homePage__liveGames::-webkit-scrollbar {
+  width: 6px;
+}
+
+.homePage__liveGames::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.homePage__liveGames::-webkit-scrollbar-thumb {
+  background: var(--color-bg-surface-4);
+  border-radius: 3px;
+}
+
+.homePage__liveGames::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-strong);
+}
+
+.homePage__liveGames > * {
+  flex-shrink: 0;
+}
+
+.homePage__liveGamesTitle {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+/* ─── Match Sections ─── */
+.homePage__matchSection {
+  padding: 24px 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.homePage__sectionDivider {
+  height: 3px;
+  background: var(--color-bg-surface-3);
+  border: none;
+  margin: 0;
+}
+
+/* ─── Carousel Wrapper ─── */
+.homePage__carouselWrapper {
+  position: relative;
+}
+
+.homePage__carousel {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.homePage__carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.homePage__carousel > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* ─── Carousel Arrows ─── */
+.homePage__carouselArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-default);
+  background: var(--color-bg-surface-2);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 200ms ease-out, border-color 200ms ease-out;
+}
+
+.homePage__carouselArrow:hover {
+  background: var(--color-bg-surface-4);
+  border-color: var(--color-border-strong);
+}
+
+.homePage__carouselArrow--left {
+  left: -18px;
+}
+
+.homePage__carouselArrow--right {
+  right: -18px;
+}
+
+/* ─── Footer ─── */
+.homePage__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 32px 0;
+  margin-top: auto;
+}
+
+.homePage__footerLinks {
+  display: flex;
+  gap: 32px;
+}
+
+.homePage__footerLink {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--color-text-muted-2);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 300ms ease-out;
+}
+
+.homePage__footerLink:hover {
+  color: var(--color-text-secondary);
+}
+
+.homePage__copyright {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--color-text-muted-2);
+}
+
+/* ─── Responsive: Tablet ─── */
+@media (max-width: 1024px) {
+  .homePage__sidebar {
+    width: 72px;
+    min-width: 72px;
+    padding: 24px 12px;
+    align-items: center;
+  }
+
+  .homePage__logo,
+  .homePage__menuLabel {
+    display: none;
+  }
+
+  .homePage__sidebar .menuButton__label {
+    display: none;
+  }
+
+  .homePage__banners {
+    grid-template-columns: 1fr;
+  }
+
+  .homePage__liveGamesWrapper {
+    position: static;
+  }
+
+  .homePage__liveGames {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    overflow: visible;
+    justify-items: center;
+  }
+
+  .homePage__liveGamesTitle {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .homePage__footer {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+/* ─── Responsive: Mobile ─── */
+@media (max-width: 768px) {
+  .homePage__sidebar {
+    display: none;
+  }
+
+  .homePage__header {
+    padding: 12px 16px;
+  }
+
+  .homePage__banners {
+    padding: 0 16px;
+    grid-template-columns: 1fr;
+  }
+
+  .homePage__bannerMain .bannerHero {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 728 / 356;
+  }
+
+  .homePage__liveGamesWrapper {
+    position: static;
+  }
+
+  .homePage__liveGames {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    overflow: visible;
+    justify-items: center;
+  }
+
+  .homePage__liveGamesTitle {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .homePage__matchSection {
+    padding: 16px 16px 0;
+  }
+
+  .homePage__footer {
+    padding: 24px 16px 0;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .homePage__footerLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .homePage__carousel {
+    gap: 16px;
+  }
+}
