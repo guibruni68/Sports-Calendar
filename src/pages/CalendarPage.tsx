@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MenuButton } from "../components/MenuButton";
 import { CalendarButton } from "../components/CalendarButton";
 import { FilterCalendar } from "../components/FilterCalendar";
@@ -88,6 +89,7 @@ const FILTER_TO_SPORT: Partial<Record<FilterCalendarName, CardEventSport>> = {
 /* ─── Page Component ─── */
 
 export function CalendarPage() {
+  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState<FilterCalendarName>("Todos");
 
   function getEvent(day: number, hour: number): CalendarEvent | undefined {
@@ -110,19 +112,19 @@ export function CalendarPage() {
         <span className="calendarPage__menuLabel">Menu</span>
 
         <nav className="calendarPage__navGroup">
-          <MenuButton name="Home" />
+          <MenuButton name="Home" onClick={() => navigate("/")} />
           <MenuButton name="Calendário" active />
         </nav>
 
         <hr className="calendarPage__divider" />
 
         <div className="calendarPage__sportsGroup">
-          <MenuButton name="Futebol" />
-          <MenuButton name="Basquete" />
-          <MenuButton name="Hóquei" />
-          <MenuButton name="Futebol Americano" />
-          <MenuButton name="Automobilismo" />
-          <MenuButton name="Beisebol" />
+          <MenuButton name="Futebol" onClick={() => navigate("/sport/futebol")} />
+          <MenuButton name="Basquete" onClick={() => navigate("/sport/basquete")} />
+          <MenuButton name="Futebol Americano" onClick={() => navigate("/sport/futebol-americano")} />
+          <MenuButton name="Automobilismo" onClick={() => navigate("/sport/automobilismo")} />
+          <MenuButton name="Beisebol" onClick={() => navigate("/sport/beisebol")} />
+          <MenuButton name="Hóquei" onClick={() => navigate("/sport/hoquei")} />
         </div>
       </aside>
 
@@ -131,9 +133,9 @@ export function CalendarPage() {
         {/* Header */}
         <header className="calendarPage__header">
           <div className="calendarPage__headerSearch">
-            <SearchBar />
+            <SearchBar onFocus={() => navigate("/search")} />
           </div>
-          <CTAButton label="Subscribe" />
+          <CTAButton label="Quero ser Watch" />
         </header>
 
         {/* Calendar */}

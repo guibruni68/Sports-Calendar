@@ -17,7 +17,8 @@
 /* ── Tipo: Jogo ───────────────────────────────────────────────────────── */
 
 .cardDestaque--jogo {
-  width: 272px;
+  width: 100%;
+  max-width: 272px;
   height: 116px;
   border-radius: 0;
   gap: 8px;

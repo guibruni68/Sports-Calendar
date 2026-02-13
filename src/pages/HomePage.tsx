@@ -1,4 +1,5 @@
 import { useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { BannerHero } from "../components/BannerHero";
 import { CardDestaque } from "../components/CardDestaque";
 import { CardJogo } from "../components/CardJogo";
@@ -218,6 +219,7 @@ function CarouselArrow({ direction, onClick }: { direction: "left" | "right"; on
 }
 
 export function HomePage() {
+  const navigate = useNavigate();
   const carousel1Ref = useRef<HTMLDivElement>(null);
   const carousel2Ref = useRef<HTMLDivElement>(null);
 
@@ -239,18 +241,18 @@ export function HomePage() {
 
         <nav className="homePage__navGroup">
           <MenuButton name="Home" active />
-          <MenuButton name="Calendário" />
+          <MenuButton name="Calendário" onClick={() => navigate("/calendar")} />
         </nav>
 
         <hr className="homePage__divider" />
 
         <div className="homePage__sportsGroup">
-          <MenuButton name="Futebol" />
-          <MenuButton name="Basquete" />
-          <MenuButton name="Futebol Americano" />
-          <MenuButton name="Automobilismo" />
-          <MenuButton name="Beisebol" />
-          <MenuButton name="Hóquei" />
+          <MenuButton name="Futebol" onClick={() => navigate("/sport/futebol")} />
+          <MenuButton name="Basquete" onClick={() => navigate("/sport/basquete")} />
+          <MenuButton name="Futebol Americano" onClick={() => navigate("/sport/futebol-americano")} />
+          <MenuButton name="Automobilismo" onClick={() => navigate("/sport/automobilismo")} />
+          <MenuButton name="Beisebol" onClick={() => navigate("/sport/beisebol")} />
+          <MenuButton name="Hóquei" onClick={() => navigate("/sport/hoquei")} />
         </div>
       </aside>
 
@@ -259,7 +261,7 @@ export function HomePage() {
         {/* Header */}
         <header className="homePage__header">
           <div className="homePage__headerSearch">
-            <SearchBar />
+            <SearchBar onFocus={() => navigate("/search")} />
           </div>
           <CTAButton label="Quero ser Watch" />
         </header>
@@ -269,19 +271,21 @@ export function HomePage() {
           <div className="homePage__bannerMain">
             <BannerHero imageSrc={bannerHeroBg} alt="Banner principal" />
           </div>
-          <div className="homePage__liveGames">
-            <h2 className="homePage__liveGamesTitle">Jogos ao vivo:</h2>
-            {LIVE_GAMES.map((game, i) => (
-              <CardDestaque
-                key={i}
-                tipo="Jogo"
-                aoVivo={game.aoVivo}
-                gameDate={game.gameDate}
-                homeLogo={game.homeLogo}
-                awayLogo={game.awayLogo}
-                channels={game.channels}
-              />
-            ))}
+          <div className="homePage__liveGamesWrapper">
+            <div className="homePage__liveGames">
+              <h2 className="homePage__liveGamesTitle">Jogos ao vivo:</h2>
+              {LIVE_GAMES.map((game, i) => (
+                <CardDestaque
+                  key={i}
+                  tipo="Jogo"
+                  aoVivo={game.aoVivo}
+                  gameDate={game.gameDate}
+                  homeLogo={game.homeLogo}
+                  awayLogo={game.awayLogo}
+                  channels={game.channels}
+                />
+              ))}
+            </div>
           </div>
         </section>
 

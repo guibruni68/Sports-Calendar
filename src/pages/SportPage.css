@@ -1,13 +1,13 @@
-/* ─── Home Page Layout ─── */
-.homePage {
+/* ─── Sport Page Layout ─── */
+.sportPage {
   display: flex;
   min-height: 100vh;
   background: var(--color-bg-base);
   color: var(--color-text-secondary);
 }
 
-/* ─── Sidebar ─── */
-.homePage__sidebar {
+/* ─── Sidebar (same pattern) ─── */
+.sportPage__sidebar {
   width: 283px;
   min-width: 283px;
   background: var(--color-bg-surface-1);
@@ -22,7 +22,7 @@
   overflow-y: auto;
 }
 
-.homePage__logo {
+.sportPage__logo {
   font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -34,12 +34,12 @@
   margin-bottom: 32px;
 }
 
-.homePage__logoAccent {
+.sportPage__logoAccent {
   color: var(--color-primary);
   font-weight: 700;
 }
 
-.homePage__menuLabel {
+.sportPage__menuLabel {
   font-family: "Inter", sans-serif;
   font-size: 11px;
   font-weight: 500;
@@ -48,27 +48,27 @@
   letter-spacing: 1.5px;
 }
 
-.homePage__navGroup {
+.sportPage__navGroup {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.homePage__divider {
+.sportPage__divider {
   height: 3px;
   background: var(--color-bg-surface-3);
   border: none;
   margin: 0;
 }
 
-.homePage__sportsGroup {
+.sportPage__sportsGroup {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
 /* ─── Main Content ─── */
-.homePage__main {
+.sportPage__main {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -77,7 +77,7 @@
 }
 
 /* ─── Header ─── */
-.homePage__header {
+.sportPage__header {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -85,34 +85,33 @@
   padding: 16px 32px 64px;
 }
 
-.homePage__headerSearch {
+.sportPage__headerSearch {
   max-width: 190px;
 }
 
-
-/* ─── Banners Section ─── */
-.homePage__banners {
+/* ─── Banners Section (same as HomePage) ─── */
+.sportPage__banners {
   display: grid;
   grid-template-columns: 1fr 301px;
   gap: 24px;
   padding: 0 32px;
 }
 
-.homePage__bannerMain {
+.sportPage__bannerMain {
   min-width: 0;
 }
 
-.homePage__bannerMain .bannerHero {
+.sportPage__bannerMain .bannerHero {
   width: 100%;
   height: auto;
   aspect-ratio: 728 / 356;
 }
 
-.homePage__liveGamesWrapper {
+.sportPage__liveGamesWrapper {
   position: relative;
 }
 
-.homePage__liveGames {
+.sportPage__liveGames {
   position: absolute;
   inset: 0;
   display: flex;
@@ -129,28 +128,28 @@
   box-sizing: border-box;
 }
 
-.homePage__liveGames::-webkit-scrollbar {
+.sportPage__liveGames::-webkit-scrollbar {
   width: 6px;
 }
 
-.homePage__liveGames::-webkit-scrollbar-track {
+.sportPage__liveGames::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.homePage__liveGames::-webkit-scrollbar-thumb {
+.sportPage__liveGames::-webkit-scrollbar-thumb {
   background: var(--color-bg-surface-4);
   border-radius: 3px;
 }
 
-.homePage__liveGames::-webkit-scrollbar-thumb:hover {
+.sportPage__liveGames::-webkit-scrollbar-thumb:hover {
   background: var(--color-border-strong);
 }
 
-.homePage__liveGames > * {
+.sportPage__liveGames > * {
   flex-shrink: 0;
 }
 
-.homePage__liveGamesTitle {
+.sportPage__liveGamesTitle {
   font-family: "Segoe UI", sans-serif;
   font-size: 16px;
   font-weight: 600;
@@ -160,26 +159,46 @@
 }
 
 /* ─── Match Sections ─── */
-.homePage__matchSection {
-  padding: 24px 32px 0;
+.sportPage__matchSection {
+  padding: 24px 32px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.homePage__sectionDivider {
+.sportPage__sectionDivider {
   height: 3px;
   background: var(--color-bg-surface-3);
   border: none;
   margin: 0;
 }
 
-/* ─── Carousel Wrapper ─── */
-.homePage__carouselWrapper {
+/* ─── Clubs Section ─── */
+.sportPage__clubsSection {
+  padding: 48px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sportPage__carousel--clubs {
+  justify-content: center;
+}
+
+/* ─── Championship Filters ─── */
+.sportPage__filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ─── Carousel ─── */
+.sportPage__carouselWrapper {
   position: relative;
 }
 
-.homePage__carousel {
+.sportPage__carousel {
   display: flex;
   gap: 24px;
   overflow-x: auto;
@@ -188,17 +207,17 @@
   scrollbar-width: none;
 }
 
-.homePage__carousel::-webkit-scrollbar {
+.sportPage__carousel::-webkit-scrollbar {
   display: none;
 }
 
-.homePage__carousel > * {
+.sportPage__carousel > * {
   scroll-snap-align: start;
   flex-shrink: 0;
 }
 
 /* ─── Carousel Arrows ─── */
-.homePage__carouselArrow {
+.sportPage__carouselArrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -216,21 +235,60 @@
   transition: background 200ms ease-out, border-color 200ms ease-out;
 }
 
-.homePage__carouselArrow:hover {
+.sportPage__carouselArrow:hover {
   background: var(--color-bg-surface-4);
   border-color: var(--color-border-strong);
 }
 
-.homePage__carouselArrow--left {
+.sportPage__carouselArrow--left {
   left: -18px;
 }
 
-.homePage__carouselArrow--right {
+.sportPage__carouselArrow--right {
   right: -18px;
 }
 
+/* ─── Bottom Row (Upcoming + Mini Banner) ─── */
+.sportPage__bottomRow {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.sportPage__upcomingCard {
+  width: 301px;
+  min-width: 301px;
+  background: var(--color-bg-surface-1);
+  border: 1px solid var(--color-bg-surface-3);
+  border-radius: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sportPage__upcomingTitle {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.sportPage__bannerMini {
+  flex: 1;
+  min-width: 0;
+}
+
+.sportPage__bannerMini .bannerHero {
+  width: 100%;
+  height: auto;
+}
+
 /* ─── Footer ─── */
-.homePage__footer {
+.sportPage__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -238,12 +296,12 @@
   margin-top: auto;
 }
 
-.homePage__footerLinks {
+.sportPage__footerLinks {
   display: flex;
   gap: 32px;
 }
 
-.homePage__footerLink {
+.sportPage__footerLink {
   font-family: "Inter", sans-serif;
   font-size: 13px;
   color: var(--color-text-muted-2);
@@ -252,11 +310,11 @@
   transition: color 300ms ease-out;
 }
 
-.homePage__footerLink:hover {
+.sportPage__footerLink:hover {
   color: var(--color-text-secondary);
 }
 
-.homePage__copyright {
+.sportPage__copyright {
   font-family: "Inter", sans-serif;
   font-size: 13px;
   color: var(--color-text-muted-2);
@@ -264,31 +322,31 @@
 
 /* ─── Responsive: Tablet ─── */
 @media (max-width: 1024px) {
-  .homePage__sidebar {
+  .sportPage__sidebar {
     width: 72px;
     min-width: 72px;
     padding: 24px 12px;
     align-items: center;
   }
 
-  .homePage__logo,
-  .homePage__menuLabel {
+  .sportPage__logo,
+  .sportPage__menuLabel {
     display: none;
   }
 
-  .homePage__sidebar .menuButton__label {
+  .sportPage__sidebar .menuButton__label {
     display: none;
   }
 
-  .homePage__banners {
+  .sportPage__banners {
     grid-template-columns: 1fr;
   }
 
-  .homePage__liveGamesWrapper {
+  .sportPage__liveGamesWrapper {
     position: static;
   }
 
-  .homePage__liveGames {
+  .sportPage__liveGames {
     position: static;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -297,12 +355,21 @@
     justify-items: center;
   }
 
-  .homePage__liveGamesTitle {
+  .sportPage__liveGamesTitle {
     grid-column: 1 / -1;
     width: 100%;
   }
 
-  .homePage__footer {
+  .sportPage__bottomRow {
+    flex-direction: column;
+  }
+
+  .sportPage__upcomingCard {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .sportPage__footer {
     flex-direction: column;
     gap: 12px;
     text-align: center;
@@ -311,30 +378,30 @@
 
 /* ─── Responsive: Mobile ─── */
 @media (max-width: 768px) {
-  .homePage__sidebar {
+  .sportPage__sidebar {
     display: none;
   }
 
-  .homePage__header {
+  .sportPage__header {
     padding: 12px 16px;
   }
 
-  .homePage__banners {
+  .sportPage__banners {
     padding: 0 16px;
     grid-template-columns: 1fr;
   }
 
-  .homePage__bannerMain .bannerHero {
+  .sportPage__bannerMain .bannerHero {
     width: 100%;
     height: auto;
     aspect-ratio: 728 / 356;
   }
 
-  .homePage__liveGamesWrapper {
+  .sportPage__liveGamesWrapper {
     position: static;
   }
 
-  .homePage__liveGames {
+  .sportPage__liveGames {
     position: static;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -343,29 +410,38 @@
     justify-items: center;
   }
 
-  .homePage__liveGamesTitle {
+  .sportPage__liveGamesTitle {
     grid-column: 1 / -1;
     width: 100%;
   }
 
-  .homePage__matchSection {
+  .sportPage__matchSection {
     padding: 16px 16px 0;
   }
 
-  .homePage__footer {
+  .sportPage__bottomRow {
+    flex-direction: column;
+  }
+
+  .sportPage__upcomingCard {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .sportPage__carousel {
+    gap: 16px;
+  }
+
+  .sportPage__footer {
     padding: 24px 16px 0;
     flex-direction: column;
     gap: 12px;
     text-align: center;
   }
 
-  .homePage__footerLinks {
+  .sportPage__footerLinks {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 16px;
-  }
-
-  .homePage__carousel {
     gap: 16px;
   }
 }
