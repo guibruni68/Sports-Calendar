@@ -1,0 +1,75 @@
+/* ─── Banner Carousel ─── */
+.bannerCarousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+/* ─── Track: stacks slides on top of each other ─── */
+.bannerCarousel__track {
+  position: relative;
+  width: 100%;
+}
+
+.bannerCarousel__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+  pointer-events: none;
+}
+
+.bannerCarousel__slide--active {
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Override BannerHero fixed sizing so it fills the carousel */
+.bannerCarousel .bannerHero {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 728 / 356;
+  border-radius: 0;
+}
+
+.bannerCarousel .bannerHero--mini {
+  aspect-ratio: 620 / 350;
+}
+
+.bannerCarousel .bannerHero:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* ─── Dot Indicators ─── */
+.bannerCarousel__dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.bannerCarousel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: background 300ms ease-out, transform 300ms ease-out;
+}
+
+.bannerCarousel__dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.bannerCarousel__dot--active {
+  background: #fff;
+  transform: scale(1.25);
+}

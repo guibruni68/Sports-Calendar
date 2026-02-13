@@ -1,6 +1,6 @@
 import { useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { BannerHero } from "../components/BannerHero";
+import { BannerCarousel } from "../components/BannerCarousel";
 import { CardDestaque } from "../components/CardDestaque";
 import { CardJogo } from "../components/CardJogo";
 import type { Broadcast } from "../components/CardJogo";
@@ -10,7 +10,6 @@ import { MenuButton } from "../components/MenuButton";
 import { CalendarButton } from "../components/CalendarButton";
 import { CTAButton } from "../components/CTAButton";
 import defaultClubLogo from "../assets/default-club-logo.svg";
-import bannerHeroBg from "../assets/banner-hero-bg.png";
 import "./HomePage.css";
 
 /* ─── Static match data (from Figma design) ─── */
@@ -269,7 +268,7 @@ export function HomePage() {
         {/* Banners */}
         <section className="homePage__banners">
           <div className="homePage__bannerMain">
-            <BannerHero imageSrc={bannerHeroBg} alt="Banner principal" />
+            <BannerCarousel alt="Banner principal" />
           </div>
           <div className="homePage__liveGamesWrapper">
             <div className="homePage__liveGames">

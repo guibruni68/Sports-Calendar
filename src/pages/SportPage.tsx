@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { BannerHero } from "../components/BannerHero";
+import { BannerCarousel } from "../components/BannerCarousel";
 import { CardDestaque } from "../components/CardDestaque";
 import { CardJogo } from "../components/CardJogo";
 import type { Broadcast } from "../components/CardJogo";
@@ -14,7 +14,6 @@ import type { MenuButtonName } from "../components/MenuButton";
 import { SearchBar } from "../components/SearchBar";
 import { CTAButton } from "../components/CTAButton";
 import defaultClubLogo from "../assets/default-club-logo.svg";
-import bannerHeroBg from "../assets/banner-hero-bg.png";
 import "./SportPage.css";
 
 /* ─── Sport configuration type ─── */
@@ -462,7 +461,7 @@ export function SportPage({ sport }: { sport: string }) {
         {/* Banner + Live Games */}
         <section className="sportPage__banners">
           <div className="sportPage__bannerMain">
-            <BannerHero imageSrc={bannerHeroBg} alt={`Banner ${config.name}`} />
+            <BannerCarousel sport={sport} alt={`Banner ${config.name}`} />
           </div>
           <div className="sportPage__liveGamesWrapper">
             <div className="sportPage__liveGames">
@@ -554,7 +553,7 @@ export function SportPage({ sport }: { sport: string }) {
               ))}
             </div>
             <div className="sportPage__bannerMini">
-              <BannerHero imageSrc={bannerHeroBg} alt={`Banner ${config.name}`} size="Mini" />
+              <BannerCarousel sport={sport} alt={`Banner ${config.name}`} size="Mini" />
             </div>
           </div>
         </section>
