@@ -4,18 +4,6 @@ import type { BannerHeroSize } from "../BannerHero";
 import bannerHeroBg from "../../assets/banner-hero-bg.png";
 import "./BannerCarousel.css";
 
-const AIRTABLE_BASE = "https://api.airtable.com/v0/appFzpEcAata6XxpD/banner";
-const AIRTABLE_TOKEN = import.meta.env.VITE_AIRTABLE_TOKEN ?? "";
-
-const SPORT_FILTERS: Record<string, string> = {
-  futebol:
-    "AND(FIND('futebol',LOWER(ARRAYJOIN(sport))),NOT(FIND('americano',LOWER(ARRAYJOIN(sport)))))",
-  basquete: "FIND('basquete',LOWER(ARRAYJOIN(sport)))",
-  "futebol-americano": "FIND('futebol americano',LOWER(ARRAYJOIN(sport)))",
-  automobilismo: "FIND('automobilismo',LOWER(ARRAYJOIN(sport)))",
-  beisebol: "FIND('beisebol',LOWER(ARRAYJOIN(sport)))",
-  hoquei: "FIND('hóquei',LOWER(ARRAYJOIN(sport)))",
-};
 
 interface BannerCarouselProps {
   sport?: string;
@@ -34,16 +22,9 @@ export function BannerCarousel({
   /* ── Fetch banners ── */
   useEffect(() => {
     const controller = new AbortController();
-    const params = new URLSearchParams({ view: "Grid view" });
+    const url = sport ? `/api/banners?sport=${encodeURIComponent(sport)}` : "/api/banners";
 
-    if (sport && SPORT_FILTERS[sport]) {
-      params.set("filterByFormula", SPORT_FILTERS[sport]);
-    }
-
-    fetch(`${AIRTABLE_BASE}?${params}`, {
-      headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` },
-      signal: controller.signal,
-    })
+    fetch(url, { signal: controller.signal })
       .then((res) => res.json())
       .then((data) => {
         const urls: string[] = data.records
