@@ -13,6 +13,8 @@ import { MenuButton } from "../components/MenuButton";
 import type { MenuButtonName } from "../components/MenuButton";
 import { SearchBar } from "../components/SearchBar";
 import { CTAButton } from "../components/CTAButton";
+import { fetchBasketballEvents } from "../services/eventsService";
+import type { EventData } from "../services/eventsService";
 import defaultClubLogo from "../assets/default-club-logo.svg";
 import "./SportPage.css";
 
@@ -368,10 +370,16 @@ const SPORT_ROUTES: Record<string, string> = {
   Beisebol: "/sport/beisebol",
 };
 
-/* ─── Page Component ─── */
+/* ─── Channel string parser ─── */
 
-const AIRTABLE_BASE = "https://api.airtable.com/v0/appFzpEcAata6XxpD/team";
-const AIRTABLE_TOKEN = import.meta.env.VITE_AIRTABLE_TOKEN ?? "";
+function parseChannel(ch: string): Broadcast {
+  const parts = ch.trim().split(" ");
+  const canal = parts.length > 1 ? parts.pop() : undefined;
+  const channel = parts.join(" ");
+  return { channel, canal } as Broadcast;
+}
+
+/* ─── Page Component ─── */
 
 interface AirtableTeam {
   name: string;
@@ -383,17 +391,16 @@ export function SportPage({ sport }: { sport: string }) {
   const config = SPORT_DATA[sport];
   const [activeFilter, setActiveFilter] = useState("Todos");
   const [apiClubs, setApiClubs] = useState<AirtableTeam[]>([]);
+  const [apiMatches, setApiMatches] = useState<EventData[]>([]);
   const matchesRef = useRef<HTMLDivElement>(null);
   const clubsRef = useRef<HTMLDivElement>(null);
 
+  /* ── Fetch futebol teams ── */
   useEffect(() => {
     if (sport !== "futebol") return;
 
     const controller = new AbortController();
-    fetch(`${AIRTABLE_BASE}?view=Grid%20view&filterByFormula=AND({name-team}!='',{Logo}!='')`, {
-      headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` },
-      signal: controller.signal,
-    })
+    fetch("/api/teams", { signal: controller.signal })
       .then((res) => res.json())
       .then((data) => {
         const teams: AirtableTeam[] = data.records
@@ -410,7 +417,30 @@ export function SportPage({ sport }: { sport: string }) {
     return () => controller.abort();
   }, [sport]);
 
+  /* ── Fetch basketball events ── */
+  useEffect(() => {
+    if (sport !== "basquete") return;
+
+    const controller = new AbortController();
+    fetchBasketballEvents(controller.signal)
+      .then(setApiMatches)
+      .catch(() => {});
+    return () => controller.abort();
+  }, [sport]);
+
   const clubs = sport === "futebol" && apiClubs.length > 0 ? apiClubs : config?.clubs ?? [];
+
+  const matches =
+    sport === "basquete" && apiMatches.length > 0
+      ? apiMatches.map((e) => ({
+          championship: "NBA",
+          tagJogo: "None" as const,
+          teamA: { name: e.homeTeam, logoSrc: e.homeTeamLogo || defaultClubLogo },
+          teamB: { name: e.awayTeam, logoSrc: e.awayTeamLogo || defaultClubLogo },
+          dateTime: e.date,
+          broadcasts: e.channels.map(parseChannel),
+        }))
+      : config?.matches ?? [];
 
   const scroll = useCallback((ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
     if (!ref.current) return;
@@ -501,7 +531,7 @@ export function SportPage({ sport }: { sport: string }) {
           <div className="sportPage__carouselWrapper">
             <CarouselArrow direction="left" onClick={() => scroll(matchesRef, "left")} />
             <div className="sportPage__carousel" ref={matchesRef}>
-              {config.matches.map((match, i) => (
+              {matches.map((match, i) => (
                 <CardJogo
                   key={i}
                   championship={match.championship}
@@ -512,9 +542,10 @@ export function SportPage({ sport }: { sport: string }) {
                   broadcasts={match.broadcasts}
                 />
               ))}
-              {Array.from({ length: 7 }, (_, i) => (
-                <CardHorizontal key={`h1-${i}`} imageSrc={PLACEHOLDER_IMG} tag="" />
-              ))}
+              {!(sport === "basquete" && apiMatches.length > 0) &&
+                Array.from({ length: 7 }, (_, i) => (
+                  <CardHorizontal key={`h1-${i}`} imageSrc={PLACEHOLDER_IMG} tag="" />
+                ))}
             </div>
             <CarouselArrow direction="right" onClick={() => scroll(matchesRef, "right")} />
           </div>
