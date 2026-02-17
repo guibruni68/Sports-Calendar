@@ -225,6 +225,71 @@
   right: -18px;
 }
 
+/* ─── Standings Widget ─── */
+.homePage__standingsSection {
+  padding: 0 32px;
+  margin-top: 40px;
+}
+
+.homePage__standingsTitle {
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0 0 24px;
+}
+
+.homePage__standingsRow {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Outer clip container — border-radius crops everything inside */
+.homePage__standingsWidget {
+  flex: 1;
+  min-width: 0;
+  height: 800px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #111113;
+  position: relative;
+}
+
+/* Inner scroll area */
+.homePage__standingsScroll {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-bg-surface-4) transparent;
+}
+
+/* Iframe wrapper — relative for click blocker */
+.homePage__standingsIframeWrap {
+  position: relative;
+}
+
+.homePage__standingsIframeWrap iframe {
+  display: block;
+  filter: invert(0.933) hue-rotate(180deg);
+  -webkit-filter: invert(0.933) hue-rotate(180deg);
+}
+
+/* Full overlay: blocks clicks + hides branding at bottom */
+.homePage__standingsIframeWrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  cursor: default;
+  background: linear-gradient(
+    to bottom,
+    transparent calc(100% - 120px),
+    #111113 calc(100% - 120px)
+  );
+}
+
 /* ─── Footer ─── */
 .homePage__footer {
   display: flex;

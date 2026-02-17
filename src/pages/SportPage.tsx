@@ -561,6 +561,66 @@ export function SportPage({ sport }: { sport: string }) {
           </div>
         </section>
 
+        {/* Standings Widgets — Futebol */}
+        {sport === "futebol" && (
+          <section className="sportPage__standingsSection">
+            <h2 className="sportPage__standingsTitle">Classificação Principais Competições</h2>
+            <div className="sportPage__standingsRow">
+              <div className="sportPage__standingsWidget">
+                <div className="sportPage__standingsScroll">
+                  <div className="sportPage__standingsIframeWrap">
+                    <iframe
+                      id="sofa-standings-embed-83-87678"
+                      src="https://widgets.sofascore.com/pt-BR/embed/tournament/83/season/87678/standings/Brasileiro%20Serie%20A%202026?widgetTitle=Brasileiro%20Serie%20A%202026&showCompetitionLogo=true"
+                      style={{ height: 1123, maxWidth: 768, width: "100%" }}
+                      frameBorder="0"
+                      scrolling="no"
+                      title="Classificação Brasileiro Série A 2026"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sportPage__standingsWidget">
+                <div className="sportPage__standingsScroll">
+                  <div className="sportPage__standingsIframeWrap">
+                    <iframe
+                      id="sofa-standings-embed-138314-76953"
+                      src="https://widgets.sofascore.com/pt-BR/embed/tournament/138314/season/76953/standings/UEFA%20Champions%20League%2025%2F26?widgetTitle=UEFA%20Champions%20League%2025%2F26&showCompetitionLogo=true"
+                      style={{ height: 1763, maxWidth: 768, width: "100%" }}
+                      frameBorder="0"
+                      scrolling="no"
+                      title="Classificação UEFA Champions League 25/26"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Standings Widgets — Basquete */}
+        {sport === "basquete" && (
+          <section className="sportPage__standingsSection">
+            <h2 className="sportPage__standingsTitle">Classificação Principais Competições</h2>
+            <div className="sportPage__standingsRow">
+              <div className="sportPage__standingsWidget">
+                <div className="sportPage__standingsScroll">
+                  <div className="sportPage__standingsIframeWrap">
+                    <iframe
+                      id="sofa-standings-embed-177-80229"
+                      src="https://widgets.sofascore.com/pt-BR/embed/tournament/177/season/80229/standings/NBA%20Eastern%20Conference?widgetTitle=NBA%20Eastern%20Conference&showCompetitionLogo=true"
+                      style={{ height: 923, maxWidth: 768, width: "100%" }}
+                      frameBorder="0"
+                      scrolling="no"
+                      title="Classificação NBA Eastern Conference"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Upcoming Games + Mini Banner */}
         <section className="sportPage__matchSection">
           <div className="sportPage__bottomRow">

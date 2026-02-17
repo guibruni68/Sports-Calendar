@@ -339,8 +339,40 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* Bottom Spacer */}
-        <div className="homePage__matchSection" />
+        {/* Standings Widgets */}
+        <section className="homePage__standingsSection">
+          <h2 className="homePage__standingsTitle">Classificação Principais Competições</h2>
+          <div className="homePage__standingsRow">
+            <div className="homePage__standingsWidget">
+              <div className="homePage__standingsScroll">
+                <div className="homePage__standingsIframeWrap">
+                  <iframe
+                    id="sofa-standings-home-83-87678"
+                    src="https://widgets.sofascore.com/pt-BR/embed/tournament/83/season/87678/standings/Brasileiro%20Serie%20A%202026?widgetTitle=Brasileiro%20Serie%20A%202026&showCompetitionLogo=true"
+                    style={{ height: 1123, maxWidth: 768, width: "100%" }}
+                    frameBorder="0"
+                    scrolling="no"
+                    title="Classificação Brasileiro Série A 2026"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="homePage__standingsWidget">
+              <div className="homePage__standingsScroll">
+                <div className="homePage__standingsIframeWrap">
+                  <iframe
+                    id="sofa-standings-home-177-80229"
+                    src="https://widgets.sofascore.com/pt-BR/embed/tournament/177/season/80229/standings/NBA%20Eastern%20Conference?widgetTitle=NBA%20Eastern%20Conference&showCompetitionLogo=true"
+                    style={{ height: 923, maxWidth: 768, width: "100%" }}
+                    frameBorder="0"
+                    scrolling="no"
+                    title="Classificação NBA Eastern Conference"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Footer */}
         <footer className="homePage__footer">
