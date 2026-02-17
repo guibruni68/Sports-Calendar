@@ -99,9 +99,9 @@ export function CardDestaqueShowcase({ subTab }: ShowcaseProps) {
               <div className="token-card__value">#EA580C</div>
             </div>
             <div className="token-card">
-              <div className="token-card__preview" style={{ backgroundColor: "rgba(234, 88, 12, 0.1)" }} />
-              <div className="token-card__label">Score Pill BG</div>
-              <div className="token-card__value">rgba(234, 88, 12, 0.1)</div>
+              <div className="token-card__preview" style={{ backgroundColor: "#FF5903" }} />
+              <div className="token-card__label">Hover Border (Ao Vivo)</div>
+              <div className="token-card__value">#FF5903</div>
             </div>
             <div className="token-card">
               <div className="token-card__preview" style={{ backgroundColor: "#C5023C" }} />
@@ -126,7 +126,7 @@ export function CardDestaqueShowcase({ subTab }: ShowcaseProps) {
           <div className="token-grid">
             <div className="token-card">
               <div className="token-card__label">Game Date Font</div>
-              <div className="token-card__value">Inter 600 18px / 22px</div>
+              <div className="token-card__value">Roboto 700 12px / 16px</div>
             </div>
             <div className="token-card">
               <div className="token-card__label">AO VIVO Font</div>
@@ -152,7 +152,7 @@ export function CardDestaqueShowcase({ subTab }: ShowcaseProps) {
             </div>
             <div className="token-card">
               <div className="token-card__label">Jogo Padding</div>
-              <div className="token-card__value">0 4px</div>
+              <div className="token-card__value">12px 4px (default) / 12px 0 (ao vivo)</div>
             </div>
             <div className="token-card">
               <div className="token-card__label">Gap</div>
@@ -344,11 +344,15 @@ export function CardDestaqueShowcase({ subTab }: ShowcaseProps) {
             </tr>
             <tr>
               <td><code>.cardDestaque--jogo</code></td>
-              <td>Match variant (272x116px, no default radius)</td>
+              <td>Match variant (272x116px, radius 0 default, 24px on hover)</td>
+            </tr>
+            <tr>
+              <td><code>.cardDestaque--ao-vivo</code></td>
+              <td>Live match modifier: 12px 0 padding, 12px gap, hover border #FF5903</td>
             </tr>
             <tr>
               <td><code>.cardDestaque--time</code></td>
-              <td>Team variant (250x70px, always rounded)</td>
+              <td>Team variant (250x70px, always 24px radius)</td>
             </tr>
             <tr>
               <td><code>.cardDestaque--competicao</code></td>
@@ -364,7 +368,7 @@ export function CardDestaqueShowcase({ subTab }: ShowcaseProps) {
             </tr>
             <tr>
               <td><code>.cardDestaque__score</code></td>
-              <td>Date/time pill container</td>
+              <td>Date/time pill container (50px radius, transparent bg)</td>
             </tr>
             <tr>
               <td><code>.cardDestaque__live</code></td>
@@ -376,7 +380,7 @@ export function CardDestaqueShowcase({ subTab }: ShowcaseProps) {
             </tr>
             <tr>
               <td><code>.cardDestaque__channels</code></td>
-              <td>Bottom channel row with top border</td>
+              <td>Bottom channel row (CSS grid 3-col, 0.8px top border)</td>
             </tr>
           </tbody>
         </table>

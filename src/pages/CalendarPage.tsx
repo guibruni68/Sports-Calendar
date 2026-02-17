@@ -9,6 +9,7 @@ import { CTAButton } from "../components/CTAButton";
 import { CardEvent } from "../components/CardEvent";
 import type { CardEventSport } from "../components/CardEvent";
 import defaultClubLogo from "../assets/default-club-logo.svg";
+import logoWatch from "../assets/logo-watch.svg";
 import "./CalendarPage.css";
 
 /* ─── Week days ─── */
@@ -106,7 +107,7 @@ export function CalendarPage() {
       {/* ─── Sidebar ─── */}
       <aside className="calendarPage__sidebar">
         <div className="calendarPage__logo">
-          STREAMING by <span className="calendarPage__logoAccent">WATCH</span>
+          <img src={logoWatch} alt="Streaming by Watch" className="calendarPage__logoImg" />
         </div>
 
         <span className="calendarPage__menuLabel">Menu</span>

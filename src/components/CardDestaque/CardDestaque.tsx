@@ -43,10 +43,12 @@ export function CardDestaque({
         ? "cardDestaque--time"
         : "cardDestaque--competicao";
 
+  const aoVivoClass = tipo === "Jogo" && aoVivo ? "cardDestaque--ao-vivo" : "";
+
   if (tipo === "Jogo") {
     return (
       <button
-        className={`cardDestaque ${tipoClass}`}
+        className={`cardDestaque ${tipoClass} ${aoVivoClass}`}
         onClick={onClick}
         type="button"
       >
@@ -63,7 +65,9 @@ export function CardDestaque({
             <span className="cardDestaque__live">AO VIVO</span>
           ) : (
             <span className="cardDestaque__score">
-              <span className="cardDestaque__date">{gameDate}</span>
+              <span className="cardDestaque__date">
+                {gameDate?.replace(" ", "\n")}
+              </span>
             </span>
           )}
           <img

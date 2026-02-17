@@ -1,4 +1,4 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BannerCarousel } from "../components/BannerCarousel";
 import { CardDestaque } from "../components/CardDestaque";
@@ -9,7 +9,10 @@ import { SearchBar } from "../components/SearchBar";
 import { MenuButton } from "../components/MenuButton";
 import { CalendarButton } from "../components/CalendarButton";
 import { CTAButton } from "../components/CTAButton";
+import { fetchEvents } from "../services/eventsService";
+import type { EventData } from "../services/eventsService";
 import defaultClubLogo from "../assets/default-club-logo.svg";
+import logoWatch from "../assets/logo-watch.svg";
 import "./HomePage.css";
 
 /* ─── Static match data (from Figma design) ─── */
@@ -217,10 +220,36 @@ function CarouselArrow({ direction, onClick }: { direction: "left" | "right"; on
   );
 }
 
+function parseChannel(ch: string): Broadcast {
+  const parts = ch.trim().split(" ");
+  const canal = parts.length > 1 ? parts.pop() : undefined;
+  const channel = parts.join(" ");
+  return { channel, canal } as Broadcast;
+}
+
 export function HomePage() {
   const navigate = useNavigate();
   const carousel1Ref = useRef<HTMLDivElement>(null);
-  const carousel2Ref = useRef<HTMLDivElement>(null);
+  const [apiEvents, setApiEvents] = useState<EventData[]>([]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchEvents(undefined, controller.signal)
+      .then(setApiEvents)
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
+
+  const events = apiEvents.length > 0
+    ? apiEvents.map((e) => ({
+        championship: "",
+        tagJogo: "None" as const,
+        teamA: { name: e.homeTeam, logoSrc: e.homeTeamLogo || defaultClubLogo },
+        teamB: { name: e.awayTeam, logoSrc: e.awayTeamLogo || defaultClubLogo },
+        dateTime: e.date,
+        broadcasts: e.channels.map(parseChannel),
+      }))
+    : [...CAROUSEL_1, ...CAROUSEL_2];
 
   const scroll = useCallback((ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
     if (!ref.current) return;
@@ -233,7 +262,7 @@ export function HomePage() {
       {/* ─── Sidebar ─── */}
       <aside className="homePage__sidebar">
         <div className="homePage__logo">
-          STREAMING by <span className="homePage__logoAccent">WATCH</span>
+          <img src={logoWatch} alt="Streaming by Watch" className="homePage__logoImg" />
         </div>
 
         <span className="homePage__menuLabel">Menu</span>
@@ -288,14 +317,13 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* Match Section 1 */}
+        {/* Match Section */}
         <section className="homePage__matchSection">
-          <hr className="homePage__sectionDivider" />
           <CalendarButton label="Hoje" />
           <div className="homePage__carouselWrapper">
             <CarouselArrow direction="left" onClick={() => scroll(carousel1Ref, "left")} />
             <div className="homePage__carousel" ref={carousel1Ref}>
-              {CAROUSEL_1.map((match, i) => (
+              {events.map((match, i) => (
                 <CardJogo
                   key={`c1-${i}`}
                   championship={match.championship}
@@ -311,31 +339,8 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* Match Section 2 */}
-        <section className="homePage__matchSection">
-          <div className="homePage__carouselWrapper">
-            <CarouselArrow direction="left" onClick={() => scroll(carousel2Ref, "left")} />
-            <div className="homePage__carousel" ref={carousel2Ref}>
-              {CAROUSEL_2.map((match, i) => (
-                <CardJogo
-                  key={`c2-${i}`}
-                  championship={match.championship}
-                  tagJogo={match.tagJogo}
-                  teamA={match.teamA}
-                  teamB={match.teamB}
-                  dateTime={match.dateTime}
-                  broadcasts={match.broadcasts}
-                />
-              ))}
-            </div>
-            <CarouselArrow direction="right" onClick={() => scroll(carousel2Ref, "right")} />
-          </div>
-        </section>
-
-        {/* Bottom Divider */}
-        <div className="homePage__matchSection">
-          <hr className="homePage__sectionDivider" />
-        </div>
+        {/* Bottom Spacer */}
+        <div className="homePage__matchSection" />
 
         {/* Footer */}
         <footer className="homePage__footer">

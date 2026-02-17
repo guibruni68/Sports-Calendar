@@ -6,6 +6,7 @@ import { TagCanal } from "../components/TagCanal";
 import { SearchBar } from "../components/SearchBar";
 import { CTAButton } from "../components/CTAButton";
 import defaultClubLogo from "../assets/default-club-logo.svg";
+import logoWatch from "../assets/logo-watch.svg";
 import "./SearchPage.css";
 
 /* ─── Static search result data (from Figma design) ─── */
@@ -74,7 +75,7 @@ export function SearchPage() {
       {/* ─── Sidebar ─── */}
       <aside className="searchPage__sidebar">
         <div className="searchPage__logo">
-          STREAMING by <span className="searchPage__logoAccent">WATCH</span>
+          <img src={logoWatch} alt="Streaming by Watch" className="searchPage__logoImg" />
         </div>
 
         <span className="searchPage__menuLabel">Menu</span>

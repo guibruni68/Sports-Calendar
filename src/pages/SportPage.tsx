@@ -13,9 +13,10 @@ import { MenuButton } from "../components/MenuButton";
 import type { MenuButtonName } from "../components/MenuButton";
 import { SearchBar } from "../components/SearchBar";
 import { CTAButton } from "../components/CTAButton";
-import { fetchBasketballEvents } from "../services/eventsService";
+import { fetchEvents } from "../services/eventsService";
 import type { EventData } from "../services/eventsService";
 import defaultClubLogo from "../assets/default-club-logo.svg";
+import logoWatch from "../assets/logo-watch.svg";
 import "./SportPage.css";
 
 /* ─── Sport configuration type ─── */
@@ -417,12 +418,10 @@ export function SportPage({ sport }: { sport: string }) {
     return () => controller.abort();
   }, [sport]);
 
-  /* ── Fetch basketball events ── */
+  /* ── Fetch sport events ── */
   useEffect(() => {
-    if (sport !== "basquete") return;
-
     const controller = new AbortController();
-    fetchBasketballEvents(controller.signal)
+    fetchEvents(sport, controller.signal)
       .then(setApiMatches)
       .catch(() => {});
     return () => controller.abort();
@@ -431,9 +430,9 @@ export function SportPage({ sport }: { sport: string }) {
   const clubs = sport === "futebol" && apiClubs.length > 0 ? apiClubs : config?.clubs ?? [];
 
   const matches =
-    sport === "basquete" && apiMatches.length > 0
+    apiMatches.length > 0
       ? apiMatches.map((e) => ({
-          championship: "NBA",
+          championship: "",
           tagJogo: "None" as const,
           teamA: { name: e.homeTeam, logoSrc: e.homeTeamLogo || defaultClubLogo },
           teamB: { name: e.awayTeam, logoSrc: e.awayTeamLogo || defaultClubLogo },
@@ -454,7 +453,7 @@ export function SportPage({ sport }: { sport: string }) {
       {/* ─── Sidebar ─── */}
       <aside className="sportPage__sidebar">
         <div className="sportPage__logo">
-          STREAMING by <span className="sportPage__logoAccent">WATCH</span>
+          <img src={logoWatch} alt="Streaming by Watch" className="sportPage__logoImg" />
         </div>
 
         <span className="sportPage__menuLabel">Menu</span>
@@ -524,8 +523,6 @@ export function SportPage({ sport }: { sport: string }) {
             ))}
           </div>
 
-          <hr className="sportPage__sectionDivider" />
-
           <CalendarButton label="Hoje" />
 
           <div className="sportPage__carouselWrapper">
@@ -542,7 +539,7 @@ export function SportPage({ sport }: { sport: string }) {
                   broadcasts={match.broadcasts}
                 />
               ))}
-              {!(sport === "basquete" && apiMatches.length > 0) &&
+              {apiMatches.length === 0 &&
                 Array.from({ length: 7 }, (_, i) => (
                   <CardHorizontal key={`h1-${i}`} imageSrc={PLACEHOLDER_IMG} tag="" />
                 ))}
@@ -566,8 +563,6 @@ export function SportPage({ sport }: { sport: string }) {
 
         {/* Upcoming Games + Mini Banner */}
         <section className="sportPage__matchSection">
-          <hr className="sportPage__sectionDivider" />
-
           <div className="sportPage__bottomRow">
             <div className="sportPage__upcomingCard">
               <h2 className="sportPage__upcomingTitle">Começam daqui a pouco!</h2>

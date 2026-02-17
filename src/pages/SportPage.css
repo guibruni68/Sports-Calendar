@@ -23,20 +23,15 @@
 }
 
 .sportPage__logo {
-  font-family: "Inter", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--color-text-muted);
-  letter-spacing: 1px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 32px;
+  margin-bottom: 48px;
 }
 
-.sportPage__logoAccent {
-  color: var(--color-primary);
-  font-weight: 700;
+.sportPage__logoImg {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
 }
 
 .sportPage__menuLabel {
@@ -82,7 +77,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
-  padding: 16px 32px 64px;
+  padding: 16px 32px 40px;
 }
 
 .sportPage__headerSearch {
@@ -95,6 +90,7 @@
   grid-template-columns: 1fr 301px;
   gap: 24px;
   padding: 0 32px;
+  margin-bottom: 24px;
 }
 
 .sportPage__bannerMain {
