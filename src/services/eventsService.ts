@@ -24,10 +24,14 @@ interface AirtableRecord {
   fields: AirtableEventFields;
 }
 
-export async function fetchBasketballEvents(
+export async function fetchEvents(
+  sport?: string,
   signal?: AbortSignal
 ): Promise<EventData[]> {
-  const res = await fetch("/api/events?sport=basquete", { signal });
+  const url = sport
+    ? `/api/events?sport=${encodeURIComponent(sport)}`
+    : "/api/events";
+  const res = await fetch(url, { signal });
   const data = await res.json();
 
   return (data.records as AirtableRecord[])

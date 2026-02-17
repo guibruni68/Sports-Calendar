@@ -4,7 +4,7 @@
   width: 145px;
   height: 73px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 0;
   background-color: var(--card-bg);
   cursor: pointer;
