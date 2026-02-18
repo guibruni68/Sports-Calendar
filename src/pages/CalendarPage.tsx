@@ -47,6 +47,7 @@ interface Broadcast {
 
 interface CalendarEvent {
   sport: CardEventSport;
+  league: string;
   title: string;
   homeLogo: string;
   awayLogo: string;
@@ -59,43 +60,43 @@ interface CalendarEvent {
 
 const EVENTS: CalendarEvent[] = [
   // SEG 02 – 9 AM (2 jogos)
-  { sport: "Futebol", title: "Corinthians X Ponte Preta", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 1, hour: 9, broadcasts: [{ channel: "Premiere", canal: "1" }, { channel: "SporTV", canal: "1" }] },
-  { sport: "Basquete", title: "Lakers X Celtics", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 1, hour: 9, broadcasts: [{ channel: "ESPN", canal: "1" }] },
+  { sport: "Futebol", league: "Paulistão", title: "Corinthians X Ponte Preta", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 1, hour: 9, broadcasts: [{ channel: "Premiere", canal: "1" }, { channel: "SporTV", canal: "1" }] },
+  { sport: "Basquete", league: "NBA", title: "Lakers X Celtics", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 1, hour: 9, broadcasts: [{ channel: "ESPN", canal: "1" }] },
   // SEG 02 – 10 AM
-  { sport: "Futebol", title: "Flamengo X Vasco", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 1, hour: 10, broadcasts: [{ channel: "GE TV", canal: "1" }] },
+  { sport: "Futebol", league: "Campeonato Carioca", title: "Flamengo X Vasco", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 1, hour: 10, broadcasts: [{ channel: "GE TV", canal: "1" }] },
   // TER 03 – 1 PM (2 jogos)
-  { sport: "Futebol", title: "Palmeiras X São Paulo", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 2, hour: 13, broadcasts: [{ channel: "GE TV", canal: "1" }, { channel: "SporTV", canal: "2" }] },
-  { sport: "Hóquei", title: "Maple Leafs X Penguins", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 2, hour: 13, broadcasts: [{ channel: "ESPN", canal: "2" }] },
+  { sport: "Futebol", league: "Paulistão", title: "Palmeiras X São Paulo", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 2, hour: 13, broadcasts: [{ channel: "GE TV", canal: "1" }, { channel: "SporTV", canal: "2" }] },
+  { sport: "Hóquei", league: "NHL", title: "Maple Leafs X Penguins", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 2, hour: 13, broadcasts: [{ channel: "ESPN", canal: "2" }] },
   // QUA 04 – 9 AM
-  { sport: "Hóquei", title: "Seattle Kraken X Buffalo Sabres", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 9, broadcasts: [{ channel: "ESPN", canal: "2" }] },
+  { sport: "Hóquei", league: "NHL", title: "Seattle Kraken X Buffalo Sabres", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 9, broadcasts: [{ channel: "ESPN", canal: "2" }] },
   // QUA 04 – 12 PM (3 jogos — testa o +1)
-  { sport: "Futebol", title: "Corinthians X Santos", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 12, broadcasts: [{ channel: "Premiere", canal: "1" }] },
-  { sport: "Basquete", title: "Warriors X Nuggets", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 12, broadcasts: [{ channel: "ESPN", canal: "3" }] },
-  { sport: "Futebol", title: "Grêmio X Internacional", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 12, broadcasts: [{ channel: "SporTV", canal: "2" }] },
+  { sport: "Futebol", league: "Paulistão", title: "Corinthians X Santos", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 12, broadcasts: [{ channel: "Premiere", canal: "1" }] },
+  { sport: "Basquete", league: "NBA", title: "Warriors X Nuggets", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 12, broadcasts: [{ channel: "ESPN", canal: "3" }] },
+  { sport: "Futebol", league: "Gauchão", title: "Grêmio X Internacional", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 12, broadcasts: [{ channel: "SporTV", canal: "2" }] },
   // QUI 05 – 1 PM
-  { sport: "Basquete", title: "Houston Rockets X Denver Nuggets", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 4, hour: 13, broadcasts: [{ channel: "ESPN", canal: "1" }] },
+  { sport: "Basquete", league: "NBA", title: "Houston Rockets X Denver Nuggets", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 4, hour: 13, broadcasts: [{ channel: "ESPN", canal: "1" }] },
   // QUI 05 – 3 PM (4 jogos — testa o +2)
-  { sport: "Futebol", title: "Chelsea X Arsenal", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 4, hour: 15, broadcasts: [{ channel: "ESPN", canal: "1" }] },
-  { sport: "Futebol", title: "Real Madrid X Barcelona", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 4, hour: 15, broadcasts: [{ channel: "ESPN", canal: "2" }] },
-  { sport: "Basquete", title: "Celtics X Heat", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 4, hour: 15, broadcasts: [{ channel: "ESPN", canal: "3" }] },
-  { sport: "Hóquei", title: "Kraken X Bruins", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 4, hour: 15, broadcasts: [{ channel: "SporTV", canal: "1" }] },
+  { sport: "Futebol", league: "Premier League", title: "Chelsea X Arsenal", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 4, hour: 15, broadcasts: [{ channel: "ESPN", canal: "1" }] },
+  { sport: "Futebol", league: "La Liga", title: "Real Madrid X Barcelona", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 4, hour: 15, broadcasts: [{ channel: "ESPN", canal: "2" }] },
+  { sport: "Basquete", league: "NBA", title: "Celtics X Heat", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 4, hour: 15, broadcasts: [{ channel: "ESPN", canal: "3" }] },
+  { sport: "Hóquei", league: "NHL", title: "Kraken X Bruins", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 4, hour: 15, broadcasts: [{ channel: "SporTV", canal: "1" }] },
   // SEX 06 – 6 PM
-  { sport: "Hóquei", title: "Seattle Kraken X Buffalo Sabres", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 5, hour: 18, broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "SporTV", canal: "4k" }] },
+  { sport: "Hóquei", league: "NHL", title: "Seattle Kraken X Buffalo Sabres", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 5, hour: 18, broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "SporTV", canal: "4k" }] },
   // SAB 07 – 9 AM (2 jogos)
-  { sport: "Futebol", title: "Corinthians X Ponte Preta", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 6, hour: 9, broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "Premiere", canal: "2" }] },
-  { sport: "Basquete", title: "Rockets X Grizzlies", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 6, hour: 9, broadcasts: [{ channel: "ESPN", canal: "2" }] },
+  { sport: "Futebol", league: "Paulistão", title: "Corinthians X Ponte Preta", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 6, hour: 9, broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "Premiere", canal: "2" }] },
+  { sport: "Basquete", league: "NBA", title: "Rockets X Grizzlies", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 6, hour: 9, broadcasts: [{ channel: "ESPN", canal: "2" }] },
   // SAB 07 – 12 PM
-  { sport: "Futebol", title: "Botafogo X Fluminense", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 6, hour: 12, broadcasts: [{ channel: "SBT" }, { channel: "Premiere", canal: "3" }] },
+  { sport: "Futebol", league: "Campeonato Carioca", title: "Botafogo X Fluminense", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 6, hour: 12, broadcasts: [{ channel: "SBT" }, { channel: "Premiere", canal: "3" }] },
   // SAB 07 – 2 PM
-  { sport: "Futebol", title: "Atletico-MG X Cruzeiro", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 6, hour: 14, broadcasts: [{ channel: "Band" }, { channel: "Premiere", canal: "1" }] },
+  { sport: "Futebol", league: "Campeonato Mineiro", title: "Atletico-MG X Cruzeiro", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 6, hour: 14, broadcasts: [{ channel: "Band" }, { channel: "Premiere", canal: "1" }] },
   // SAB 07 – 5 PM
-  { sport: "Hóquei", title: "Seattle Kraken X Buffalo Sabres", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 6, hour: 17, broadcasts: [{ channel: "ESPN", canal: "3" }] },
+  { sport: "Hóquei", league: "NHL", title: "Seattle Kraken X Buffalo Sabres", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 6, hour: 17, broadcasts: [{ channel: "ESPN", canal: "3" }] },
   // SEG 02 – 4 PM
-  { sport: "Basquete", title: "Houston Rockets X Denver Nuggets", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 1, hour: 16, broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "SporTV", canal: "3" }] },
+  { sport: "Basquete", league: "NBA", title: "Houston Rockets X Denver Nuggets", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 1, hour: 16, broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "SporTV", canal: "3" }] },
   // QUA 04 – 5 PM
-  { sport: "Basquete", title: "Timberwolves X Suns", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 17, broadcasts: [{ channel: "ESPN", canal: "2" }] },
+  { sport: "Basquete", league: "NBA", title: "Timberwolves X Suns", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 17, broadcasts: [{ channel: "ESPN", canal: "2" }] },
   // QUA 04 – 3 PM
-  { sport: "Futebol", title: "Liverpool X Man City", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 15, broadcasts: [{ channel: "Premiere", canal: "2" }] },
+  { sport: "Futebol", league: "Premier League", title: "Liverpool X Man City", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 15, broadcasts: [{ channel: "Premiere", canal: "2" }] },
 ];
 
 /* ─── Filter → Sport mapping ─── */
@@ -296,7 +297,7 @@ export function CalendarPage() {
         <div className="calendarPage__modalOverlay" onClick={() => setSelectedEvent(null)}>
           <div className="calendarPage__modalContent" onClick={(e) => e.stopPropagation()}>
             <PopUpCard
-              championship={selectedEvent.sport}
+              championship={selectedEvent.league}
               homeName={selectedEvent.title.split(" X ")[0]}
               awayName={selectedEvent.title.split(" X ")[1]}
               homeLogo={selectedEvent.homeLogo}
