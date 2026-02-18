@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MenuButton } from "../components/MenuButton";
 import { CalendarButton } from "../components/CalendarButton";
@@ -24,9 +24,9 @@ const WEEK_DAYS = [
   { label: "SAB", number: "07" },
 ];
 
-/* ─── Hours (7 AM – 7 PM) ─── */
+/* ─── Hours (24h) ─── */
 
-const HOURS = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+const HOURS = Array.from({ length: 24 }, (_, i) => i);
 
 function formatHour(h: number): string {
   if (h === 0) return "12 AM";
@@ -44,7 +44,7 @@ interface CalendarEvent {
   awayLogo: string;
   /** Day column index 0–6 (DOM=0, SAB=6) */
   day: number;
-  /** Hour row 7–19 */
+  /** Hour row 0–23 */
   hour: number;
 }
 
@@ -92,6 +92,15 @@ const FILTER_TO_SPORT: Partial<Record<FilterCalendarName, CardEventSport>> = {
 export function CalendarPage() {
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState<FilterCalendarName>("Todos");
+  const mainRef = useRef<HTMLElement>(null);
+  const currentHourRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (currentHourRef.current && mainRef.current) {
+      const offset = currentHourRef.current.offsetTop - 100;
+      mainRef.current.scrollTo({ top: offset, behavior: "instant" });
+    }
+  }, []);
 
   function getEvent(day: number, hour: number): CalendarEvent | undefined {
     return EVENTS.find((e) => {
@@ -130,7 +139,7 @@ export function CalendarPage() {
       </aside>
 
       {/* ─── Main Content ─── */}
-      <main className="calendarPage__main">
+      <main ref={mainRef} className="calendarPage__main">
         {/* Header */}
         <header className="calendarPage__header">
           <div className="calendarPage__headerSearch">
@@ -166,9 +175,12 @@ export function CalendarPage() {
 
             {/* Hour rows */}
             {HOURS.map((hour) => (
-              <>
+              <Fragment key={hour}>
                 {/* Time label */}
-                <div key={`t-${hour}`} className="calendarPage__timeLabel">
+                <div
+                  ref={hour === new Date().getHours() ? currentHourRef : undefined}
+                  className="calendarPage__timeLabel"
+                >
                   {formatHour(hour)}
                 </div>
                 {/* 7 day cells */}
@@ -187,7 +199,7 @@ export function CalendarPage() {
                     </div>
                   );
                 })}
-              </>
+              </Fragment>
             ))}
           </div>
         </section>

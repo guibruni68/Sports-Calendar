@@ -1,7 +1,8 @@
 /* ─── Calendar Page Layout ─── */
 .calendarPage {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: var(--color-bg-base);
   color: var(--color-text-secondary);
 }
@@ -67,6 +68,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   overflow-x: hidden;
   padding-bottom: 40px;
 }
@@ -90,7 +92,7 @@
   padding: 0 32px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
 }
 
 /* ─── Calendar Header (filters row) ─── */
@@ -99,6 +101,11 @@
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  position: sticky;
+  top: 16px;
+  z-index: 10;
+  background: var(--color-bg-base);
+  padding: 16px 0;
 }
 
 .calendarPage__calendarSearch {
@@ -112,7 +119,6 @@
   grid-template-columns: 60px repeat(7, 1fr);
   border: 1px solid var(--color-border-subtle);
   border-radius: 8px;
-  overflow: hidden;
 }
 
 /* ─── Week Days Header ─── */
@@ -124,6 +130,10 @@
   padding: 8px 12px;
   background: var(--color-bg-surface-2);
   border-left: 1px solid var(--color-border-subtle);
+  position: sticky;
+  top: 80px;
+  z-index: 9;
+  box-shadow: 0 -100px 0 0 var(--color-bg-base);
 }
 
 .calendarPage__dayHeader:first-of-type {
@@ -150,6 +160,10 @@
 /* Corner cell (top-left empty) */
 .calendarPage__cornerCell {
   background: var(--color-bg-surface-2);
+  position: sticky;
+  top: 80px;
+  z-index: 9;
+  box-shadow: 0 -100px 0 0 var(--color-bg-base);
 }
 
 /* ─── Hour Rows ─── */
@@ -164,6 +178,8 @@
   color: var(--color-text-muted);
   border-top: 1px solid var(--color-border-subtle);
   white-space: nowrap;
+  position: relative;
+  z-index: 1;
 }
 
 .calendarPage__cell {
@@ -173,6 +189,8 @@
   padding: 4px;
   display: flex;
   align-items: flex-start;
+  position: relative;
+  z-index: 1;
   justify-content: stretch;
 }
 
