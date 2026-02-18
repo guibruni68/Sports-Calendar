@@ -2,7 +2,6 @@
 .bannerCarousel {
   position: relative;
   width: 100%;
-  overflow: hidden;
   border-radius: 16px;
 }
 
@@ -38,10 +37,6 @@
   aspect-ratio: 620 / 350;
 }
 
-.bannerCarousel .bannerHero:hover {
-  transform: none;
-  box-shadow: none;
-}
 
 /* ─── Dot Indicators ─── */
 .bannerCarousel__dots {

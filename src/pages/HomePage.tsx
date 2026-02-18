@@ -242,7 +242,7 @@ export function HomePage() {
 
   const events = apiEvents.length > 0
     ? apiEvents.map((e) => ({
-        championship: "",
+        championship: e.league,
         tagJogo: "None" as const,
         teamA: { name: e.homeTeam, logoSrc: e.homeTeamLogo || defaultClubLogo },
         teamB: { name: e.awayTeam, logoSrc: e.awayTeamLogo || defaultClubLogo },
@@ -302,17 +302,36 @@ export function HomePage() {
           <div className="homePage__liveGamesWrapper">
             <div className="homePage__liveGames">
               <h2 className="homePage__liveGamesTitle">Jogos ao vivo:</h2>
-              {LIVE_GAMES.map((game, i) => (
-                <CardDestaque
-                  key={i}
-                  tipo="Jogo"
-                  aoVivo={game.aoVivo}
-                  gameDate={game.gameDate}
-                  homeLogo={game.homeLogo}
-                  awayLogo={game.awayLogo}
-                  channels={game.channels}
-                />
-              ))}
+              {apiEvents.length > 0
+                ? apiEvents.map((e, i) => (
+                    <CardDestaque
+                      key={i}
+                      tipo="Jogo"
+                      aoVivo={false}
+                      gameDate={e.date}
+                      homeLogo={e.homeTeamLogo || defaultClubLogo}
+                      awayLogo={e.awayTeamLogo || defaultClubLogo}
+                      channels={
+                        <>
+                          {e.channels.map((ch, j) => {
+                            const parsed = parseChannel(ch);
+                            return <TagCanal key={j} channel={parsed.channel} canal={parsed.canal} />;
+                          })}
+                        </>
+                      }
+                    />
+                  ))
+                : LIVE_GAMES.map((game, i) => (
+                    <CardDestaque
+                      key={i}
+                      tipo="Jogo"
+                      aoVivo={game.aoVivo}
+                      gameDate={game.gameDate}
+                      homeLogo={game.homeLogo}
+                      awayLogo={game.awayLogo}
+                      channels={game.channels}
+                    />
+                  ))}
             </div>
           </div>
         </section>

@@ -188,16 +188,53 @@
   min-height: 80px;
   padding: 4px;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
   position: relative;
   z-index: 1;
-  justify-content: stretch;
 }
 
 .calendarPage__cell .cardEvent {
   width: 100%;
   height: auto;
   min-height: 73px;
+}
+
+.calendarPage__cellOverflow {
+  width: 100%;
+  padding: 4px;
+  border-radius: 4px;
+  background: var(--color-bg-surface-3);
+  color: var(--color-text-muted);
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.calendarPage__cellOverflow:hover {
+  background: var(--color-bg-surface-2);
+  color: var(--color-text-primary);
+}
+
+
+/* ─── Modal Overlay ─── */
+.calendarPage__modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendarPage__modalContent {
+  position: relative;
 }
 
 /* ─── Footer ─── */

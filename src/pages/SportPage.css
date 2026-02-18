@@ -171,14 +171,12 @@
 
 /* ─── Clubs Section ─── */
 .sportPage__clubsSection {
-  padding: 48px 32px;
+  padding: 24px 32px;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .sportPage__carousel--clubs {
-  justify-content: center;
 }
 
 /* ─── Championship Filters ─── */

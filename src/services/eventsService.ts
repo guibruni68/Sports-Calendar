@@ -6,6 +6,7 @@ export interface EventData {
   awayTeamLogo: string;
   date: string;
   channels: string[];
+  league: string;
 }
 
 interface AirtableEventFields {
@@ -17,6 +18,7 @@ interface AirtableEventFields {
   "date-event"?: string;
   "sport"?: string;
   "Status"?: string;
+  "league"?: string;
 }
 
 interface AirtableRecord {
@@ -50,5 +52,6 @@ export async function fetchEvents(
       channels: r.fields["channel"]
         ? r.fields["channel"].split(", ")
         : [],
+      league: r.fields["league"] ?? "",
     }));
 }

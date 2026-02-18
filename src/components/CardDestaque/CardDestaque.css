@@ -70,8 +70,7 @@
 .cardDestaque__logo {
   width: 56px;
   height: 56px;
-  border-radius: 50%;
-  background-color: var(--color-text-primary);
+  background-color: transparent;
   object-fit: contain;
   flex-shrink: 0;
 }

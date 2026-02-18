@@ -4,7 +4,7 @@ const AIRTABLE_BASE = "https://api.airtable.com/v0/appFzpEcAata6XxpD/event";
 
 const SPORT_FILTERS: Record<string, string> = {
   futebol:
-    "AND({Status}=TRUE(),FIND('futebol',LOWER(ARRAYJOIN(sport))),NOT(FIND('americano',LOWER(ARRAYJOIN(sport)))))",
+    "AND({Status}=TRUE(),{sport}='FUTEBOL')",
   basquete:
     "AND({Status}=TRUE(),FIND('basquete',LOWER(ARRAYJOIN(sport))))",
   "futebol-americano":

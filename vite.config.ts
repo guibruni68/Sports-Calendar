@@ -5,7 +5,7 @@ const AIRTABLE_BASE = 'https://api.airtable.com'
 const AIRTABLE_APP = 'appFzpEcAata6XxpD'
 
 const EVENT_SPORT_FILTERS: Record<string, string> = {
-  futebol: "AND({Status}=TRUE(),FIND('futebol',LOWER(ARRAYJOIN(sport))),NOT(FIND('americano',LOWER(ARRAYJOIN(sport)))))",
+  futebol: "AND({Status}=TRUE(),{sport}='FUTEBOL')",
   basquete: "AND({Status}=TRUE(),FIND('basquete',LOWER(ARRAYJOIN(sport))))",
   'futebol-americano': "AND({Status}=TRUE(),FIND('futebol americano',LOWER(ARRAYJOIN(sport))))",
   automobilismo: "AND({Status}=TRUE(),FIND('automobilismo',LOWER(ARRAYJOIN(sport))))",
@@ -14,7 +14,7 @@ const EVENT_SPORT_FILTERS: Record<string, string> = {
 }
 
 const BANNER_SPORT_FILTERS: Record<string, string> = {
-  futebol: "AND(FIND('futebol',LOWER(ARRAYJOIN(sport))),NOT(FIND('americano',LOWER(ARRAYJOIN(sport)))))",
+  futebol: "{sport}='FUTEBOL'",
   basquete: "FIND('basquete',LOWER(ARRAYJOIN(sport)))",
   'futebol-americano': "FIND('futebol americano',LOWER(ARRAYJOIN(sport)))",
   automobilismo: "FIND('automobilismo',LOWER(ARRAYJOIN(sport)))",
@@ -33,7 +33,6 @@ export default defineConfig(({ mode }) => {
         '/api/events': {
           target: AIRTABLE_BASE,
           changeOrigin: true,
-          rewrite: () => `/v0/${AIRTABLE_APP}/event`,
           configure: (proxy) => {
             proxy.on('proxyReq', (proxyReq, req) => {
               proxyReq.setHeader('Authorization', `Bearer ${env.AIRTABLE_TOKEN}`)
@@ -57,7 +56,6 @@ export default defineConfig(({ mode }) => {
         '/api/banners': {
           target: AIRTABLE_BASE,
           changeOrigin: true,
-          rewrite: () => `/v0/${AIRTABLE_APP}/banner`,
           configure: (proxy) => {
             proxy.on('proxyReq', (proxyReq, req) => {
               proxyReq.setHeader('Authorization', `Bearer ${env.AIRTABLE_TOKEN}`)
@@ -74,13 +72,18 @@ export default defineConfig(({ mode }) => {
         '/api/teams': {
           target: AIRTABLE_BASE,
           changeOrigin: true,
-          rewrite: () => `/v0/${AIRTABLE_APP}/team`,
           configure: (proxy) => {
-            proxy.on('proxyReq', (proxyReq) => {
+            proxy.on('proxyReq', (proxyReq, req) => {
               proxyReq.setHeader('Authorization', `Bearer ${env.AIRTABLE_TOKEN}`)
+              const url = new URL(req.url!, 'http://localhost')
+              const sport = url.searchParams.get('sport')
+              let filter = "AND({name-team}!='',{Logo}!='')"
+              if (sport && EVENT_SPORT_FILTERS[sport]) {
+                filter = `AND({name-team}!='',{Logo}!='',{Esporte}='${sport.toUpperCase()}')`
+              }
               const params = new URLSearchParams({
                 view: 'Grid view',
-                filterByFormula: "AND({name-team}!='',{Logo}!='')",
+                filterByFormula: filter,
               })
               proxyReq.path = `/v0/${AIRTABLE_APP}/team?${params}`
             })

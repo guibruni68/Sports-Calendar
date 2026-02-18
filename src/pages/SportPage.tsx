@@ -396,12 +396,11 @@ export function SportPage({ sport }: { sport: string }) {
   const matchesRef = useRef<HTMLDivElement>(null);
   const clubsRef = useRef<HTMLDivElement>(null);
 
-  /* ── Fetch futebol teams ── */
+  /* ── Fetch teams by sport ── */
   useEffect(() => {
-    if (sport !== "futebol") return;
-
+    setApiClubs([]);
     const controller = new AbortController();
-    fetch("/api/teams", { signal: controller.signal })
+    fetch(`/api/teams?sport=${encodeURIComponent(sport)}`, { signal: controller.signal })
       .then((res) => res.json())
       .then((data) => {
         const teams: AirtableTeam[] = data.records
@@ -420,6 +419,7 @@ export function SportPage({ sport }: { sport: string }) {
 
   /* ── Fetch sport events ── */
   useEffect(() => {
+    setApiMatches([]);
     const controller = new AbortController();
     fetchEvents(sport, controller.signal)
       .then(setApiMatches)
@@ -427,12 +427,12 @@ export function SportPage({ sport }: { sport: string }) {
     return () => controller.abort();
   }, [sport]);
 
-  const clubs = sport === "futebol" && apiClubs.length > 0 ? apiClubs : config?.clubs ?? [];
+  const clubs = apiClubs.length > 0 ? apiClubs : config?.clubs ?? [];
 
   const matches =
     apiMatches.length > 0
       ? apiMatches.map((e) => ({
-          championship: "",
+          championship: e.league,
           tagJogo: "None" as const,
           teamA: { name: e.homeTeam, logoSrc: e.homeTeamLogo || defaultClubLogo },
           teamB: { name: e.awayTeam, logoSrc: e.awayTeamLogo || defaultClubLogo },
