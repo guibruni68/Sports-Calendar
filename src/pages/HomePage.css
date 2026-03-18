@@ -77,7 +77,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
-  padding: 16px 32px 40px;
+  padding: 32px 32px 40px;
 }
 
 .homePage__headerSearch {
@@ -429,4 +429,19 @@
   .homePage__carousel {
     gap: 16px;
   }
+}
+
+/* ─── Modal Overlay ─── */
+.homePage__modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homePage__modalContent {
+  position: relative;
 }

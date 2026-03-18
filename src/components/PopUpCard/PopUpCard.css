@@ -35,8 +35,8 @@
   margin-top: 41px;
   font-family: "Montserrat Alternates", sans-serif;
   font-weight: 700;
-  font-size: 36px;
-  line-height: 44px;
+  font-size: 32px;
+  line-height: 39px;
   color: var(--color-primary);
   text-align: center;
 }
@@ -70,16 +70,14 @@
 .popUpCard__logo {
   width: 164px;
   height: 164px;
-  border-radius: 50%;
-  background-color: var(--color-text-primary);
   object-fit: contain;
 }
 
 .popUpCard__teamName {
-  font-family: "Montserrat Alternates", sans-serif;
-  font-weight: 700;
+  font-family: "Lexend Deca", sans-serif;
+  font-weight: 400;
   font-size: 24px;
-  line-height: 29px;
+  line-height: 30px;
   color: var(--color-text-primary);
   text-align: center;
   width: 100%;
@@ -98,7 +96,14 @@
   padding-top: 20px;
 }
 
+/* Score pill — dark container (same bg as card) masks looper BG behind text */
 .popUpCard__score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 62px;
+  background-color: var(--color-bg-surface-3);
   font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: 22px;
@@ -111,13 +116,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 15px;
-  border-radius: 7px;
+  padding: 4.5px 12px;
+  border-radius: 6px;
   background-color: var(--color-live);
-  font-family: "Roboto", sans-serif;
+  font-family: "Segoe UI", sans-serif;
   font-weight: 700;
-  font-size: 22px;
-  line-height: 29px;
+  font-size: 18px;
+  line-height: 24px;
   color: var(--color-text-tertiary);
   white-space: nowrap;
 }
@@ -135,8 +140,67 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 13px 0;
-  margin-top: 16px;
+  gap: 8px;
+  padding: 13px 26px 32px;
+  margin-top: auto;
   width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Scoped TagCanal overrides (larger inside PopUpCard) ─────────────── */
+
+.popUpCard__channels .tagCanal {
+  font-size: 14px;
+  padding: 5px 10px;
+  height: auto;
+}
+
+/* ── Event variant ────────────────────────────────────────────────────── */
+
+.popUpCard--event {
+  height: 250px;
+}
+
+.popUpCard--event .popUpCard__looper {
+  left: auto;
+  right: -87px;
+  height: 250px;
+}
+
+.popUpCard__eventLayout {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+  padding: 0 26px;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+.popUpCard__eventLogoWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.popUpCard__eventLogo {
+  max-width: 200px;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.popUpCard__eventInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+}
+
+.popUpCard__eventInfo .popUpCard__championship {
+  margin-top: 0;
+  text-align: left;
 }

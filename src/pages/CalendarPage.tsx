@@ -7,7 +7,7 @@ import type { FilterCalendarName } from "../components/FilterCalendar";
 import { SearchBar } from "../components/SearchBar";
 import { CTAButton } from "../components/CTAButton";
 import { CardEvent } from "../components/CardEvent";
-import type { CardEventSport } from "../components/CardEvent";
+import type { CardEventSport, CardEventTipo } from "../components/CardEvent";
 import { PopUpCard } from "../components/PopUpCard";
 import { TagCanal } from "../components/TagCanal";
 import type { ChannelName, CanalNumber } from "../components/TagCanal";
@@ -15,17 +15,35 @@ import defaultClubLogo from "../assets/default-club-logo.svg";
 import logoWatch from "../assets/logo-watch.svg";
 import "./CalendarPage.css";
 
-/* ─── Week days ─── */
+/* ─── Week helpers ─── */
 
-const WEEK_DAYS = [
-  { label: "DOM", number: "01" },
-  { label: "SEG", number: "02" },
-  { label: "TER", number: "03" },
-  { label: "QUA", number: "04" },
-  { label: "QUI", number: "05" },
-  { label: "SEX", number: "06" },
-  { label: "SAB", number: "07" },
-];
+const DAY_NAMES = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"] as const;
+
+function getWeekDays(offset: number) {
+  const today = new Date();
+  // Sunday of the current week
+  const sunday = new Date(today);
+  sunday.setDate(today.getDate() - today.getDay() + offset * 7);
+  sunday.setHours(0, 0, 0, 0);
+
+  return DAY_NAMES.map((label, i) => {
+    const d = new Date(sunday);
+    d.setDate(sunday.getDate() + i);
+    return {
+      label,
+      number: String(d.getDate()).padStart(2, "0"),
+      month: String(d.getMonth() + 1).padStart(2, "0"),
+      isToday: d.toDateString() === today.toDateString(),
+    };
+  });
+}
+
+function getWeekLabel(offset: number): string {
+  const days = getWeekDays(offset);
+  const s = days[0];
+  const e = days[6];
+  return `${s.number}/${s.month} - ${e.number}/${e.month}`;
+}
 
 /* ─── Hours (24h) ─── */
 
@@ -47,10 +65,12 @@ interface Broadcast {
 
 interface CalendarEvent {
   sport: CardEventSport;
+  /** Card variant — "event" for single-entity sports (Automobilismo, etc.) */
+  tipo?: CardEventTipo;
   league: string;
   title: string;
-  homeLogo: string;
-  awayLogo: string;
+  homeLogo?: string;
+  awayLogo?: string;
   /** Day column index 0–6 (DOM=0, SAB=6) */
   day: number;
   /** Hour row 0–23 */
@@ -97,6 +117,10 @@ const EVENTS: CalendarEvent[] = [
   { sport: "Basquete", league: "NBA", title: "Timberwolves X Suns", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 17, broadcasts: [{ channel: "ESPN", canal: "2" }] },
   // QUA 04 – 3 PM
   { sport: "Futebol", league: "Premier League", title: "Liverpool X Man City", homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, day: 3, hour: 15, broadcasts: [{ channel: "Premiere", canal: "2" }] },
+  // QUI 05 – 5 PM — Automobilismo (event tipo)
+  { sport: "Automobilismo", tipo: "event", league: "Fórmula 1", title: "GP da Austrália", homeLogo: defaultClubLogo, day: 4, hour: 17, broadcasts: [{ channel: "Band" }, { channel: "SporTV", canal: "2" }] },
+  // SEX 06 – 10 AM — Automobilismo
+  { sport: "Automobilismo", tipo: "event", league: "Fórmula 1", title: "GP do Bahrein", homeLogo: defaultClubLogo, day: 5, hour: 10, broadcasts: [{ channel: "Band" }] },
 ];
 
 /* ─── Filter → Sport mapping ─── */
@@ -105,17 +129,21 @@ const FILTER_TO_SPORT: Partial<Record<FilterCalendarName, CardEventSport>> = {
   Futebol: "Futebol",
   Basquete: "Basquete",
   Hóquei: "Hóquei",
+  Automobilismo: "Automobilismo",
 };
 
 /* ─── Page Component ─── */
 
 export function CalendarPage() {
   const navigate = useNavigate();
+  const [weekOffset, setWeekOffset] = useState(0);
   const [activeFilter, setActiveFilter] = useState<FilterCalendarName>("Todos");
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
   const [expandedCells, setExpandedCells] = useState<Set<string>>(new Set());
   const mainRef = useRef<HTMLElement>(null);
   const currentHourRef = useRef<HTMLDivElement>(null);
+
+  const weekDays = getWeekDays(weekOffset);
 
   function toggleExpand(key: string) {
     setExpandedCells((prev) => {
@@ -140,11 +168,13 @@ export function CalendarPage() {
   }, [expandedCells.size]);
 
   useEffect(() => {
-    if (currentHourRef.current && mainRef.current) {
+    if (weekOffset === 0 && currentHourRef.current && mainRef.current) {
       const offset = currentHourRef.current.offsetTop - 100;
       mainRef.current.scrollTo({ top: offset, behavior: "instant" });
+    } else if (weekOffset !== 0 && mainRef.current) {
+      mainRef.current.scrollTo({ top: 0, behavior: "instant" });
     }
-  }, []);
+  }, [weekOffset]);
 
   useEffect(() => {
     if (!selectedEvent) return;
@@ -192,20 +222,34 @@ export function CalendarPage() {
       </aside>
 
       {/* ─── Main Content ─── */}
-      <main ref={mainRef} className="calendarPage__main">
-        {/* Header */}
+      {/*
+        Split-scroll architecture:
+        - calendarPage__main: overflow hidden (does NOT scroll)
+        - calendarPage__header (CTA + Search) is first, always visible
+        - calendarPage__calendarHeader (filters) and calendarPage__gridHeader (day names)
+          are always-visible, non-sticky elements above the scroll area.
+        - calendarPage__gridBody is the ONLY scroll container.
+          Grid cells are physically impossible to escape above the day-header row.
+      */}
+      <main className="calendarPage__main">
+        {/* Page header — CTA + Search, always on top */}
         <header className="calendarPage__header">
+          <CTAButton label="Quero ser Watch" />
           <div className="calendarPage__headerSearch">
             <SearchBar onFocus={() => navigate("/search")} />
           </div>
-          <CTAButton label="Quero ser Watch" />
         </header>
 
         {/* Calendar */}
         <section className="calendarPage__calendar">
-          {/* Calendar Header */}
+          {/* Filter bar — always visible, never sticky */}
           <div className="calendarPage__calendarHeader">
-            <CalendarButton label="01/02 - 07/02" />
+            <CalendarButton
+              label={getWeekLabel(weekOffset)}
+              onPrevious={() => setWeekOffset((o) => o - 1)}
+              onNext={() => setWeekOffset((o) => o + 1)}
+              onClick={() => setWeekOffset(0)}
+            />
             <FilterCalendar name="Todos" active={activeFilter === "Todos"} onClick={() => setActiveFilter("Todos")} />
             <FilterCalendar name="Futebol" active={activeFilter === "Futebol"} onClick={() => setActiveFilter("Futebol")} />
             <FilterCalendar name="Basquete" active={activeFilter === "Basquete"} onClick={() => setActiveFilter("Basquete")} />
@@ -215,81 +259,87 @@ export function CalendarPage() {
             <FilterCalendar name="Beisebol" active={activeFilter === "Beisebol"} onClick={() => setActiveFilter("Beisebol")} />
           </div>
 
-          {/* Calendar Grid */}
-          <div className="calendarPage__grid">
-            {/* Header row: corner + 7 days */}
+          {/* Day-header row — always visible, never sticky */}
+          <div className="calendarPage__gridHeader">
             <div className="calendarPage__cornerCell" />
-            {WEEK_DAYS.map((d) => (
-              <div key={d.label} className="calendarPage__dayHeader">
+            {weekDays.map((d) => (
+              <div
+                key={d.label}
+                className={`calendarPage__dayHeader${d.isToday ? " calendarPage__dayHeader--today" : ""}`}
+              >
                 <span className="calendarPage__dayLabel">{d.label}</span>
                 <span className="calendarPage__dayNumber">{d.number}</span>
               </div>
             ))}
+          </div>
 
-            {/* Hour rows */}
-            {HOURS.map((hour) => (
-              <Fragment key={hour}>
-                {/* Time label */}
-                <div
-                  ref={hour === new Date().getHours() ? currentHourRef : undefined}
-                  className="calendarPage__timeLabel"
-                >
-                  {formatHour(hour)}
-                </div>
-                {/* 7 day cells */}
-                {WEEK_DAYS.map((_, dayIdx) => {
-                  const events = getEvents(dayIdx, hour);
-                  const cellKey = `${hour}-${dayIdx}`;
-                  const isExpanded = expandedCells.has(cellKey);
-                  const visible = isExpanded ? events : events.slice(0, 2);
-                  const overflow = events.length - 2;
-                  return (
-                    <div key={`c-${cellKey}`} className="calendarPage__cell">
-                      {visible.map((event, idx) => (
-                        <CardEvent
-                          key={idx}
-                          sport={event.sport}
-                          title={event.title}
-                          homeLogo={event.homeLogo}
-                          awayLogo={event.awayLogo}
-                          onClick={() => setSelectedEvent(event)}
-                        />
-                      ))}
-                      {overflow > 0 && !isExpanded && (
-                        <button
-                          className="calendarPage__cellOverflow"
-                          onClick={() => toggleExpand(cellKey)}
-                        >
-                          +{overflow}
-                        </button>
-                      )}
-                      {isExpanded && (
-                        <button
-                          className="calendarPage__cellOverflow"
-                          onClick={() => toggleExpand(cellKey)}
-                        >
-                          ×
-                        </button>
-                      )}
-                    </div>
-                  );
-                })}
-              </Fragment>
-            ))}
+          {/* Scrollable body — only this scrolls */}
+          <div ref={mainRef} className="calendarPage__gridBody">
+            {/* Hour grid */}
+            <div className="calendarPage__grid">
+              {HOURS.map((hour) => (
+                <Fragment key={hour}>
+                  <div
+                    ref={hour === new Date().getHours() ? currentHourRef : undefined}
+                    className="calendarPage__timeLabel"
+                  >
+                    {formatHour(hour)}
+                  </div>
+                  {weekDays.map((_, dayIdx) => {
+                    const events = getEvents(dayIdx, hour);
+                    const cellKey = `${hour}-${dayIdx}`;
+                    const isExpanded = expandedCells.has(cellKey);
+                    const visible = isExpanded ? events : events.slice(0, 2);
+                    const overflow = events.length - 2;
+                    return (
+                      <div key={`c-${cellKey}`} className="calendarPage__cell">
+                        {visible.map((event, idx) => (
+                          <CardEvent
+                            key={idx}
+                            sport={event.sport}
+                            tipo={event.tipo ?? "versus"}
+                            title={event.title}
+                            homeLogo={event.homeLogo}
+                            awayLogo={event.awayLogo}
+                            onClick={() => setSelectedEvent(event)}
+                          />
+                        ))}
+                        {overflow > 0 && !isExpanded && (
+                          <button
+                            className="calendarPage__cellOverflow"
+                            onClick={() => toggleExpand(cellKey)}
+                          >
+                            +{overflow}
+                          </button>
+                        )}
+                        {isExpanded && (
+                          <button
+                            className="calendarPage__cellOverflow"
+                            onClick={() => toggleExpand(cellKey)}
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </Fragment>
+              ))}
+            </div>
+
+            {/* Footer scrolls with grid */}
+            <footer className="calendarPage__footer">
+              <div className="calendarPage__footerLinks">
+                <span className="calendarPage__footerLink">Terms Of Service</span>
+                <span className="calendarPage__footerLink">Report Abuse</span>
+                <span className="calendarPage__footerLink">Privacy & Data Policy</span>
+              </div>
+              <span className="calendarPage__copyright">
+                2026 All Rights Reserved &copy; WatchStats
+              </span>
+            </footer>
           </div>
         </section>
-
-        {/* Footer */}
-        <footer className="calendarPage__footer">
-          <div className="calendarPage__footerLinks">
-            <span className="calendarPage__footerLink">Terms Of Service</span>
-            <span className="calendarPage__footerLink">Report Abuse</span>
-            <span className="calendarPage__footerLink">Privacy & Data Policy</span>
-          </div>
-          <span className="calendarPage__copyright">
-            2026 All Rights Reserved &copy; WatchStats
-          </span>
-        </footer>
       </main>
 
       {/* Modal PopUpCard */}
@@ -298,11 +348,12 @@ export function CalendarPage() {
           <div className="calendarPage__modalContent" onClick={(e) => e.stopPropagation()}>
             <PopUpCard
               championship={selectedEvent.league}
+              tipo={selectedEvent.tipo === "event" ? "event" : "versus"}
               homeName={selectedEvent.title.split(" X ")[0]}
               awayName={selectedEvent.title.split(" X ")[1]}
-              homeLogo={selectedEvent.homeLogo}
+              homeLogo={selectedEvent.homeLogo ?? ""}
               awayLogo={selectedEvent.awayLogo}
-              gameDate={`${WEEK_DAYS[selectedEvent.day].label} ${WEEK_DAYS[selectedEvent.day].number} - ${formatHour(selectedEvent.hour)}`}
+              gameDate={`${weekDays[selectedEvent.day].number}/${weekDays[selectedEvent.day].month} ${String(selectedEvent.hour).padStart(2, "0")}:00`}
               channels={
                 selectedEvent.broadcasts && (
                   <>

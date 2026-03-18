@@ -3,11 +3,14 @@
 .cardDestaque {
   display: inline-flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 258px;
   background-color: var(--color-bg-surface-3);
   border: 2px solid transparent;
-  padding: 0;
+  padding: 0 4px;
+  gap: 8px;
   cursor: pointer;
-  overflow: hidden;
   box-sizing: border-box;
   border-radius: 8px;
   transition: border-color 300ms ease-out;
@@ -17,36 +20,18 @@
   border-color: var(--color-primary);
 }
 
-/* ── Tipo: Jogo ───────────────────────────────────────────────────────── */
+/* ── Tipo: Jogo / Evento (116px) ─────────────────────────────────────── */
 
-.cardDestaque--jogo {
-  width: 100%;
-  max-width: 272px;
-  height: auto;
-  gap: 0;
-  padding: 16px 12px 0;
-  align-items: center;
-  justify-content: center;
+.cardDestaque--jogo,
+.cardDestaque--evento {
+  height: 116px;
 }
 
-.cardDestaque--jogo.cardDestaque--ao-vivo {
-  padding: 16px 12px 0;
-}
-
-.cardDestaque--jogo.cardDestaque--ao-vivo:hover {
-  border-color: #ff5903;
-}
-
-/* ── Tipo: Time / Competição ──────────────────────────────────────────── */
+/* ── Tipo: Time / Competição (70px) ──────────────────────────────────── */
 
 .cardDestaque--time,
 .cardDestaque--competicao {
-  width: 250px;
   height: 70px;
-  gap: 8px;
-  padding: 8px 0;
-  align-items: center;
-  justify-content: center;
 }
 
 /* ── Club row ─────────────────────────────────────────────────────────── */
@@ -54,46 +39,60 @@
 .cardDestaque__club {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
 }
 
 .cardDestaque--jogo .cardDestaque__club {
   gap: 8px;
 }
 
+/* AO VIVO badge is wider — needs more breathing room between logos */
 .cardDestaque--jogo.cardDestaque--ao-vivo .cardDestaque__club {
-  gap: 12px;
+  gap: 18px;
 }
 
-/* ── Logo ─────────────────────────────────────────────────────────────── */
+.cardDestaque--evento .cardDestaque__club {
+  gap: 60px;
+}
+
+.cardDestaque--time .cardDestaque__club,
+.cardDestaque--competicao .cardDestaque__club {
+  gap: 6px;
+}
+
+/* ── Logos (56×56) ────────────────────────────────────────────────────── */
 
 .cardDestaque__logo {
   width: 56px;
   height: 56px;
-  background-color: transparent;
   object-fit: contain;
   flex-shrink: 0;
 }
 
-/* ── Score pill (game date) ───────────────────────────────────────────── */
+/* ── Event logo (max 80×20) ───────────────────────────────────────────── */
+
+.cardDestaque__eventLogo {
+  max-width: 80px;
+  max-height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ── Score pill (10% primary bg, primary text) ───────────────────────── */
 
 .cardDestaque__score {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 16px;
+  padding: 3px 8px;
   border-radius: 50px;
-}
-
-.cardDestaque__date {
-  font-family: "Roboto", sans-serif;
+  background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  font-family: "Segoe UI", sans-serif;
   font-weight: 700;
   font-size: 12px;
   line-height: 16px;
-  letter-spacing: 0.05px;
-  color: var(--color-text-tertiary);
-  white-space: pre-line;
-  text-align: center;
+  color: var(--color-primary);
+  white-space: nowrap;
 }
 
 /* ── AO VIVO badge ────────────────────────────────────────────────────── */
@@ -105,12 +104,11 @@
   padding: 3px 8px;
   border-radius: 4px;
   background-color: var(--color-live);
-  font-family: "Roboto", sans-serif;
+  font-family: "Segoe UI", sans-serif;
   font-weight: 700;
   font-size: 12px;
   line-height: 16px;
-  letter-spacing: 0.05px;
-  color: var(--color-text-tertiary);
+  color: var(--color-text-primary);
   white-space: nowrap;
 }
 
@@ -126,16 +124,25 @@
   width: 150px;
 }
 
-/* ── Channels row (Transmissão) ───────────────────────────────────────── */
+/* ── TV icon ──────────────────────────────────────────────────────────── */
+
+.cardDestaque__tvIcon {
+  width: 14px;
+  height: 14px;
+  color: var(--color-text-translucent);
+  flex-shrink: 0;
+}
+
+/* ── Channels row (Transmissão) — divider only ────────────────────────── */
 
 .cardDestaque__channels {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr);
+  display: flex;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 8px;
   width: 100%;
-  margin-top: 12px;
-  padding: 10px 0 12px;
-  border-top: 0.8px solid var(--color-border-muted);
+  padding: 6px 0;
+  border-top: 1px solid var(--color-border-subtle);
+  box-sizing: border-box;
 }

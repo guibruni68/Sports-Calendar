@@ -4,11 +4,11 @@ import { TagJogo } from "../../components/TagJogo";
 import { TagCanal } from "../../components/TagCanal";
 import corinthiansLogo from "../../assets/corinthians-logo.png";
 import pontePretaLogo from "../../assets/ponte-preta-logo.png";
-import popUpCardSetRef from "../../assets/reference/popup-card-set.png";
 import type { ShowcaseProps } from "./types";
 
 export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
   const [demoAoVivo, setDemoAoVivo] = useState(false);
+  const [demoTipo, setDemoTipo] = useState<"versus" | "event">("versus");
   const [demoChampionship, setDemoChampionship] = useState("Paulistão");
 
   const sampleChannels = (
@@ -25,7 +25,7 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
     return (
       <>
         <div className="showcase__section">
-          <h2>Variants</h2>
+          <h2>Variants — Tipo=Versus</h2>
 
           <h3>Ao Vivo = False (With Date)</h3>
           <p style={{ color: "#71717a", fontSize: 14, marginBottom: 16 }}>Default state showing game date/time in center</p>
@@ -59,12 +59,32 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
         </div>
 
         <div className="showcase__section">
-          <h2>Figma Reference</h2>
-          <img
-            src={popUpCardSetRef}
-            alt="PopUp Card – Figma reference"
-            style={{ maxWidth: "100%", borderRadius: 8 }}
-          />
+          <h2>Variants — Tipo=Event</h2>
+          <p style={{ color: "#71717a", fontSize: 14, marginBottom: 16 }}>For single-entity sports (F1, Tennis, etc.) — logo left, title + date/live right, card height 250px</p>
+
+          <h3>Ao Vivo = False</h3>
+          <div className="demo-area" style={{ justifyContent: "center" }}>
+            <PopUpCard
+              tipo="event"
+              championship="Fórmula 1"
+              homeLogo={corinthiansLogo}
+              homeName="Fórmula 1"
+              gameDate="27/01 19:00"
+              channels={sampleChannels}
+            />
+          </div>
+
+          <h3 style={{ marginTop: 32 }}>Ao Vivo = True</h3>
+          <div className="demo-area" style={{ justifyContent: "center" }}>
+            <PopUpCard
+              tipo="event"
+              championship="Fórmula 1"
+              homeLogo={corinthiansLogo}
+              homeName="Fórmula 1"
+              aoVivo
+              channels={sampleChannels}
+            />
+          </div>
         </div>
       </>
     );
@@ -78,27 +98,27 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
             <div className="token-card">
               <div className="token-card__preview" style={{ backgroundColor: "#1B1C21" }} />
               <div className="token-card__label">Card Background</div>
-              <div className="token-card__value">#1B1C21</div>
+              <div className="token-card__value">--color-bg-surface-3 · #1B1C21</div>
             </div>
             <div className="token-card">
               <div className="token-card__preview" style={{ backgroundColor: "#EA580C" }} />
               <div className="token-card__label">Championship Text</div>
-              <div className="token-card__value">#EA580C</div>
+              <div className="token-card__value">--color-primary · #EA580C</div>
             </div>
             <div className="token-card">
               <div className="token-card__preview" style={{ backgroundColor: "#FFFFFF" }} />
               <div className="token-card__label">Team Name / Score</div>
-              <div className="token-card__value">#FFFFFF</div>
+              <div className="token-card__value">--color-text-primary · #FFFFFF</div>
             </div>
             <div className="token-card">
               <div className="token-card__preview" style={{ backgroundColor: "#C5023C" }} />
               <div className="token-card__label">AO VIVO Badge BG</div>
-              <div className="token-card__value">#C5023C</div>
+              <div className="token-card__value">--color-status-live · #C5023C</div>
             </div>
             <div className="token-card">
               <div className="token-card__preview" style={{ backgroundColor: "#FAFAFA" }} />
               <div className="token-card__label">AO VIVO Badge Text</div>
-              <div className="token-card__value">#FAFAFA</div>
+              <div className="token-card__value">--color-text-tertiary · #FAFAFA</div>
             </div>
           </div>
         </div>
@@ -108,29 +128,29 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
           <div className="token-grid">
             <div className="token-card">
               <div className="token-card__label">Championship Font</div>
-              <div className="token-card__value">Montserrat Alternates 700 36px</div>
+              <div className="token-card__value">Montserrat Alternates 700 · 32px / 39px</div>
             </div>
             <div className="token-card">
               <div className="token-card__label">Team Name Font</div>
-              <div className="token-card__value">Montserrat Alternates 700 24px</div>
+              <div className="token-card__value">Montserrat Alternates 700 · 24px / 29px</div>
             </div>
             <div className="token-card">
-              <div className="token-card__label">Game Date Font</div>
-              <div className="token-card__value">Inter 600 22px</div>
+              <div className="token-card__label">Score/Date Font</div>
+              <div className="token-card__value">Inter 600 · 22px / 27px</div>
             </div>
             <div className="token-card">
               <div className="token-card__label">AO VIVO Font</div>
-              <div className="token-card__value">Roboto 700 22px</div>
+              <div className="token-card__value">Montserrat 700 · 18px / 24px</div>
             </div>
           </div>
         </div>
 
         <div className="showcase__section">
-          <h2>Spacing & Layout Tokens</h2>
+          <h2>Spacing & Layout — Versus</h2>
           <div className="token-grid">
             <div className="token-card">
               <div className="token-card__label">Card Size</div>
-              <div className="token-card__value">600 x 441px</div>
+              <div className="token-card__value">600 × 441px</div>
             </div>
             <div className="token-card">
               <div className="token-card__label">Border Radius</div>
@@ -138,19 +158,19 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
             </div>
             <div className="token-card">
               <div className="token-card__label">Team Logo Size</div>
-              <div className="token-card__value">164 x 164px (circle)</div>
+              <div className="token-card__value">164 × 164px · natural shape</div>
             </div>
             <div className="token-card">
               <div className="token-card__label">AO VIVO Padding</div>
-              <div className="token-card__value">5px 15px</div>
+              <div className="token-card__value">4.5px 12px</div>
             </div>
             <div className="token-card">
               <div className="token-card__label">AO VIVO Radius</div>
-              <div className="token-card__value">7px</div>
+              <div className="token-card__value">6px</div>
             </div>
             <div className="token-card">
               <div className="token-card__label">Channels Row Gap</div>
-              <div className="token-card__value">12px</div>
+              <div className="token-card__value">8px</div>
             </div>
             <div className="token-card">
               <div className="token-card__label">Channels Row Padding</div>
@@ -160,23 +180,45 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
         </div>
 
         <div className="showcase__section">
+          <h2>Spacing & Layout — Event</h2>
+          <div className="token-grid">
+            <div className="token-card">
+              <div className="token-card__label">Card Size</div>
+              <div className="token-card__value">600 × 250px</div>
+            </div>
+            <div className="token-card">
+              <div className="token-card__label">Event Logo Max Size</div>
+              <div className="token-card__value">200 × 100px · object-fit: contain</div>
+            </div>
+            <div className="token-card">
+              <div className="token-card__label">Layout</div>
+              <div className="token-card__value">Horizontal · logo left, info right</div>
+            </div>
+            <div className="token-card">
+              <div className="token-card__label">Looper BG</div>
+              <div className="token-card__value">Mirrored to right · right: -87px</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="showcase__section">
           <h2>Decorative Mesh (Looper BG)</h2>
           <div className="token-grid">
             <div className="token-card">
-              <div className="token-card__label">Position</div>
-              <div className="token-card__value">absolute, left: -87px</div>
+              <div className="token-card__label">Position (Versus)</div>
+              <div className="token-card__value">absolute · left: -87px</div>
             </div>
             <div className="token-card">
-              <div className="token-card__label">Size</div>
-              <div className="token-card__value">662 x 441px</div>
+              <div className="token-card__label">Position (Event)</div>
+              <div className="token-card__value">absolute · right: -87px</div>
+            </div>
+            <div className="token-card">
+              <div className="token-card__label">Size (Versus)</div>
+              <div className="token-card__value">662 × 441px</div>
             </div>
             <div className="token-card">
               <div className="token-card__label">Opacity</div>
               <div className="token-card__value">0.45</div>
-            </div>
-            <div className="token-card">
-              <div className="token-card__label">Stroke Gradient</div>
-              <div className="token-card__value">#6B0CAE → #EA580C</div>
             </div>
           </div>
         </div>
@@ -197,8 +239,9 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
             awayName="Ponte Preta"
             aoVivo={demoAoVivo}
             gameDate={demoAoVivo ? undefined : "27/01 19:00"}
-            tagJogo={<TagJogo name="Clássico" text="⚔️ Clássico!" />}
+            tagJogo={demoTipo === "versus" ? <TagJogo name="Clássico" text="⚔️ Clássico!" /> : undefined}
             channels={sampleChannels}
+            tipo={demoTipo}
           />
         </div>
         <div className="demo-controls">
@@ -209,6 +252,13 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
               value={demoChampionship}
               onChange={(e) => setDemoChampionship(e.target.value)}
             />
+          </label>
+          <label>
+            tipo:
+            <select value={demoTipo} onChange={(e) => setDemoTipo(e.target.value as "versus" | "event")}>
+              <option value="versus">versus</option>
+              <option value="event">event</option>
+            </select>
           </label>
           <label>
             <input
@@ -237,13 +287,13 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
               <td><code>championship</code></td>
               <td><code>string</code></td>
               <td>—</td>
-              <td>Championship name (e.g. "Paulistão") (required)</td>
+              <td>Championship or event name (required)</td>
             </tr>
             <tr>
               <td><code>homeLogo</code></td>
               <td><code>string</code></td>
               <td>—</td>
-              <td>Home team logo URL (required)</td>
+              <td>Home team logo URL; in tipo="event", used as the event image (required)</td>
             </tr>
             <tr>
               <td><code>homeName</code></td>
@@ -255,13 +305,19 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
               <td><code>awayLogo</code></td>
               <td><code>string</code></td>
               <td>—</td>
-              <td>Away team logo URL (required)</td>
+              <td>Away team logo URL (optional; unused in tipo="event")</td>
             </tr>
             <tr>
               <td><code>awayName</code></td>
               <td><code>string</code></td>
               <td>—</td>
-              <td>Away team name (required)</td>
+              <td>Away team name (optional; unused in tipo="event")</td>
+            </tr>
+            <tr>
+              <td><code>tipo</code></td>
+              <td><code>"versus" | "event"</code></td>
+              <td><code>"versus"</code></td>
+              <td>Card variant — "versus" for two-team matches, "event" for single-entity sports</td>
             </tr>
             <tr>
               <td><code>aoVivo</code></td>
@@ -273,13 +329,13 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
               <td><code>gameDate</code></td>
               <td><code>string</code></td>
               <td><code>"27/01 19:00"</code></td>
-              <td>Date/time string</td>
+              <td>Date/time string (shown when aoVivo is false)</td>
             </tr>
             <tr>
               <td><code>tagJogo</code></td>
               <td><code>ReactNode</code></td>
               <td>—</td>
-              <td>Tag Jogo element (e.g. Clássico)</td>
+              <td>Tag Jogo element (e.g. Clássico); unused in tipo="event"</td>
             </tr>
             <tr>
               <td><code>channels</code></td>
@@ -303,11 +359,15 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
           <tbody>
             <tr>
               <td><code>.popUpCard</code></td>
-              <td>Outer container (600 x 441)</td>
+              <td>Outer container (600 × 441px, versus)</td>
+            </tr>
+            <tr>
+              <td><code>.popUpCard--event</code></td>
+              <td>Event modifier — overrides height to 250px, mirrors looper</td>
             </tr>
             <tr>
               <td><code>.popUpCard__looper</code></td>
-              <td>Decorative mesh background</td>
+              <td>Decorative mesh background (left in versus, right in event)</td>
             </tr>
             <tr>
               <td><code>.popUpCard__championship</code></td>
@@ -315,23 +375,23 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
             </tr>
             <tr>
               <td><code>.popUpCard__teams</code></td>
-              <td>Row with both teams + center</td>
+              <td>Row with both teams + center (versus only)</td>
             </tr>
             <tr>
               <td><code>.popUpCard__team</code></td>
-              <td>Individual team column</td>
+              <td>Individual team column (versus only)</td>
             </tr>
             <tr>
               <td><code>.popUpCard__logo</code></td>
-              <td>Team logo (164px circle)</td>
+              <td>Team logo — 164px, natural crest shape (versus only)</td>
             </tr>
             <tr>
               <td><code>.popUpCard__teamName</code></td>
-              <td>Team name text</td>
+              <td>Team name text (versus only)</td>
             </tr>
             <tr>
               <td><code>.popUpCard__center</code></td>
-              <td>Center column (score/live/tag)</td>
+              <td>Center column (score/live/tagJogo, versus only)</td>
             </tr>
             <tr>
               <td><code>.popUpCard__score</code></td>
@@ -343,7 +403,23 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
             </tr>
             <tr>
               <td><code>.popUpCard__channels</code></td>
-              <td>Bottom broadcast row</td>
+              <td>Bottom broadcast row (gap 8px)</td>
+            </tr>
+            <tr>
+              <td><code>.popUpCard__eventLayout</code></td>
+              <td>Horizontal flex row for event variant</td>
+            </tr>
+            <tr>
+              <td><code>.popUpCard__eventLogoWrap</code></td>
+              <td>Left column holding the event image</td>
+            </tr>
+            <tr>
+              <td><code>.popUpCard__eventLogo</code></td>
+              <td>Event image (max 200×100px)</td>
+            </tr>
+            <tr>
+              <td><code>.popUpCard__eventInfo</code></td>
+              <td>Right column holding championship + score/live</td>
             </tr>
           </tbody>
         </table>
@@ -351,7 +427,7 @@ export function PopUpCardShowcase({ subTab }: ShowcaseProps) {
 
       <div className="showcase__section">
         <h2>Usage Examples</h2>
-        <h3>Basic usage</h3>
+        <h3>Versus — default</h3>
         <div className="code-block">
           {`import { PopUpCard } from "./components/PopUpCard";
 import { TagCanal } from "./components/TagCanal";
@@ -373,7 +449,7 @@ import { TagJogo } from "./components/TagJogo";
   }
 />`}
         </div>
-        <h3 style={{ marginTop: 24 }}>Live match</h3>
+        <h3 style={{ marginTop: 24 }}>Versus — ao vivo</h3>
         <div className="code-block">
           {`<PopUpCard
   championship="Brasileirão"
@@ -383,12 +459,29 @@ import { TagJogo } from "./components/TagJogo";
   awayName="Santos"
   aoVivo
   tagJogo={<TagJogo name="Clássico" text="⚔️ Clássico!" />}
-  channels={
-    <>
-      <TagCanal channel="GE TV" canal="1" />
-      <TagCanal channel="SporTV" canal="1" />
-    </>
-  }
+  channels={<TagCanal channel="GE TV" canal="1" />}
+/>`}
+        </div>
+        <h3 style={{ marginTop: 24 }}>Event</h3>
+        <div className="code-block">
+          {`<PopUpCard
+  tipo="event"
+  championship="Fórmula 1"
+  homeLogo="/logos/f1.svg"
+  homeName="Fórmula 1"
+  gameDate="27/01 19:00"
+  channels={<TagCanal channel="Premiere" canal="1" />}
+/>`}
+        </div>
+        <h3 style={{ marginTop: 24 }}>Event — ao vivo</h3>
+        <div className="code-block">
+          {`<PopUpCard
+  tipo="event"
+  championship="Fórmula 1"
+  homeLogo="/logos/f1.svg"
+  homeName="Fórmula 1"
+  aoVivo
+  channels={<TagCanal channel="Premiere" canal="1" />}
 />`}
         </div>
       </div>

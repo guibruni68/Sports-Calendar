@@ -77,7 +77,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
-  padding: 16px 32px 40px;
+  padding: 32px 32px 40px;
 }
 
 .sportPage__headerSearch {
@@ -279,6 +279,7 @@
 .sportPage__bannerMini .bannerHero {
   width: 100%;
   height: auto;
+  aspect-ratio: 728 / 356;
 }
 
 /* ─── Standings Widget ─── */
@@ -505,4 +506,19 @@
     justify-content: center;
     gap: 16px;
   }
+}
+
+/* ─── Modal Overlay ─── */
+.sportPage__modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sportPage__modalContent {
+  position: relative;
 }

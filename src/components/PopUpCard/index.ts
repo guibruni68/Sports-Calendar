@@ -1,2 +1,2 @@
 export { PopUpCard } from "./PopUpCard";
-export type { PopUpCardProps } from "./PopUpCard";
+export type { PopUpCardProps, PopUpCardTipo } from "./PopUpCard";

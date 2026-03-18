@@ -1,2 +1,3 @@
 export { CardDestaque } from "./CardDestaque";
-export type { CardDestaqueProps, CardDestaqueTipo } from "./CardDestaque";
+export type { CardDestaqueProps, CardDestaqueTipo, CardDestaqueBroadcast } from "./CardDestaque";
+

@@ -27,6 +27,7 @@
   --color-border-subtle: rgba(255, 255, 255, 0.08);
   --color-border-muted: rgba(255, 255, 255, 0.1);
   --color-border-strong: #3F3F46;
+  --color-border-input: #D9D9D9;
 
   /* ── Overlay / Shadow ── */
   --color-overlay-light: rgba(255, 255, 255, 0.04);
@@ -43,14 +44,16 @@
   --color-sport-futebol: #40BD01;
   --color-sport-futebol-bg: #243223;
   --color-sport-futebol-bg-hover: #306F13;
-  --color-sport-basquete: #FF0800;
-  --color-sport-basquete-bg: #372023;
-  --color-sport-basquete-bg-hover: #591B1D;
+  --color-sport-basquete: #00A05B;
+  --color-sport-basquete-bg: #17302A;
+  --color-sport-basquete-bg-hover: #0D5E3E;
   --color-sport-hockey: #0077FF;
   --color-sport-hockey-bg: #1E2B3C;
   --color-sport-hockey-bg-hover: #104C93;
   --color-sport-futebol-americano: #E11577;
   --color-sport-automobilismo: #9B18BC;
+  --color-sport-automobilismo-bg: #351B40;
+  --color-sport-automobilismo-bg-hover: #5A1A6E;
   --color-sport-beisebol: #2822DA;
 
   /* ── Channel Colors ── */

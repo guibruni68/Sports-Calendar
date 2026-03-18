@@ -1,9 +1,12 @@
 import { useRef, useCallback, useState, useEffect } from "react";
+import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { BannerCarousel } from "../components/BannerCarousel";
 import { CardDestaque } from "../components/CardDestaque";
+import type { CardDestaqueBroadcast } from "../components/CardDestaque";
 import { CardJogo } from "../components/CardJogo";
 import type { Broadcast } from "../components/CardJogo";
+import { PopUpCard } from "../components/PopUpCard";
 import { TagCanal } from "../components/TagCanal";
 import { SearchBar } from "../components/SearchBar";
 import { MenuButton } from "../components/MenuButton";
@@ -14,6 +17,17 @@ import type { EventData } from "../services/eventsService";
 import defaultClubLogo from "../assets/default-club-logo.svg";
 import logoWatch from "../assets/logo-watch.svg";
 import "./HomePage.css";
+
+interface SelectedMatch {
+  championship: string;
+  homeName: string;
+  awayName: string;
+  homeLogo: string;
+  awayLogo: string;
+  aoVivo?: boolean;
+  gameDate?: string;
+  broadcasts?: Broadcast[];
+}
 
 /* ─── Static match data (from Figma design) ─── */
 
@@ -126,76 +140,40 @@ const CAROUSEL_2 = [
   },
 ];
 
-const LIVE_GAMES = [
+const LIVE_GAMES: {
+  championship: string; homeName: string; awayName: string;
+  homeLogo: string; awayLogo: string; aoVivo: boolean;
+  gameDate?: string; broadcasts: CardDestaqueBroadcast[];
+}[] = [
   {
-    homeLogo: defaultClubLogo,
-    awayLogo: defaultClubLogo,
-    aoVivo: true,
-    channels: (
-      <>
-        <TagCanal channel="SporTV" canal="1" />
-        <TagCanal channel="GE TV" />
-      </>
-    ),
+    championship: "Paulistão", homeName: "Corinthians", awayName: "Ponte Preta",
+    homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
+    broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "GE TV" }],
   },
   {
-    homeLogo: defaultClubLogo,
-    awayLogo: defaultClubLogo,
-    aoVivo: true,
-    channels: (
-      <>
-        <TagCanal channel="ESPN" canal="1" />
-        <TagCanal channel="GE TV" />
-      </>
-    ),
+    championship: "NBA", homeName: "Celtics", awayName: "Lakers",
+    homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
+    broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "GE TV" }],
   },
   {
-    homeLogo: defaultClubLogo,
-    awayLogo: defaultClubLogo,
-    aoVivo: false,
-    gameDate: "27/01 19:00",
-    channels: (
-      <>
-        <TagCanal channel="SporTV" canal="1" />
-        <TagCanal channel="GE TV" />
-      </>
-    ),
+    championship: "Champions League", homeName: "Chelsea", awayName: "Borussia Dortmund",
+    homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: false, gameDate: "27/01 19:00",
+    broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "GE TV" }],
   },
   {
-    homeLogo: defaultClubLogo,
-    awayLogo: defaultClubLogo,
-    aoVivo: false,
-    gameDate: "27/01 19:00",
-    channels: (
-      <>
-        <TagCanal channel="ESPN" canal="5" />
-        <TagCanal channel="ESPN" canal="6" />
-      </>
-    ),
+    championship: "NHL", homeName: "Seattle Kraken", awayName: "Buffalo Sabres",
+    homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: false, gameDate: "27/01 19:00",
+    broadcasts: [{ channel: "ESPN", canal: "5" }, { channel: "ESPN", canal: "6" }],
   },
   {
-    homeLogo: defaultClubLogo,
-    awayLogo: defaultClubLogo,
-    aoVivo: false,
-    gameDate: "27/01 20:30",
-    channels: (
-      <>
-        <TagCanal channel="SporTV" canal="1" />
-        <TagCanal channel="GE TV" />
-      </>
-    ),
+    championship: "NBA", homeName: "Memphis Grizzlies", awayName: "Minnesota Timberwolves",
+    homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: false, gameDate: "27/01 20:30",
+    broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "GE TV" }],
   },
   {
-    homeLogo: defaultClubLogo,
-    awayLogo: defaultClubLogo,
-    aoVivo: false,
-    gameDate: "27/01 18:30",
-    channels: (
-      <>
-        <TagCanal channel="SporTV" canal="1" />
-        <TagCanal channel="GE TV" />
-      </>
-    ),
+    championship: "FIBA EuroBasket", homeName: "Itália", awayName: "Espanha",
+    homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: false, gameDate: "27/01 18:30",
+    broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "GE TV" }],
   },
 ];
 
@@ -220,6 +198,36 @@ function CarouselArrow({ direction, onClick }: { direction: "left" | "right"; on
   );
 }
 
+function getWeekLabel(offset: number): string {
+  const today = new Date();
+  const sunday = new Date(today);
+  sunday.setDate(today.getDate() - today.getDay() + offset * 7);
+  sunday.setHours(0, 0, 0, 0);
+  const sat = new Date(sunday);
+  sat.setDate(sunday.getDate() + 6);
+  const fmt = (d: Date) =>
+    `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`;
+  return offset === 0 ? "Hoje" : `${fmt(sunday)} - ${fmt(sat)}`;
+}
+
+const MONTH_MAP: Record<string, string> = {
+  janeiro: "01", fevereiro: "02", março: "03", abril: "04",
+  maio: "05", junho: "06", julho: "07", agosto: "08",
+  setembro: "09", outubro: "10", novembro: "11", dezembro: "12",
+};
+
+function formatGameDate(raw: string | undefined): string | undefined {
+  if (!raw) return raw;
+  if (/^\d{2}\/\d{2}/.test(raw)) return raw;
+  const m = raw.match(/(\d+)\s+de\s+(\w+),?\s+(\d{1,2}:\d{2})/i);
+  if (m) {
+    const day = m[1].padStart(2, "0");
+    const month = MONTH_MAP[m[2].toLowerCase()] ?? "??";
+    return `${day}/${month} ${m[3]}`;
+  }
+  return raw;
+}
+
 function parseChannel(ch: string): Broadcast {
   const parts = ch.trim().split(" ");
   const canal = parts.length > 1 ? parts.pop() : undefined;
@@ -230,7 +238,9 @@ function parseChannel(ch: string): Broadcast {
 export function HomePage() {
   const navigate = useNavigate();
   const carousel1Ref = useRef<HTMLDivElement>(null);
+  const [weekOffset, setWeekOffset] = useState(0);
   const [apiEvents, setApiEvents] = useState<EventData[]>([]);
+  const [selectedMatch, setSelectedMatch] = useState<SelectedMatch | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -239,6 +249,15 @@ export function HomePage() {
       .catch(() => {});
     return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    if (!selectedMatch) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedMatch(null);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [selectedMatch]);
 
   const events = apiEvents.length > 0
     ? apiEvents.map((e) => ({
@@ -288,10 +307,10 @@ export function HomePage() {
       <main className="homePage__main">
         {/* Header */}
         <header className="homePage__header">
+          <CTAButton label="Quero ser Watch" />
           <div className="homePage__headerSearch">
             <SearchBar onFocus={() => navigate("/search")} />
           </div>
-          <CTAButton label="Quero ser Watch" />
         </header>
 
         {/* Banners */}
@@ -302,43 +321,39 @@ export function HomePage() {
           <div className="homePage__liveGamesWrapper">
             <div className="homePage__liveGames">
               <h2 className="homePage__liveGamesTitle">Jogos ao vivo:</h2>
-              {apiEvents.length > 0
-                ? apiEvents.map((e, i) => (
-                    <CardDestaque
-                      key={i}
-                      tipo="Jogo"
-                      aoVivo={false}
-                      gameDate={e.date}
-                      homeLogo={e.homeTeamLogo || defaultClubLogo}
-                      awayLogo={e.awayTeamLogo || defaultClubLogo}
-                      channels={
-                        <>
-                          {e.channels.map((ch, j) => {
-                            const parsed = parseChannel(ch);
-                            return <TagCanal key={j} channel={parsed.channel} canal={parsed.canal} />;
-                          })}
-                        </>
-                      }
-                    />
-                  ))
-                : LIVE_GAMES.map((game, i) => (
-                    <CardDestaque
-                      key={i}
-                      tipo="Jogo"
-                      aoVivo={game.aoVivo}
-                      gameDate={game.gameDate}
-                      homeLogo={game.homeLogo}
-                      awayLogo={game.awayLogo}
-                      channels={game.channels}
-                    />
-                  ))}
+              {LIVE_GAMES.map((game, i) => (
+                <CardDestaque
+                  key={i}
+                  tipo="Jogo"
+                  aoVivo={game.aoVivo}
+                  gameDate={game.gameDate}
+                  homeLogo={game.homeLogo}
+                  awayLogo={game.awayLogo}
+                  broadcasts={game.broadcasts}
+                  onClick={() => setSelectedMatch({
+                    championship: game.championship,
+                    homeName: game.homeName,
+                    awayName: game.awayName,
+                    homeLogo: game.homeLogo,
+                    awayLogo: game.awayLogo,
+                    aoVivo: game.aoVivo,
+                    gameDate: game.gameDate,
+                    broadcasts: game.broadcasts,
+                  })}
+                />
+              ))}
             </div>
           </div>
         </section>
 
         {/* Match Section */}
         <section className="homePage__matchSection">
-          <CalendarButton label="Hoje" />
+          <CalendarButton
+            label={getWeekLabel(weekOffset)}
+            onPrevious={() => setWeekOffset((o) => o - 1)}
+            onNext={() => setWeekOffset((o) => o + 1)}
+            onClick={() => setWeekOffset(0)}
+          />
           <div className="homePage__carouselWrapper">
             <CarouselArrow direction="left" onClick={() => scroll(carousel1Ref, "left")} />
             <div className="homePage__carousel" ref={carousel1Ref}>
@@ -351,6 +366,15 @@ export function HomePage() {
                   teamB={match.teamB}
                   dateTime={match.dateTime}
                   broadcasts={match.broadcasts}
+                  onClick={() => setSelectedMatch({
+                    championship: match.championship,
+                    homeName: match.teamA.name,
+                    awayName: match.teamB.name,
+                    homeLogo: match.teamA.logoSrc,
+                    awayLogo: match.teamB.logoSrc,
+                    gameDate: formatGameDate(match.dateTime),
+                    broadcasts: match.broadcasts,
+                  })}
                 />
               ))}
             </div>
@@ -405,6 +429,32 @@ export function HomePage() {
           </span>
         </footer>
       </main>
+
+      {/* Modal PopUpCard */}
+      {selectedMatch && (
+        <div className="homePage__modalOverlay" onClick={() => setSelectedMatch(null)}>
+          <div className="homePage__modalContent" onClick={(e) => e.stopPropagation()}>
+            <PopUpCard
+              championship={selectedMatch.championship}
+              homeName={selectedMatch.homeName}
+              awayName={selectedMatch.awayName}
+              homeLogo={selectedMatch.homeLogo}
+              awayLogo={selectedMatch.awayLogo}
+              aoVivo={selectedMatch.aoVivo}
+              gameDate={selectedMatch.gameDate}
+              channels={
+                selectedMatch.broadcasts && (
+                  <>
+                    {selectedMatch.broadcasts.map((b, i) => (
+                      <TagCanal key={`${b.channel}-${b.canal ?? "1"}-${i}`} channel={b.channel} canal={b.canal} />
+                    ))}
+                  </>
+                )
+              }
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -2,8 +2,10 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BannerCarousel } from "../components/BannerCarousel";
 import { CardDestaque } from "../components/CardDestaque";
+import type { CardDestaqueBroadcast } from "../components/CardDestaque";
 import { CardJogo } from "../components/CardJogo";
 import type { Broadcast } from "../components/CardJogo";
+import { PopUpCard } from "../components/PopUpCard";
 import { TagCanal } from "../components/TagCanal";
 import { ClubeBall } from "../components/ClubeBall";
 import { CardHorizontal } from "../components/CardHorizontal";
@@ -36,19 +38,25 @@ interface SportConfig {
   slug: string;
   championships: string[];
   liveGames: {
+    championship: string;
+    homeName: string;
+    awayName: string;
     homeLogo: string;
     awayLogo: string;
     aoVivo: boolean;
     gameDate?: string;
-    channels: React.ReactNode;
+    broadcasts: CardDestaqueBroadcast[];
   }[];
   matches: SportMatch[];
   clubs: { name: string; logoSrc: string }[];
   upcomingGames: {
+    championship: string;
+    homeName: string;
+    awayName: string;
     homeLogo: string;
     awayLogo: string;
     gameDate: string;
-    channels: React.ReactNode;
+    broadcasts: CardDestaqueBroadcast[];
   }[];
 }
 
@@ -62,20 +70,24 @@ const SPORT_DATA: Record<string, SportConfig> = {
     championships: ["Todos", "Brasileirão", "Paulistão", "Champions League", "Premier League", "La Liga", "Copa do Brasil"],
     liveGames: [
       {
+        championship: "Paulistão", homeName: "Corinthians", awayName: "Ponte Preta",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
-        channels: <><TagCanal channel="SporTV" canal="1" /><TagCanal channel="GE TV" /></>,
+        broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "GE TV" }],
       },
       {
+        championship: "Campeonato Carioca", homeName: "Flamengo", awayName: "Vasco da Gama",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
-        channels: <><TagCanal channel="Premiere" canal="1" /><TagCanal channel="GE TV" /></>,
+        broadcasts: [{ channel: "Premiere", canal: "1" }, { channel: "GE TV" }],
       },
       {
+        championship: "Champions League", homeName: "Chelsea", awayName: "Borussia Dortmund",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: false, gameDate: "27/01 19:00",
-        channels: <><TagCanal channel="SporTV" canal="1" /><TagCanal channel="GE TV" /></>,
+        broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "GE TV" }],
       },
       {
+        championship: "Premier League", homeName: "Arsenal", awayName: "Liverpool",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: false, gameDate: "27/01 20:30",
-        channels: <><TagCanal channel="ESPN" canal="1" /><TagCanal channel="ESPN" canal="2" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "ESPN", canal: "2" }],
       },
     ],
     matches: [
@@ -111,12 +123,14 @@ const SPORT_DATA: Record<string, SportConfig> = {
     clubs: Array.from({ length: 11 }, (_, i) => ({ name: `Clube ${i + 1}`, logoSrc: defaultClubLogo })),
     upcomingGames: [
       {
+        championship: "Paulistão", homeName: "Corinthians", awayName: "Ponte Preta",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, gameDate: "27/01 19:00",
-        channels: <><TagCanal channel="SporTV" canal="1" /><TagCanal channel="GE TV" /></>,
+        broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "GE TV" }],
       },
       {
+        championship: "Campeonato Carioca", homeName: "Flamengo", awayName: "Vasco da Gama",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, gameDate: "27/01 20:30",
-        channels: <><TagCanal channel="SporTV" canal="1" /><TagCanal channel="GE TV" /></>,
+        broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "GE TV" }],
       },
     ],
   },
@@ -127,32 +141,36 @@ const SPORT_DATA: Record<string, SportConfig> = {
     championships: ["Todos", "NBA", "NBB", "FIBA EuroBasket", "Basquete Universitário", "WNBA Finals"],
     liveGames: [
       {
+        championship: "NBA", homeName: "Celtics", awayName: "Lakers",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
-        channels: <><TagCanal channel="ESPN" canal="1" /><TagCanal channel="ESPN" canal="2" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "ESPN", canal: "2" }],
       },
       {
+        championship: "NBA", homeName: "Warriors", awayName: "Nuggets",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
-        channels: <><TagCanal channel="ESPN" canal="3" /><TagCanal channel="ESPN" canal="5" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "3" }, { channel: "ESPN", canal: "5" }],
       },
       {
+        championship: "FIBA EuroBasket", homeName: "Itália", awayName: "Espanha",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
-        channels: <><TagCanal channel="ESPN" canal="1" /><TagCanal channel="ESPN" canal="2" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "ESPN", canal: "2" }],
       },
       {
+        championship: "NBA", homeName: "Memphis Grizzlies", awayName: "Minnesota Timberwolves",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: false, gameDate: "27/01 22:00",
-        channels: <><TagCanal channel="Premiere" canal="1" /><TagCanal channel="GE TV" /></>,
+        broadcasts: [{ channel: "Premiere", canal: "1" }, { channel: "GE TV" }],
       },
     ],
     matches: [
       {
-        championship: "Nome do Campeonato", tagJogo: "None",
-        teamA: { name: "Memphis Grizzles", logoSrc: defaultClubLogo },
+        championship: "NBA", tagJogo: "None",
+        teamA: { name: "Memphis Grizzlies", logoSrc: defaultClubLogo },
         teamB: { name: "Minnesota Timberwolves", logoSrc: defaultClubLogo },
         dateTime: "27 de Janeiro, 19:00",
         broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "ESPN", canal: "3" }, { channel: "Band", canal: "1" }],
       },
       {
-        championship: "Nome do Campeonato", tagJogo: "Clássico",
+        championship: "NBA", tagJogo: "Clássico",
         teamA: { name: "Celtics", logoSrc: defaultClubLogo },
         teamB: { name: "Lakers", logoSrc: defaultClubLogo },
         dateTime: "27 de Janeiro, 20:30",
@@ -176,12 +194,14 @@ const SPORT_DATA: Record<string, SportConfig> = {
     clubs: Array.from({ length: 11 }, (_, i) => ({ name: `Time ${i + 1}`, logoSrc: defaultClubLogo })),
     upcomingGames: [
       {
+        championship: "NBA", homeName: "Celtics", awayName: "Lakers",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, gameDate: "27/01 19:00",
-        channels: <><TagCanal channel="SporTV" canal="1" /><TagCanal channel="GE TV" /></>,
+        broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "GE TV" }],
       },
       {
+        championship: "FIBA EuroBasket", homeName: "Itália", awayName: "Espanha",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, gameDate: "27/01 19:00",
-        channels: <><TagCanal channel="SporTV" canal="1" /><TagCanal channel="GE TV" /></>,
+        broadcasts: [{ channel: "SporTV", canal: "1" }, { channel: "GE TV" }],
       },
     ],
   },
@@ -192,12 +212,14 @@ const SPORT_DATA: Record<string, SportConfig> = {
     championships: ["Todos", "NFL", "Super Bowl", "College Football", "CFL"],
     liveGames: [
       {
+        championship: "NFL", homeName: "Kansas City Chiefs", awayName: "San Francisco 49ers",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
-        channels: <><TagCanal channel="ESPN" canal="1" /><TagCanal channel="ESPN" canal="2" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "ESPN", canal: "2" }],
       },
       {
+        championship: "NFL", homeName: "Dallas Cowboys", awayName: "Philadelphia Eagles",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: false, gameDate: "27/01 22:00",
-        channels: <><TagCanal channel="ESPN" canal="3" /><TagCanal channel="Band" canal="1" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "3" }, { channel: "Band", canal: "1" }],
       },
     ],
     matches: [
@@ -219,8 +241,9 @@ const SPORT_DATA: Record<string, SportConfig> = {
     clubs: Array.from({ length: 11 }, (_, i) => ({ name: `Time ${i + 1}`, logoSrc: defaultClubLogo })),
     upcomingGames: [
       {
+        championship: "NFL", homeName: "Kansas City Chiefs", awayName: "San Francisco 49ers",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, gameDate: "28/01 22:00",
-        channels: <><TagCanal channel="ESPN" canal="1" /><TagCanal channel="ESPN" canal="2" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "1" }, { channel: "ESPN", canal: "2" }],
       },
     ],
   },
@@ -231,8 +254,9 @@ const SPORT_DATA: Record<string, SportConfig> = {
     championships: ["Todos", "Fórmula 1", "MotoGP", "IndyCar", "NASCAR", "Stock Car"],
     liveGames: [
       {
+        championship: "Fórmula 1", homeName: "Red Bull", awayName: "Mercedes",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
-        channels: <><TagCanal channel="Band" canal="1" /><TagCanal channel="ESPN" canal="1" /></>,
+        broadcasts: [{ channel: "Band", canal: "1" }, { channel: "ESPN", canal: "1" }],
       },
     ],
     matches: [
@@ -254,8 +278,9 @@ const SPORT_DATA: Record<string, SportConfig> = {
     clubs: Array.from({ length: 11 }, (_, i) => ({ name: `Equipe ${i + 1}`, logoSrc: defaultClubLogo })),
     upcomingGames: [
       {
+        championship: "Fórmula 1", homeName: "Red Bull", awayName: "Mercedes",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, gameDate: "02/02 11:00",
-        channels: <><TagCanal channel="Band" canal="1" /><TagCanal channel="ESPN" canal="1" /></>,
+        broadcasts: [{ channel: "Band", canal: "1" }, { channel: "ESPN", canal: "1" }],
       },
     ],
   },
@@ -266,8 +291,9 @@ const SPORT_DATA: Record<string, SportConfig> = {
     championships: ["Todos", "MLB", "World Series", "NPB", "KBO"],
     liveGames: [
       {
+        championship: "MLB", homeName: "New York Yankees", awayName: "Boston Red Sox",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
-        channels: <><TagCanal channel="ESPN" canal="5" /><TagCanal channel="ESPN" canal="6" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "5" }, { channel: "ESPN", canal: "6" }],
       },
     ],
     matches: [
@@ -289,8 +315,9 @@ const SPORT_DATA: Record<string, SportConfig> = {
     clubs: Array.from({ length: 11 }, (_, i) => ({ name: `Time ${i + 1}`, logoSrc: defaultClubLogo })),
     upcomingGames: [
       {
+        championship: "MLB", homeName: "New York Yankees", awayName: "Boston Red Sox",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, gameDate: "28/01 21:00",
-        channels: <><TagCanal channel="ESPN" canal="5" /><TagCanal channel="ESPN" canal="6" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "5" }, { channel: "ESPN", canal: "6" }],
       },
     ],
   },
@@ -301,12 +328,14 @@ const SPORT_DATA: Record<string, SportConfig> = {
     championships: ["Todos", "NHL", "KHL", "SHL", "AHL"],
     liveGames: [
       {
+        championship: "NHL", homeName: "Seattle Kraken", awayName: "Buffalo Sabres",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: true,
-        channels: <><TagCanal channel="ESPN" canal="2" /><TagCanal channel="ESPN" canal="3" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "2" }, { channel: "ESPN", canal: "3" }],
       },
       {
+        championship: "NHL", homeName: "Maple Leafs", awayName: "Pittsburgh Penguins",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, aoVivo: false, gameDate: "27/01 21:00",
-        channels: <><TagCanal channel="ESPN" canal="5" /><TagCanal channel="HBO Max" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "5" }, { channel: "HBO Max" }],
       },
     ],
     matches: [
@@ -328,8 +357,9 @@ const SPORT_DATA: Record<string, SportConfig> = {
     clubs: Array.from({ length: 11 }, (_, i) => ({ name: `Time ${i + 1}`, logoSrc: defaultClubLogo })),
     upcomingGames: [
       {
+        championship: "NHL", homeName: "Seattle Kraken", awayName: "Buffalo Sabres",
         homeLogo: defaultClubLogo, awayLogo: defaultClubLogo, gameDate: "28/01 18:30",
-        channels: <><TagCanal channel="ESPN" canal="2" /><TagCanal channel="ESPN" canal="3" /></>,
+        broadcasts: [{ channel: "ESPN", canal: "2" }, { channel: "ESPN", canal: "3" }],
       },
     ],
   },
@@ -373,6 +403,36 @@ const SPORT_ROUTES: Record<string, string> = {
 
 /* ─── Channel string parser ─── */
 
+function getWeekLabel(offset: number): string {
+  const today = new Date();
+  const sunday = new Date(today);
+  sunday.setDate(today.getDate() - today.getDay() + offset * 7);
+  sunday.setHours(0, 0, 0, 0);
+  const sat = new Date(sunday);
+  sat.setDate(sunday.getDate() + 6);
+  const fmt = (d: Date) =>
+    `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`;
+  return offset === 0 ? "Hoje" : `${fmt(sunday)} - ${fmt(sat)}`;
+}
+
+const MONTH_MAP: Record<string, string> = {
+  janeiro: "01", fevereiro: "02", março: "03", abril: "04",
+  maio: "05", junho: "06", julho: "07", agosto: "08",
+  setembro: "09", outubro: "10", novembro: "11", dezembro: "12",
+};
+
+function formatGameDate(raw: string | undefined): string | undefined {
+  if (!raw) return raw;
+  if (/^\d{2}\/\d{2}/.test(raw)) return raw;
+  const m = raw.match(/(\d+)\s+de\s+(\w+),?\s+(\d{1,2}:\d{2})/i);
+  if (m) {
+    const day = m[1].padStart(2, "0");
+    const month = MONTH_MAP[m[2].toLowerCase()] ?? "??";
+    return `${day}/${month} ${m[3]}`;
+  }
+  return raw;
+}
+
 function parseChannel(ch: string): Broadcast {
   const parts = ch.trim().split(" ");
   const canal = parts.length > 1 ? parts.pop() : undefined;
@@ -387,10 +447,23 @@ interface AirtableTeam {
   logoSrc: string;
 }
 
+interface SelectedMatch {
+  championship: string;
+  homeName: string;
+  awayName: string;
+  homeLogo: string;
+  awayLogo: string;
+  aoVivo?: boolean;
+  gameDate?: string;
+  broadcasts?: Broadcast[];
+}
+
 export function SportPage({ sport }: { sport: string }) {
   const navigate = useNavigate();
   const config = SPORT_DATA[sport];
+  const [weekOffset, setWeekOffset] = useState(0);
   const [activeFilter, setActiveFilter] = useState("Todos");
+  const [selectedMatch, setSelectedMatch] = useState<SelectedMatch | null>(null);
   const [apiClubs, setApiClubs] = useState<AirtableTeam[]>([]);
   const [apiMatches, setApiMatches] = useState<EventData[]>([]);
   const matchesRef = useRef<HTMLDivElement>(null);
@@ -426,6 +499,15 @@ export function SportPage({ sport }: { sport: string }) {
       .catch(() => {});
     return () => controller.abort();
   }, [sport]);
+
+  useEffect(() => {
+    if (!selectedMatch) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedMatch(null);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [selectedMatch]);
 
   const clubs = apiClubs.length > 0 ? apiClubs : config?.clubs ?? [];
 
@@ -481,10 +563,10 @@ export function SportPage({ sport }: { sport: string }) {
       <main className="sportPage__main">
         {/* Header */}
         <header className="sportPage__header">
+          <CTAButton label="Quero ser Watch" />
           <div className="sportPage__headerSearch">
             <SearchBar onFocus={() => navigate("/search")} />
           </div>
-          <CTAButton label="Quero ser Watch" />
         </header>
 
         {/* Banner + Live Games */}
@@ -503,7 +585,17 @@ export function SportPage({ sport }: { sport: string }) {
                   gameDate={game.gameDate}
                   homeLogo={game.homeLogo}
                   awayLogo={game.awayLogo}
-                  channels={game.channels}
+                  broadcasts={game.broadcasts}
+                  onClick={() => setSelectedMatch({
+                    championship: game.championship,
+                    homeName: game.homeName,
+                    awayName: game.awayName,
+                    homeLogo: game.homeLogo,
+                    awayLogo: game.awayLogo,
+                    aoVivo: game.aoVivo,
+                    gameDate: game.gameDate,
+                    broadcasts: game.broadcasts,
+                  })}
                 />
               ))}
             </div>
@@ -523,7 +615,12 @@ export function SportPage({ sport }: { sport: string }) {
             ))}
           </div>
 
-          <CalendarButton label="Hoje" />
+          <CalendarButton
+            label={getWeekLabel(weekOffset)}
+            onPrevious={() => setWeekOffset((o) => o - 1)}
+            onNext={() => setWeekOffset((o) => o + 1)}
+            onClick={() => setWeekOffset(0)}
+          />
 
           <div className="sportPage__carouselWrapper">
             <CarouselArrow direction="left" onClick={() => scroll(matchesRef, "left")} />
@@ -537,6 +634,15 @@ export function SportPage({ sport }: { sport: string }) {
                   teamB={match.teamB}
                   dateTime={match.dateTime}
                   broadcasts={match.broadcasts}
+                  onClick={() => setSelectedMatch({
+                    championship: match.championship,
+                    homeName: match.teamA.name,
+                    awayName: match.teamB.name,
+                    homeLogo: match.teamA.logoSrc,
+                    awayLogo: match.teamB.logoSrc,
+                    gameDate: formatGameDate(match.dateTime),
+                    broadcasts: match.broadcasts,
+                  })}
                 />
               ))}
               {apiMatches.length === 0 &&
@@ -634,12 +740,22 @@ export function SportPage({ sport }: { sport: string }) {
                   gameDate={game.gameDate}
                   homeLogo={game.homeLogo}
                   awayLogo={game.awayLogo}
-                  channels={game.channels}
+                  broadcasts={game.broadcasts}
+                  onClick={() => setSelectedMatch({
+                    championship: game.championship,
+                    homeName: game.homeName,
+                    awayName: game.awayName,
+                    homeLogo: game.homeLogo,
+                    awayLogo: game.awayLogo,
+                    aoVivo: false,
+                    gameDate: game.gameDate,
+                    broadcasts: game.broadcasts,
+                  })}
                 />
               ))}
             </div>
             <div className="sportPage__bannerMini">
-              <BannerCarousel sport={sport} alt={`Banner ${config.name}`} size="Mini" />
+              <BannerCarousel sport={sport} alt={`Banner ${config.name}`} />
             </div>
           </div>
         </section>
@@ -656,6 +772,32 @@ export function SportPage({ sport }: { sport: string }) {
           </span>
         </footer>
       </main>
+
+      {/* Modal PopUpCard */}
+      {selectedMatch && (
+        <div className="sportPage__modalOverlay" onClick={() => setSelectedMatch(null)}>
+          <div className="sportPage__modalContent" onClick={(e) => e.stopPropagation()}>
+            <PopUpCard
+              championship={selectedMatch.championship}
+              homeName={selectedMatch.homeName}
+              awayName={selectedMatch.awayName}
+              homeLogo={selectedMatch.homeLogo}
+              awayLogo={selectedMatch.awayLogo}
+              aoVivo={selectedMatch.aoVivo}
+              gameDate={selectedMatch.gameDate}
+              channels={
+                selectedMatch.broadcasts ? (
+                  <>
+                    {selectedMatch.broadcasts.map((b, i) => (
+                      <TagCanal key={`${b.channel}-${b.canal ?? "1"}-${i}`} channel={b.channel} canal={b.canal} />
+                    ))}
+                  </>
+                ) : undefined
+              }
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

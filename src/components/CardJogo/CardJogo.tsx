@@ -1,9 +1,25 @@
+import { Fragment } from "react";
 import { TagJogo } from "../TagJogo";
 import type { TagJogoName } from "../TagJogo";
 import { TagCanal } from "../TagCanal";
 import type { ChannelName, CanalNumber } from "../TagCanal";
 import defaultClubLogo from "../../assets/default-club-logo.svg";
 import "./CardJogo.css";
+
+const TvIcon = () => (
+  <svg
+    className="cardJogo__tvIcon"
+    width="16"
+    height="16"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M7 1L10 4L13 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
 
 export interface Broadcast {
   channel: ChannelName;
@@ -34,35 +50,6 @@ export interface CardJogoProps {
   onClick?: () => void;
 }
 
-const TvIcon = () => (
-  <svg
-    className="cardJogo__tvIcon"
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect
-      x="2"
-      y="4"
-      width="16"
-      height="12"
-      rx="2"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M7 1L10 4L13 1"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 export function CardJogo({
   championship,
@@ -107,13 +94,11 @@ export function CardJogo({
 
         {broadcasts.length > 0 && (
           <div className="cardJogo__broadcasts">
-            <TvIcon />
             {broadcasts.map((b, i) => (
-              <TagCanal
-                key={`${b.channel}-${b.canal ?? "1"}-${i}`}
-                channel={b.channel}
-                canal={b.canal}
-              />
+              <Fragment key={`${b.channel}-${b.canal ?? "1"}-${i}`}>
+                {i === 0 && <TvIcon />}
+                <TagCanal channel={b.channel} canal={b.canal} />
+              </Fragment>
             ))}
           </div>
         )}
